@@ -19,9 +19,12 @@ public class EnemySpawner : MonoBehaviour
     {
         Vector2 spawnPos = GameObject.Find("Player").transform.position;
         spawnPos += Random.insideUnitCircle.normalized * spawnRadius;
-
-        Instantiate(enemys[Random.Range(0, enemys.Length)], spawnPos, Quaternion.identity);
-        yield return new WaitForSeconds(time);
+        
+        if(spawnPos.y <= 2.0 && spawnPos.y >=-2.5 && spawnPos.x <= 3.5 && spawnPos.x >= -5.5)
+        {
+            Instantiate(enemys[Random.Range(0, enemys.Length)], spawnPos, Quaternion.identity);
+            yield return new WaitForSeconds(time);
+        }
         StartCoroutine(SpawnEnemy());
     }
 }
