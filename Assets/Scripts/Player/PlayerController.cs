@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour
         if(currentHealth == 0)
         {
             //Deaths
-            Debug.Log("You Died");
         }
     }
 
@@ -56,12 +55,12 @@ public class PlayerController : MonoBehaviour
         {
             if (hit)
             {
-                StartCoroutine(TageDamage());
+                StartCoroutine(TakeDamage());
             }
         }
     }
 
-    IEnumerator TageDamage()
+    IEnumerator TakeDamage()
     {
         hit = false;
         currentHealth--;
