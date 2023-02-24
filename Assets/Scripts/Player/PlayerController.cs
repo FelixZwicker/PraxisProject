@@ -13,8 +13,8 @@ public class PlayerController : MonoBehaviour
     //gloabal eccessable variables
     public static int maxHealth = 10;
     public static float money = 0;
+    public float moveSpeed = 0.5f;
 
-    private float moveSpeed = 0.5f;
     private int currentHealth;
     private Vector2 movement;
     private Vector2 mousePos;

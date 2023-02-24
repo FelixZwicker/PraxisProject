@@ -13,7 +13,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        Vector2 position = player.position;
+        Vector3 position = new Vector3(player.position.x, player.position.y, -10);
         gameObject.transform.position = position;
     }
 }
