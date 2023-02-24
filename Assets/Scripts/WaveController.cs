@@ -5,8 +5,11 @@ using TMPro;
 
 public class WaveController : MonoBehaviour
 {
+    public ShopController shopControllerScript;
+    public PlayerController playerControllerScript;
+
     public TextMeshProUGUI timeText;
-    public GameObject[] enemys;
+    public GameObject[] enemies;
     public GameObject ShopUI;
     public GameObject IngameUI;
 
@@ -36,16 +39,32 @@ public class WaveController : MonoBehaviour
 
     public void StartWave()
     {
+        playerControllerScript.enabled = true;
+
         currentWaveDuration = maxWaveDuration;
         StartCoroutine(SpawnEnemys());
     }
 
     void WaveOver()
     {
+        //stop player controlles
+        playerControllerScript.enabled = false;
+
+        // destroy remaining ememys
+        GameObject[] remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in remainingEnemies)
+        {
+            GameObject.Destroy(enemy);
+        }
+
+        //adjust gamestrats
         waveCounter++;
         UpdateDifficulty();
+
+        //open shop
         ShopUI.SetActive(true);
         IngameUI.SetActive(false);
+        shopControllerScript.LoadShop();
     }
 
     void UpdateDifficulty()
@@ -63,7 +82,7 @@ public class WaveController : MonoBehaviour
         {
             if (spawnPos.y <= 2.0 && spawnPos.y >= -2.5 && spawnPos.x <= 3.5 && spawnPos.x >= -5.5)
             {
-                Instantiate(enemys[Random.Range(0, enemys.Length)], spawnPos, Quaternion.identity);        //spawns random enemy from array enemys
+                Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPos, Quaternion.identity);        //spawns random enemy from array enemys
                 yield return new WaitForSeconds(enemySpawnCooldown);
             }
             StartCoroutine(SpawnEnemys());
@@ -74,8 +93,6 @@ public class WaveController : MonoBehaviour
             WaveOver();
         }
     }
-
-
 
     void UpdateWaveTime()
     {

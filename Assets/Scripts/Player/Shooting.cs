@@ -9,12 +9,11 @@ public class Shooting : MonoBehaviour
     public GameObject bulletPrefab;
     public TextMeshProUGUI ammoDisplay;
 
-    public float bulletForce = 20f;
+    public static float bulletForce = 4.5f;
+    public static int maxAmmo = 25;
 
-    public int maxAmmo = 25;
-    public int currentAmmo;
-
-    private bool reloding = false;
+    private int currentAmmo;
+    private bool reloading = false;
 
     void Start()
     {
@@ -31,7 +30,7 @@ public class Shooting : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.R))
         {
-            Relode();
+            Reload();
         }
 
         ammoDisplay.SetText(currentAmmo.ToString() + " / " + maxAmmo.ToString());
@@ -39,7 +38,7 @@ public class Shooting : MonoBehaviour
 
     void Shoot()
     {
-        if(currentAmmo > 0 && reloding == false)
+        if(currentAmmo > 0 && reloading == false)
         {
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
@@ -48,19 +47,19 @@ public class Shooting : MonoBehaviour
         }
     }
 
-    void Relode()
+    void Reload()
     {
-        if(reloding == false)
+        if(reloading == false)
         {
-            reloding = true;
-            StartCoroutine(Reloding());
+            reloading = true;
+            StartCoroutine(Reloading());
         }
     }
 
-    IEnumerator Reloding()
+    IEnumerator Reloading()
     {
         yield return new WaitForSeconds(2);
         currentAmmo = maxAmmo;
-        reloding = false;
+        reloading = false;
     }
 }

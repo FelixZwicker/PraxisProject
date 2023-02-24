@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public PlayerController playerControllerScript;
     public float moveSpeed = 0.5f;
     public int health = 2;
 
@@ -47,6 +48,7 @@ public class Enemy : MonoBehaviour
             else
             {
                 Destroy(gameObject);
+                PlayerController.money += 20;
             }
         }
         else if(collider.transform.gameObject.tag == "Player")

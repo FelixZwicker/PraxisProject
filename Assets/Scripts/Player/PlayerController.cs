@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 0.5f;
     public Rigidbody2D rb;
     public Camera cam;
-    public int maxHealth = 10;
-    public int currentHealth;
     public HealthBar healthBar;
+    public TextMeshProUGUI moneyDisplayGameUI;
 
+    //gloabal eccessable variables
+    public static int maxHealth = 10;
+    public static float money = 0;
+
+    private float moveSpeed = 0.5f;
+    private int currentHealth;
     private Vector2 movement;
     private Vector2 mousePos;
     private bool hit = true;
@@ -18,7 +23,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetHealth(currentHealth, maxHealth);
     }
 
     void Update()
@@ -28,7 +33,10 @@ public class PlayerController : MonoBehaviour
 
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
+        healthBar.SetHealth(currentHealth, maxHealth);
+
         CheckHealth();
+        DisplayMoney();
     }
 
     private void FixedUpdate()
@@ -45,7 +53,7 @@ public class PlayerController : MonoBehaviour
     {
         if(currentHealth == 0)
         {
-            //Deaths
+            //Death
         }
     }
 
@@ -53,7 +61,7 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.transform.gameObject.tag == "Enemy")
         {
-            if (hit)
+            if(hit)
             {
                 StartCoroutine(TakeDamage());
             }
@@ -64,8 +72,12 @@ public class PlayerController : MonoBehaviour
     {
         hit = false;
         currentHealth--;
-        healthBar.SetHealth(currentHealth);
         yield return new WaitForSeconds(0.5f);
         hit = true;
+    }
+
+    void DisplayMoney()
+    {
+        moneyDisplayGameUI.text = money.ToString() + " €";
     }
 }
