@@ -9,7 +9,7 @@ public class Shooting : MonoBehaviour
     public GameObject bulletPrefab;
     public TextMeshProUGUI ammoDisplay;
 
-    public static float bulletForce = 4.5f;
+    public static float bulletForce = 8f;
     public static int maxAmmo = 25;
 
     private int currentAmmo;

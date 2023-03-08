@@ -80,11 +80,10 @@ public class WaveController : MonoBehaviour
 
         if(currentWaveDuration > 0)
         {
-            if (spawnPos.y <= 2.0 && spawnPos.y >= -2.5 && spawnPos.x <= 3.5 && spawnPos.x >= -5.5)
-            {
+            
                 Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPos, Quaternion.identity);        //spawns random enemy from array enemys
                 yield return new WaitForSeconds(enemySpawnCooldown);
-            }
+            
             StartCoroutine(SpawnEnemys());
         }
         else

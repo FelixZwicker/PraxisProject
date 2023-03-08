@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public Camera cam;
     public HealthBar healthBar;
     public TextMeshProUGUI moneyDisplayGameUI;
+    public TrailRenderer tr;
 
     //gloabal eccessable variables
     public static int maxHealth = 10;
@@ -20,6 +21,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 mousePos;
     private bool hit = true;
 
+    private bool canDash = true;
+    private bool isDashing;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 1f;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -28,13 +35,20 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if(isDashing)
+        {
+            return;
+        }
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
         healthBar.SetHealth(currentHealth, maxHealth);
-
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            StartCoroutine(Dash());
+        }
         CheckHealth();
         DisplayMoney();
     }
@@ -68,7 +82,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator TakeDamage()
+    public IEnumerator TakeDamage()
     {
         hit = false;
         currentHealth--;
@@ -79,5 +93,19 @@ public class PlayerController : MonoBehaviour
     void DisplayMoney()
     {
         moneyDisplayGameUI.text = money.ToString() + " €";
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = true;
+        isDashing = true;
+        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+
     }
 }

@@ -5,20 +5,22 @@ using UnityEngine.AI;
 
 public class Enemy_Ranged_Positioning : MonoBehaviour
 {
+    public float rotationModifier;
     public float speed;
+    public Transform enemyFirepoint;
     public float stoppingDistance;
     public float retreatDistance;
     private Transform player;
-    public GameObject Enemy;
+    private Transform Enemy;
     private float startTimeBtwShots;
     public GameObject projectile;
+    public int health;
 
     private float timeBtwShots;
     private Vector3 target;
     NavMeshAgent agent;
     private int framesToWait;
     private bool canMove;
-
 
     private void Awake()
     {
@@ -32,6 +34,7 @@ public class Enemy_Ranged_Positioning : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Enemy = gameObject.transform;
         player = GameObject.Find("Player").transform;
         startTimeBtwShots = 2;
         framesToWait = 75;
@@ -43,7 +46,10 @@ public class Enemy_Ranged_Positioning : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(framesToWait);
+        Vector2 direction = player.position - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - rotationModifier;
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 5 * Time.deltaTime);
         if (Vector2.Distance(transform.position, player.position) > stoppingDistance)
         {
             startTimeBtwShots = 2;
@@ -58,7 +64,6 @@ public class Enemy_Ranged_Positioning : MonoBehaviour
             {
                 gameObject.GetComponent<NavMeshAgent>().enabled = true;
                 MoveTowardsPlayer(player.position.x, player.position.y);
-                Debug.Log("move");
             }
         }
         else if(Vector2.Distance(transform.position, player.position) < retreatDistance)
@@ -66,7 +71,6 @@ public class Enemy_Ranged_Positioning : MonoBehaviour
            
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
             transform.position = Vector2.MoveTowards(transform.position, player.position, -speed * Time.deltaTime);
-            Debug.Log("back up");
             
         }
         else
@@ -76,12 +80,11 @@ public class Enemy_Ranged_Positioning : MonoBehaviour
             canMove = false;
             framesToWait = 75;
             transform.position = this.transform.position;
-            Debug.Log("stop");
         }
 
         if (timeBtwShots <= 0)
         {
-            Instantiate(projectile, transform.position, Quaternion.identity);
+            Instantiate(projectile, enemyFirepoint.position, Quaternion.identity);
             timeBtwShots = startTimeBtwShots;
         }
         else
@@ -93,6 +96,26 @@ public class Enemy_Ranged_Positioning : MonoBehaviour
     void MoveTowardsPlayer(float positionX, float positionY)
     {
         agent.SetDestination(new Vector3(positionX, positionY, 0));
+    }
+
+    private void OnCollisionEnter2D(Collision2D collider)
+    {
+        if (collider.transform.gameObject.tag == "Bullet")
+        {
+            if (health > 1)
+            {
+                health--;
+            }
+            else
+            {
+                Destroy(gameObject);
+                PlayerController.money += 20;
+            }
+        }
+        else if (collider.transform.gameObject.tag == "Player")
+        {
+
+        }
     }
 }
 
