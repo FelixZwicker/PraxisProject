@@ -112,10 +112,6 @@ public class Enemy_Ranged_Positioning : MonoBehaviour
                 PlayerController.money += 20;
             }
         }
-        else if (collider.transform.gameObject.tag == "Player")
-        {
-
-        }
     }
 }
 
