@@ -6,11 +6,7 @@ public class Punch : Attack
 {
     private float timeBtwPunchses;
     public Animator Animator;
-    public HitBox HitBox;
-    private static float punchRate = 10f;
-    private bool canPunchEnum;
     private GameObject player;
-    public Collider2D HitBoxCol;
 
 
     void Start()
@@ -26,7 +22,7 @@ public class Punch : Attack
             Animator.Play("EnemyCloseSlashing");
             timeBtwPunchses = punchRate;
             StartCoroutine(player.GetComponent<PlayerController>().TakeDamage());
-            CheckHitBox(HitBoxCol);
+            SoundManager.PlaySounds(SoundManager.Sound.SlashingSound);
         }
         else
         {
@@ -34,14 +30,4 @@ public class Punch : Attack
             timeBtwPunchses -= Time.deltaTime;
         }
     }
-
-    private void CheckHitBox(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("hit");
-            StartCoroutine(player.GetComponent<PlayerController>().TakeDamage());
-        }
-    }
-
 }

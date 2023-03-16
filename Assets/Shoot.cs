@@ -16,6 +16,7 @@ public class Shoot : Attack
             Instantiate(projectile, enemyFirepoint.position, Quaternion.identity);
             timeBtwShots = fireRate;
             Animator.Play("EnemyRangedShooting");
+            SoundManager.PlaySounds(SoundManager.Sound.ShootingSound);
         }
         else
         {

@@ -266,7 +266,7 @@ public class FirerateItem : Items
 
     public override void ItemEffect()
     {
-        Shooting.bulletForce += 0.5f;
+        Enemy_Health.damageTaken += 1;
     }
 }
 
@@ -279,7 +279,7 @@ public class MovementSpeedItem : Items
 
     public override void ItemEffect()
     {
-        //ToDo player movement speed inceased
+        PlayerController.moveSpeed += 0.1f;
     }
 }
 
@@ -292,6 +292,6 @@ public class ReloadSpeedItem : Items
 
     public override void ItemEffect()
     {
-        //ToDo player reload speed inceased
+        Shooting.reloadSpeed -= 0.2f;
     }
 }

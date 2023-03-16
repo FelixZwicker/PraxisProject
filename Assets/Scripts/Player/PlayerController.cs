@@ -11,11 +11,14 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI moneyDisplayGameUI;
     public TrailRenderer tr;
     public GameObject[] obstacles;
+    public GameObject GameOverUI;
+    public PauseMenu pauseScript;
+    public GameObject InGameUI;
 
     //gloabal eccessable variables
     public static int maxHealth = 10;
     public static float money = 0;
-    public float moveSpeed = 0.5f;
+    public static float moveSpeed = 10f;
     private float actualMoveSpeed;
 
     private int currentHealth;
@@ -46,9 +49,17 @@ public class PlayerController : MonoBehaviour
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
         healthBar.SetHealth(currentHealth, maxHealth);
+        //Dash
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash == true)
         {
             StartCoroutine(Dash());
+        }
+
+        //Health Kit
+        if(Input.GetKeyDown(KeyCode.Space) && WaveController.canUseHeal)
+        {
+            WaveController.canUseHeal = false;
+            currentHealth = maxHealth;
         }
         CheckHealth();
         DisplayMoney();
@@ -57,7 +68,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         rb.MovePosition(rb.position + movement * actualMoveSpeed * Time.fixedDeltaTime);
-
+        //SoundManager.PlaySounds(SoundManager.Sound.WalkingSound);
         Vector2 lookDir = mousePos - rb.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
 
@@ -68,7 +79,9 @@ public class PlayerController : MonoBehaviour
     {
         if(currentHealth == 0)
         {
-            //Death
+            pauseScript.FreezeGame();
+            GameOverUI.SetActive(true);
+            InGameUI.SetActive(false);
         }
     }
 
@@ -99,6 +112,7 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Dash()
     {
         canDash = false;
+        SoundManager.PlaySounds(SoundManager.Sound.DashSound);
         foreach (GameObject obstacle in obstacles)
         {
             obstacle.GetComponent<BoxCollider2D>().isTrigger = true;

@@ -7,17 +7,19 @@ public class WaveController : MonoBehaviour
 {
     public ShopController shopControllerScript;
     public PlayerController playerControllerScript;
+    public PauseMenu pauseScript;
 
     public TextMeshProUGUI timeText;
     public GameObject[] enemies;
     public GameObject ShopUI;
     public GameObject IngameUI;
+    public static bool canUseHeal;
 
     public int waveCounter = 1;                     //keeps track of how many waves were survived
     private float currentWaveDuration = 60f;        //how long a wave keeps spawning enemys 
     public float maxWaveDuration = 60f;
     public float enemySpawnCooldown = 1.5f;
-    private float spawnRadius = 2;
+    private float spawnRadius = 20;
     private bool gameStarted = false;
 
     void Update()
@@ -39,25 +41,31 @@ public class WaveController : MonoBehaviour
 
     public void StartWave()
     {
-        playerControllerScript.enabled = true;
-
+        pauseScript.UnfreezeGame();
         currentWaveDuration = maxWaveDuration;
+        canUseHeal = true;
         StartCoroutine(SpawnEnemys());
     }
 
     void WaveOver()
     {
         //stop player controlles
-        playerControllerScript.enabled = false;
+        pauseScript.FreezeGame();
 
         // destroy remaining ememys
-        GameObject[] remainingEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in remainingEnemies)
+        GameObject[] remainingCloseEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] remainingRangedEnemies = GameObject.FindGameObjectsWithTag("Ranged");
+        foreach (GameObject closeEnemy in remainingCloseEnemies)
         {
-            GameObject.Destroy(enemy);
+            GameObject.Destroy(closeEnemy);
         }
 
-        //adjust gamestrats
+        foreach (GameObject rangedEnemy in remainingRangedEnemies)
+        {
+            GameObject.Destroy(rangedEnemy);
+        }
+
+        //adjust gamestats
         waveCounter++;
         UpdateDifficulty();
 
@@ -71,6 +79,7 @@ public class WaveController : MonoBehaviour
     {
         maxWaveDuration += waveCounter * 2;
         enemySpawnCooldown *= 0.5f;
+        Enemy_Health.health += 1;
     }
 
     IEnumerator SpawnEnemys()
@@ -80,9 +89,11 @@ public class WaveController : MonoBehaviour
 
         if(currentWaveDuration > 0)
         {
-            
+            if(spawnPos.x < 33 && spawnPos.x > -31 && spawnPos.y < 22 && spawnPos.y > -16)
+            {
                 Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPos, Quaternion.identity);        //spawns random enemy from array enemys
                 yield return new WaitForSeconds(enemySpawnCooldown);
+            }
             
             StartCoroutine(SpawnEnemys());
         }

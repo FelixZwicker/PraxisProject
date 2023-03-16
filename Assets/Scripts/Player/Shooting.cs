@@ -9,8 +9,9 @@ public class Shooting : MonoBehaviour
     public GameObject bulletPrefab;
     public TextMeshProUGUI ammoDisplay;
 
-    public static float bulletForce = 8f;
+    public float bulletForce = 20f;
     public static int maxAmmo = 25;
+    public static float reloadSpeed = 5f;
 
     private int currentAmmo;
     private bool reloading = false;
@@ -58,7 +59,7 @@ public class Shooting : MonoBehaviour
 
     IEnumerator Reloading()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(reloadSpeed);
         currentAmmo = maxAmmo;
         reloading = false;
     }
