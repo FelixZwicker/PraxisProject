@@ -29,11 +29,14 @@ public class Projectile : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            DestroyProjectile();  
             Debug.Log("hit");
             StartCoroutine(player.GetComponent<PlayerController>().TakeDamage());
         }
-        
-        DestroyProjectile();   
+        else if (collision.CompareTag("Enviroment"))
+        {
+            DestroyProjectile();
+        }
     }
 
     void DestroyProjectile()
