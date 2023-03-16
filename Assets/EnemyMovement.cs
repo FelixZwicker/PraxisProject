@@ -1,20 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
-public class Shooting_Enemy : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
+    public Movement Movement;
     
-
-    void Start()
-    {
-    }
-
     void Update()
     {
-        
+        Movement.Move(this);   
     }
-
-
 }

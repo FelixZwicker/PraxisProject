@@ -10,42 +10,43 @@ public class PlayerController : MonoBehaviour
     public HealthBar healthBar;
     public TextMeshProUGUI moneyDisplayGameUI;
     public TrailRenderer tr;
+    public GameObject[] obstacles;
 
     //gloabal eccessable variables
     public static int maxHealth = 10;
     public static float money = 0;
     public float moveSpeed = 0.5f;
+    private float actualMoveSpeed;
 
     private int currentHealth;
     private Vector2 movement;
     private Vector2 mousePos;
     private bool hit = true;
 
-    private bool canDash = true;
-    private bool isDashing;
-    private float dashingPower = 24f;
-    private float dashingTime = 0.2f;
-    private float dashingCooldown = 1f;
+    public float dashSpeed = 2f;
+
+    private bool canDash;
+    private float dashTime = .05f;
+    private float dashCoolDown = 3f;
 
     void Start()
     {
+        canDash = true;
+        actualMoveSpeed = moveSpeed;
         currentHealth = maxHealth;
         healthBar.SetHealth(currentHealth, maxHealth);
+        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
     }
 
     void Update()
     {
-        if(isDashing)
-        {
-            return;
-        }
         movement.x = Input.GetAxisRaw("Horizontal");
         movement.y = Input.GetAxisRaw("Vertical");
 
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
         healthBar.SetHealth(currentHealth, maxHealth);
-        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash == true)
         {
             StartCoroutine(Dash());
         }
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement * actualMoveSpeed * Time.fixedDeltaTime);
 
         Vector2 lookDir = mousePos - rb.position;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
@@ -97,15 +98,20 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator Dash()
     {
+        canDash = false;
+        foreach (GameObject obstacle in obstacles)
+        {
+            obstacle.GetComponent<BoxCollider2D>().isTrigger = true;
+        }
+        actualMoveSpeed = dashSpeed;
+        yield return new WaitForSeconds(dashTime);
+        actualMoveSpeed = moveSpeed;
+        foreach (GameObject obstacle in obstacles)
+        {
+            obstacle.GetComponent<BoxCollider2D>().isTrigger = false;
+        }
+        yield return new WaitForSeconds(dashCoolDown);
+        Debug.Log("Finished");
         canDash = true;
-        isDashing = true;
-        rb.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
-        tr.emitting = true;
-        yield return new WaitForSeconds(dashingTime);
-        tr.emitting = false;
-        isDashing = false;
-        yield return new WaitForSeconds(dashingCooldown);
-        canDash = true;
-
     }
 }
