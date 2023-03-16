@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GameSounds : MonoBehaviour
 {
@@ -12,12 +13,13 @@ public class GameSounds : MonoBehaviour
         {
             if(_i == null)
             {
-                _i = (Instantiate(Resources.Load("Sounds")) as GameObject).GetComponent<GameSounds>();
+                _i = (Instantiate(Resources.Load("GameSounds")) as GameObject).GetComponent<GameSounds>();
             }
             return _i;
         }
     }
 
+    public AudioMixerGroup Mixer;
     public SoundAudioClip[] soundAudioClipArray;
 
     [System.Serializable]

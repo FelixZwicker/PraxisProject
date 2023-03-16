@@ -7,14 +7,18 @@ public static class SoundManager
     public enum Sound
     {
         ShootingSound,
-        walkingSound,
+        WalkingSound,
+        SlashingSound,
+        UIClickSound,
+        DashSound,
     }
 
-    public static void PlaySound(Sound sound, float volume)
+    public static void PlaySounds(Sound sound)
     {
         GameObject soundGameObject = new GameObject("Sound");
         AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
-        audioSource.PlayOneShot(GetAudioClip(sound), volume);
+        audioSource.PlayOneShot(GetAudioClip(sound));
+        audioSource.outputAudioMixerGroup = GameSounds.i.Mixer;
     }
 
     private static AudioClip GetAudioClip(Sound sound)

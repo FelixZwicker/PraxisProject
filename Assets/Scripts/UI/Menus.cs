@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Menus : MonoBehaviour
 {
+    public void PlayUISound()
+    {
+        SoundManager.PlaySounds(SoundManager.Sound.UIClickSound);
+    }
+
     // Start Menu
     public void LoadGame()
     {
@@ -15,8 +20,11 @@ public class Menus : MonoBehaviour
     {
         Application.Quit();
     }
-    //---------------------------------------------------
+    
 
-    //Pause Menu
+    public void Restart()
+    {
+        SceneManager.LoadScene("MainGame");
+    }
 
 }
