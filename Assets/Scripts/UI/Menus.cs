@@ -13,9 +13,19 @@ public class Menus : MonoBehaviour
     // Start Menu
     public void LoadGame()
     {
-        SceneManager.LoadScene("NavAgent_Test");
+        SceneManager.LoadScene("MainGame");
     }
 
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+
+    public void BackToStart()
+    {
+        SceneManager.LoadScene("StartMenu");
+    }
     public void Quit()
     {
         Application.Quit();

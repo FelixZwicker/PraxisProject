@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
     //gloabal eccessable variables
     public static int maxHealth = 10;
     public static float money = 0;
-    public static float moveSpeed = 10f;
-    private float actualMoveSpeed;
+    public float moveSpeed = 10f;
+    public static float actualMoveSpeed;
 
     private int currentHealth;
     private Vector2 movement;
@@ -61,6 +61,13 @@ public class PlayerController : MonoBehaviour
             WaveController.canUseHeal = false;
             currentHealth = maxHealth;
         }
+
+        //Debug add money
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            money += 100;
+        }
+
         CheckHealth();
         DisplayMoney();
     }

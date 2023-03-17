@@ -110,7 +110,7 @@ public class ShopController : MonoBehaviour
             else
             {
                 Debug.Log(firstItem.name + "allready bought");
-                PopUpMessage(firstItem, true);
+                PopUpMessage(firstItem, 1);
             }
         }
         else if(itemName == secondItem.name)
@@ -123,20 +123,20 @@ public class ShopController : MonoBehaviour
             else
             {
                 Debug.Log(secondItem.name + "allready bought");
-                PopUpMessage(secondItem, true);
+                PopUpMessage(secondItem, 1);
             }
         }
         else if(itemName == thirdItem.name)
         {
             if(boughtItemThree == false)
             {
-                InstallItem(firstItem);
+                InstallItem(thirdItem);
                 boughtItemThree = true;
             }
             else
             {
                 Debug.Log(thirdItem.name + "allready bought");
-                PopUpMessage(thirdItem, true);
+                PopUpMessage(thirdItem, 1);
             }
         }
         else
@@ -151,6 +151,7 @@ public class ShopController : MonoBehaviour
         if(PlayerController.money >= item.price)
         {
             Debug.Log(item.name + " purchased");
+            PopUpMessage(item, 3);
             PlayerController.money -= item.price;
             item.ItemEffect();
             item.price += 150;
@@ -158,22 +159,26 @@ public class ShopController : MonoBehaviour
         else
         {
             Debug.Log("not enough money");
-            PopUpMessage(item, false);
+            PopUpMessage(item, 2);
         }
 
     }
 
-    void PopUpMessage(Items item, bool errorID)
+    void PopUpMessage(Items item, int messageID)
     {
         PopUpMessageUI.SetActive(true);
         GameObject PopUpMessageText = PopUpMessageUI.transform.GetChild(0).gameObject;
-        if(errorID)
+        if(messageID == 1)
         {
             PopUpMessageText.GetComponent<TextMeshProUGUI>().text = "You allready bought " + item.name + "!";
         }
-        else if(!errorID)
+        else if(messageID == 2)
         {
             PopUpMessageText.GetComponent<TextMeshProUGUI>().text = "You dont have enough money to by " + item.name + "!";
+        }
+        else if(messageID == 3)
+        {
+            PopUpMessageText.GetComponent<TextMeshProUGUI>().text = item.name + " has been purchased!";
         }
     }
 
@@ -279,7 +284,7 @@ public class MovementSpeedItem : Items
 
     public override void ItemEffect()
     {
-        PlayerController.moveSpeed += 0.1f;
+        PlayerController.actualMoveSpeed += 0.1f;
     }
 }
 

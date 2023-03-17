@@ -10,6 +10,7 @@ public class WaveController : MonoBehaviour
     public PauseMenu pauseScript;
 
     public TextMeshProUGUI timeText;
+    public TextMeshProUGUI roundNr;
     public GameObject[] enemies;
     public GameObject ShopUI;
     public GameObject IngameUI;
@@ -37,6 +38,8 @@ public class WaveController : MonoBehaviour
         {
             currentWaveDuration = 0.5f;
         }
+
+        roundNr.text = waveCounter.ToString();
     }
 
     public void StartWave()
