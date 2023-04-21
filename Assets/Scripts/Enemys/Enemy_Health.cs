@@ -19,6 +19,12 @@ public class Enemy_Health : MonoBehaviour
             if (health > 1)
             {
                 health -= damageTaken;
+
+                if(health < 1)
+                {
+                    Destroy(gameObject);
+                    PlayerController.money += 20;
+                }
             }
             else
             {

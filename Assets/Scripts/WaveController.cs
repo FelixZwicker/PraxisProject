@@ -81,7 +81,7 @@ public class WaveController : MonoBehaviour
     void UpdateDifficulty()
     {
         maxWaveDuration += waveCounter * 2;
-        enemySpawnCooldown *= 0.5f;
+        enemySpawnCooldown *= 0.9f;
         Enemy_Health.health += 1;
     }
 

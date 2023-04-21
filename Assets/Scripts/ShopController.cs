@@ -13,12 +13,15 @@ public class ShopController : MonoBehaviour
     public GameObject thirdItemWindow;
     public GameObject PopUpMessageUI;
     public TextMeshProUGUI moneyDisplayShopUI;
+    public TextMeshProUGUI[] ItemCounterUI;
 
     private List<Items> itemsCollection = new List<Items>();
 
     private Items firstItem; 
     private Items secondItem;
     private Items thirdItem;
+
+    private int[] ItemCounter = new int[5];
 
     private bool boughtItemOne;
     private bool boughtItemTwo;
@@ -27,11 +30,11 @@ public class ShopController : MonoBehaviour
     private void Start()
     {
         //initiate all possible items
-        HealthItem healthItem = new HealthItem("+10 max Health", 500, itemsary[0]);
-        AmmoItem ammoItem = new AmmoItem("+5 Ammunition", 300, itemsary[1]);
-        FirerateItem firerateItem = new FirerateItem("Increased Firerate", 400, itemsary[2]);
-        ReloadSpeedItem reloadSpeedItem = new ReloadSpeedItem("Decreased Reload Time", 600, itemsary[3]);
-        MovementSpeedItem movementSpeedItem = new MovementSpeedItem("Inceased Movement Speed", 350, itemsary[4]);
+        HealthItem healthItem = new HealthItem("+10 max Health", 500, itemsary[0], 0);
+        AmmoItem ammoItem = new AmmoItem("+5 Ammunition", 300, itemsary[1], 1);
+        DamageItem firerateItem = new DamageItem("+1 Damage", 400, itemsary[2], 2);
+        ReloadSpeedItem reloadSpeedItem = new ReloadSpeedItem("Decreased Reload Time", 600, itemsary[3], 3);
+        MovementSpeedItem movementSpeedItem = new MovementSpeedItem("Inceased Movement Speed", 350, itemsary[4], 4);
 
 
         //store all items
@@ -40,6 +43,11 @@ public class ShopController : MonoBehaviour
         itemsCollection.Add(firerateItem);
         itemsCollection.Add(movementSpeedItem);
         itemsCollection.Add(reloadSpeedItem);
+
+        for(int x = 0; x < 5; x++)
+        {
+            ItemCounter[x] = 0;
+        }
     }
 
     private void Update()
@@ -155,6 +163,8 @@ public class ShopController : MonoBehaviour
             PlayerController.money -= item.price;
             item.ItemEffect();
             item.price += 150;
+            ItemCounter[item.id] += 1;
+            ItemCounterUI[item.id].text = ItemCounter[item.id].ToString();
         }
         else
         {
@@ -190,12 +200,14 @@ public class ShopController : MonoBehaviour
 
 public class Items
 {
+    public int id;
     public string name;
     public float price;
     public Sprite picture;
 
-    public Items(string name, float price, Sprite picture)
+    public Items(string name, float price, Sprite picture, int id)
     {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.picture = picture;
@@ -235,12 +247,22 @@ public class Items
         this.picture = picture;
     }
 
+    public int GetId()
+    {
+        return id;
+    }
+
+    public void SetId(int id)
+    {
+        this.id = id;
+    }
+
 }
 
 public class HealthItem : Items
 {
-    public HealthItem(string name, float price, Sprite picture)
-         :base(name, price, picture)
+    public HealthItem(string name, float price, Sprite picture, int id)
+         :base(name, price, picture, id)
     {
     }
     public override void ItemEffect()
@@ -251,8 +273,8 @@ public class HealthItem : Items
 
 public class AmmoItem : Items
 {
-    public AmmoItem(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public AmmoItem(string name, float price, Sprite picture, int id)
+         : base(name, price, picture, id)
     {
     }
 
@@ -262,10 +284,10 @@ public class AmmoItem : Items
     }
 }
 
-public class FirerateItem : Items
+public class DamageItem : Items
 {
-    public FirerateItem(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public DamageItem(string name, float price, Sprite picture, int id)
+         : base(name, price, picture, id)
     {
     }
 
@@ -277,8 +299,8 @@ public class FirerateItem : Items
 
 public class MovementSpeedItem : Items
 {
-    public MovementSpeedItem(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public MovementSpeedItem(string name, float price, Sprite picture, int id)
+         : base(name, price, picture, id)
     {
     }
 
@@ -290,8 +312,8 @@ public class MovementSpeedItem : Items
 
 public class ReloadSpeedItem : Items
 {
-    public ReloadSpeedItem(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public ReloadSpeedItem(string name, float price, Sprite picture, int id)
+         : base(name, price, picture, id)
     {
     }
 

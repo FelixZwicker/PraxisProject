@@ -10,10 +10,9 @@ public class Menus : MonoBehaviour
         SoundManager.PlaySounds(SoundManager.Sound.UIClickSound);
     }
 
-    // Start Menu
     public void LoadGame()
     {
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("MainGame_Felix");
     }
 
     public void RestartGame()
@@ -21,11 +20,16 @@ public class Menus : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-
     public void BackToStart()
     {
         SceneManager.LoadScene("StartMenu");
     }
+
+    public void LoadCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
     public void Quit()
     {
         Application.Quit();
