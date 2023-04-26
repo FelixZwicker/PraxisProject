@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class ExplosionProjectile : MonoBehaviour
 {
-    private Vector2 direction;
-
     public float speed;
+    public int environmentalDamage;
+    public int directDamage;
+
     private GameObject player;
     private Vector2 Target;
-    private Rigidbody2D rb;
+    private Vector2 direction;
 
     // Start is called before the first frame update
     void Start()
@@ -22,18 +23,21 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<Rigidbody2D>().MovePosition((Vector2)transform.position + (5f * Time.deltaTime * direction));
+        gameObject.GetComponent<Rigidbody2D>().MovePosition((Vector2)transform.position + (speed * Time.deltaTime * direction));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
+            gameObject.GetComponent<HandleExplosion>().PlayExplosion();
             DestroyProjectile();
-            StartCoroutine(player.GetComponent<PlayerController>().TakeDamage(1));
+            StartCoroutine(player.GetComponent<PlayerController>().TakeDamage(directDamage));
         }
-        else if (collision.CompareTag("Enviroment"))
+        else if (collision.gameObject.CompareTag("Enviroment"))
         {
+            gameObject.GetComponent<HandleExplosion>().PlayExplosion();
+            gameObject.GetComponent<HandleExplosion>().CastSurrounding(environmentalDamage);
             DestroyProjectile();
         }
     }

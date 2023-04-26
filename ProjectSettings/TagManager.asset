@@ -9,14 +9,16 @@ TagManager:
   - Obstacle
   - Ranged
   - Enviroment
+  - sound
+  - Projectile
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
+  - Enemy
   - 
   - 
   - 

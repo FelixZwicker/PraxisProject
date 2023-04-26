@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,9 +14,10 @@ public class PlayerController : MonoBehaviour
     public GameObject GameOverUI;
     public PauseMenu pauseScript;
     public GameObject InGameUI;
+    public PlayerDamageIndicator PlayerDamageIndicatorScript;
 
     //gloabal eccessable variables
-    public static int maxHealth = 10;
+    public static int maxHealth = 100;
     public static float money = 0;
     public float moveSpeed = 10f;
     public static float actualMoveSpeed;
@@ -56,14 +57,14 @@ public class PlayerController : MonoBehaviour
         }
 
         //Health Kit
-        if(Input.GetKeyDown(KeyCode.Space) && WaveController.canUseHeal)
+        if (Input.GetKeyDown(KeyCode.Space) && WaveController.canUseHeal)
         {
             WaveController.canUseHeal = false;
             currentHealth = maxHealth;
         }
 
         //Debug add money
-        if(Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             money += 100;
         }
@@ -84,7 +85,7 @@ public class PlayerController : MonoBehaviour
 
     void CheckHealth()
     {
-        if(currentHealth == 0)
+        if (currentHealth <= 0)
         {
             pauseScript.FreezeGame();
             GameOverUI.SetActive(true);
@@ -94,26 +95,27 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.transform.gameObject.tag == "Enemy")
+        if (collision.transform.gameObject.tag == "Enemy")
         {
-            if(hit)
+            if (hit)
             {
-                StartCoroutine(TakeDamage());
+                StartCoroutine(TakeDamage(1));
             }
         }
     }
 
-    public IEnumerator TakeDamage()
+    public IEnumerator TakeDamage(int Damage)
     {
         hit = false;
-        currentHealth--;
+        currentHealth -= Damage;
+        PlayerDamageIndicatorScript.TakenDamage();
         yield return new WaitForSeconds(0.5f);
         hit = true;
     }
 
     void DisplayMoney()
     {
-        moneyDisplayGameUI.text = money.ToString() + " €";
+        moneyDisplayGameUI.text = money.ToString() + " ï¿½";
     }
 
     private IEnumerator Dash()

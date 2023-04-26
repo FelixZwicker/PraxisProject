@@ -8,8 +8,9 @@ public class Shoot : Attack
     public Transform enemyFirepoint;
     public GameObject projectile;
     public Animator Animator;
-    
-    public override void Attacking(float fireRate, bool canPunch, float punchRate)
+    public float fireRate;
+
+    public override void Attacking()
     {
         if (timeBtwShots <= 0)
         {
@@ -24,5 +25,4 @@ public class Shoot : Attack
             Animator.Play("EnemyRangedRunning");
         }
     }
-    
 }

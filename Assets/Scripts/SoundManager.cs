@@ -17,8 +17,10 @@ public static class SoundManager
     {
         GameObject soundGameObject = new GameObject("Sound");
         AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
+        soundGameObject.tag = "sound";
         audioSource.PlayOneShot(GetAudioClip(sound));
         audioSource.outputAudioMixerGroup = GameSounds.i.Mixer;
+        
     }
 
     private static AudioClip GetAudioClip(Sound sound)

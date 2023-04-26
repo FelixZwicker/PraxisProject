@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class BackgroundMusic : MonoBehaviour
 {
-    public AudioClip MusicOne;
-    public AudioClip MusicTwo;
-    public AudioClip MusicThree;
-    public AudioClip MusicFour;
-    public AudioClip MusicFive;
-    public AudioClip MusicSix;
+    public AudioClip[] MusicArry;
 
     private AudioSource audio;
     private int musicCounter = 0;
@@ -21,40 +16,16 @@ public class BackgroundMusic : MonoBehaviour
 
     private void selectAudio()
     {
-        AudioClip clip;
-        switch (musicCounter)
+        if(musicCounter == MusicArry.Length)
         {
-            case 0:
-                clip = MusicOne;
-                break;
-            case 1:
-                clip = MusicTwo;
-                break;
-            case 2:
-                clip = MusicThree;
-                break;
-            case 3:
-                clip = MusicFour;
-                break;
-            case 4:
-                clip = MusicFive;
-                break;
-            case 5:
-                clip = MusicSix;
-                break;
-            default:
-                musicCounter = 0;
-                clip = MusicOne;
-                break;
+            musicCounter = 0;
         }
-
-        StartCoroutine(playBackgroundMusic(clip));
+        StartCoroutine(playBackgroundMusic(MusicArry[musicCounter]));
     }
 
     IEnumerator playBackgroundMusic(AudioClip clip)
     {
         audio.PlayOneShot(clip);
-        Debug.Log(clip.length + " in s");
         yield return new WaitForSeconds(clip.length);
         audio.Stop();
         musicCounter++;

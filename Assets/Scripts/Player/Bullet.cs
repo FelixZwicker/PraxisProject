@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public abstract class Bullet : MonoBehaviour
 {
-    //Bullet hit effects 
+    public int damage;
+
+    protected abstract void HandleCollision();
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(gameObject);
+        HandleCollision();
     }
+
 
 }

@@ -47,7 +47,7 @@ public class WaveController : MonoBehaviour
         pauseScript.UnfreezeGame();
         currentWaveDuration = maxWaveDuration;
         canUseHeal = true;
-        StartCoroutine(SpawnEnemys());
+        StartCoroutine(SpawnEnemys(waveCounter));
     }
 
     void WaveOver()
@@ -82,11 +82,21 @@ public class WaveController : MonoBehaviour
     {
         maxWaveDuration += waveCounter * 2;
         enemySpawnCooldown *= 0.9f;
-        Enemy_Health.health += 1;
+        Enemy_Health.enemyMaxHealth += 1;
     }
 
-    IEnumerator SpawnEnemys()
+    IEnumerator SpawnEnemys(int numberOfWave)
     {
+        int enemyArrayLenght = 1; 
+
+        if(numberOfWave > 4)
+        {
+            enemyArrayLenght = 2;
+        }
+        else
+        {
+            enemyArrayLenght = 4;
+        }
         Vector2 spawnPos = GameObject.Find("Player").transform.position;
         spawnPos += Random.insideUnitCircle.normalized * spawnRadius;
 
@@ -94,11 +104,11 @@ public class WaveController : MonoBehaviour
         {
             if(spawnPos.x < 33 && spawnPos.x > -31 && spawnPos.y < 22 && spawnPos.y > -16)
             {
-                Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPos, Quaternion.identity);        //spawns random enemy from array enemys
+                Instantiate(enemies[Random.Range(0, enemyArrayLenght)], spawnPos, Quaternion.identity);        //spawns random enemy from array enemys
                 yield return new WaitForSeconds(enemySpawnCooldown);
             }
             
-            StartCoroutine(SpawnEnemys());
+            StartCoroutine(SpawnEnemys(waveCounter));
         }
         else
         {

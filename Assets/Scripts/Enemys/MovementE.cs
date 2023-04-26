@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum EnemyType
+{
+    Ranged,
+    Close
+}
+
 public class MovementE : MonoBehaviour
 {
     public float stoppingDistance;
     public float rotationModifier;
     public Animator Animator;
     public Attack attack;
-    public float timeBtwPunches;
+    public EnemyType enemyType;
 
+    private EnemyAnimations enemyAnimations;
     NavMeshAgent agent;
     private Transform player;
     private bool canMove;
@@ -30,6 +37,7 @@ public class MovementE : MonoBehaviour
         framesToWait = 75;
         canMove = false;
         gameObject.GetComponent<NavMeshAgent>().enabled = false;
+        enemyAnimations = new EnemyAnimations();
     }
 
     // Update is called once per frame
@@ -38,6 +46,12 @@ public class MovementE : MonoBehaviour
         RotateTowardsPlayer();
 
         HandleMovement();
+    }
+
+    public void PlayAnimation(string enemyType, string animationType)
+    {
+        string animationName = enemyType + animationType;
+        Animator.Play(animationName);
     }
 
     private void HandleMovement()
@@ -55,28 +69,33 @@ public class MovementE : MonoBehaviour
             {
                 gameObject.GetComponent<NavMeshAgent>().enabled = true;
                 MoveTowardsPlayer(player.position.x, player.position.y);
-                if(gameObject.tag == "Ranged")
+                switch (enemyType)
                 {
-                    Animator.Play("EnemyRangedRunning");
+                    case EnemyType.Ranged:
+                        enemyAnimations.PlayRunAnimation("Ranged");
+                        break;
+
+                    case EnemyType.Close:
+                        enemyAnimations.PlayRunAnimation("Close");
+                        break;
+
+                    default:
+                        Debug.LogError("Unknown enemy type");
+                        break;
                 }
-                else
-                {
-                    Animator.Play("EnemyCloseRunnging");
-                }               
             }
         }
         else
         {
-            attack.Attacking(.5f, true, timeBtwPunches);
+            // virtual Method 
+            attack.Attacking();
             gameObject.GetComponent<NavMeshAgent>().enabled = false;
             canMove = false;
             framesToWait = 75;
             transform.position = this.transform.position;
         }
-
-        
     }
-    
+
     private void RotateTowardsPlayer()
     {
         Vector2 direction = player.position - transform.position;
