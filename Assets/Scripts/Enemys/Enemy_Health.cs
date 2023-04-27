@@ -55,5 +55,6 @@ public class Enemy_Health : MonoBehaviour
     {
         Destroy(gameObject);
         PlayerController.money += 50;
+        PlayerController.score += 10;
     }
 }

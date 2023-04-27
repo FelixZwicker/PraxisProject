@@ -3402,9 +3402,9 @@ MonoBehaviour:
   timeText: {fileID: 597129477}
   roundNr: {fileID: 841040710}
   enemies:
+  - {fileID: 469407466014011497, guid: 7a8ae776f6113d74c8c177fede039289, type: 3}
   - {fileID: 199087669079539904, guid: 7001770c245c06f4c817d5839f18d3d0, type: 3}
   - {fileID: 4018526767595813712, guid: 83dd5d6154952a24e8eb0522a4737e18, type: 3}
-  - {fileID: 469407466014011497, guid: 7a8ae776f6113d74c8c177fede039289, type: 3}
   - {fileID: 6900004730830374706, guid: 69af9e1f620d9e840ab0205ed1f4ea18, type: 3}
   ShopUI: {fileID: 892015640}
   IngameUI: {fileID: 1731398257}
@@ -19266,7 +19266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 463415253}
-  bulletPrefab: {fileID: 5247009203645425894, guid: 502a513c98affb642b361e7ae4a5bd30,
+  bulletPrefab: {fileID: 181237902458196366, guid: 7382a9ebf3f7c2e43bee9c8018772ee4,
     type: 3}
   ammoDisplay: {fileID: 1947638639}
   ReloadIndicator: {fileID: 971720976}
@@ -19283,16 +19283,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bf8a508e10d5d943ba9e179f41df299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerDamageIndicatorScript: {fileID: 1869268352}
+  pauseScript: {fileID: 264410498}
+  HealthBarScript: {fileID: 732357405}
+  moneyDisplayGameUI: {fileID: 234284405}
+  GameOverUI: {fileID: 252698322}
+  InGameUI: {fileID: 1731398257}
+  DashIndicator: {fileID: 658601774}
   rb: {fileID: 1357377330}
   cam: {fileID: 1815607384}
-  healthBar: {fileID: 732357405}
-  moneyDisplayGameUI: {fileID: 234284405}
   tr: {fileID: 1357377335}
   obstacles: []
-  GameOverUI: {fileID: 252698322}
-  pauseScript: {fileID: 264410498}
-  InGameUI: {fileID: 1731398257}
-  PlayerDamageIndicatorScript: {fileID: 1869268352}
   moveSpeed: 10
   dashSpeed: 70
 --- !u!50 &1357377330

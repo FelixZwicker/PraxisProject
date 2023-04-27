@@ -1,26 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public PlayerDamageIndicator PlayerDamageIndicatorScript;
+    public PauseMenu pauseScript;
+    public HealthBar HealthBarScript;
+
+    public TextMeshProUGUI moneyDisplayGameUI;
+    public GameObject GameOverUI;
+    public GameObject InGameUI;
+    public Image DashIndicator;
+
     public Rigidbody2D rb;
     public Camera cam;
-    public HealthBar healthBar;
-    public TextMeshProUGUI moneyDisplayGameUI;
     public TrailRenderer tr;
     public GameObject[] obstacles;
-    public GameObject GameOverUI;
-    public PauseMenu pauseScript;
-    public GameObject InGameUI;
-    public PlayerDamageIndicator PlayerDamageIndicatorScript;
 
     //gloabal eccessable variables
     public static int maxHealth = 100;
     public static float money = 0;
     public float moveSpeed = 10f;
     public static float actualMoveSpeed;
+    public static int score = 0;
 
     private int currentHealth;
     private Vector2 movement;
@@ -32,13 +37,14 @@ public class PlayerController : MonoBehaviour
     private bool canDash;
     private float dashTime = .05f;
     private float dashCoolDown = 3f;
+    private float dashTimer = 0;
 
     void Start()
     {
         canDash = true;
         actualMoveSpeed = moveSpeed;
         currentHealth = maxHealth;
-        healthBar.SetHealth(currentHealth, maxHealth);
+        HealthBarScript.SetHealth(currentHealth, maxHealth);
         obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
     }
 
@@ -49,7 +55,7 @@ public class PlayerController : MonoBehaviour
 
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-        healthBar.SetHealth(currentHealth, maxHealth);
+        HealthBarScript.SetHealth(currentHealth, maxHealth);
         //Dash
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash == true)
         {
@@ -67,6 +73,17 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.M))
         {
             money += 100;
+        }
+
+        //Desh Indicator
+        if(!canDash)
+        {
+            dashTimer += 1 / dashCoolDown * Time.deltaTime;
+            DashIndicator.fillAmount = dashTimer;
+        }
+        else
+        {
+            dashTimer = 0;
         }
 
         CheckHealth();
@@ -115,7 +132,7 @@ public class PlayerController : MonoBehaviour
 
     void DisplayMoney()
     {
-        moneyDisplayGameUI.text = money.ToString() + " �";
+        moneyDisplayGameUI.text = money.ToString() + " €";
     }
 
     private IEnumerator Dash()

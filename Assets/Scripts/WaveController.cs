@@ -89,14 +89,11 @@ public class WaveController : MonoBehaviour
     {
         int enemyArrayLenght = 1; 
 
-        if(numberOfWave > 4)
+        if(numberOfWave % 5 == 0)
         {
-            enemyArrayLenght = 2;
+            enemyArrayLenght += 1;
         }
-        else
-        {
-            enemyArrayLenght = 4;
-        }
+
         Vector2 spawnPos = GameObject.Find("Player").transform.position;
         spawnPos += Random.insideUnitCircle.normalized * spawnRadius;
 
