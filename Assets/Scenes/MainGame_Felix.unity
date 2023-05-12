@@ -5194,6 +5194,37 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 339102852}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &342310096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 342310097}
+  m_Layer: 3
+  m_Name: LazerPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &342310097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 342310096}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.06, y: 3.22, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1357377332}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &353266426
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21407,6 +21438,7 @@ GameObject:
   - component: {fileID: 1357377333}
   - component: {fileID: 1357377335}
   - component: {fileID: 1357377336}
+  - component: {fileID: 1357377337}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -21508,6 +21540,7 @@ Transform:
   m_Children:
   - {fileID: 6149980642798616500}
   - {fileID: 463415253}
+  - {fileID: 342310097}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21690,6 +21723,26 @@ MonoBehaviour:
   damage: 2
   firePoint: {fileID: 463415253}
   size: {x: 2, y: 1.75}
+--- !u!114 &1357377337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357377327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a108072ec467c341a614e3fa2432994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laserPrefab: {fileID: 4562357632072491765, guid: d00ce2d0e17986f44b09c1ff50208118,
+    type: 3}
+  laserPoint: {fileID: 342310097}
+  size: {x: 0.25, y: 5}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  laserDamage: 0.05
 --- !u!1 &1367868553
 GameObject:
   m_ObjectHideFlags: 0

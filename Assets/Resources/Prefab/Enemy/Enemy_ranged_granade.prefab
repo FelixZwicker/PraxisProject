@@ -230,7 +230,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e8588c2b4e5b84aa8dac6b65fbabd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy_HealthbarScript: {fileID: 1150300482707259501}
+  EnemyHealthbarScript: {fileID: 1150300482707259501}
+  MoneyPrefab: {fileID: 1729831844437358252, guid: a7dc9abbf3597bb45b74f34fab0f02b0,
+    type: 3}
+  WeaponPrefabs:
+  - {fileID: 2563114028794466136, guid: dda701bebd1a38441ab3068ddfa7a570, type: 3}
+  - {fileID: 8871652566782095304, guid: 91230e0817164c24eb3f9c5b745967a4, type: 3}
+  dropValue: 100
 --- !u!114 &204077437088101778
 MonoBehaviour:
   m_ObjectHideFlags: 0

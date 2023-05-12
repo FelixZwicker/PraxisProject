@@ -53,11 +53,11 @@ public class Enemy_Health : MonoBehaviour
     {
         Shooting shootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
 
-        if (Random.value < 0.8f && shootingScript.bulletPrefab != Resources.Load("Prefab/ExplosionBullet"))
+        if (Random.value < 0.15f && shootingScript.bulletPrefab != Resources.Load("Prefab/Weapon/ExplosionBullet"))
         {
             Instantiate(WeaponPrefabs[0], transform.position, Quaternion.identity);
         }
-        else if(Random.value < 0.8f && shootingScript.bulletPrefab != Resources.Load("Prefab/MashineGunBullet"))
+        else if(Random.value < 0.15f && shootingScript.bulletPrefab != Resources.Load("Prefab/Weapon/MashineGunBullet"))
         {
             Instantiate(WeaponPrefabs[1], transform.position, Quaternion.identity);
         }

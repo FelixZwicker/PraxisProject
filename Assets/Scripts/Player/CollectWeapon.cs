@@ -14,11 +14,11 @@ public class CollectWeapon : MonoBehaviour
     {
         if (gameObject.name == "ExplosionWeapon(Clone)")
         {
-            WeaponType = Resources.Load("Prefab/ExplosionBullet") as GameObject;
+            WeaponType = Resources.Load("Prefab/Weapon/ExplosionBullet") as GameObject;
         }
         else if(gameObject.name == "MashineGunWeapon(Clone)")
         {
-            WeaponType = Resources.Load("Prefab/MashineGunBullet") as GameObject;
+            WeaponType = Resources.Load("Prefab/Weapon/MashineGunBullet") as GameObject;
         }
 
         shootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
