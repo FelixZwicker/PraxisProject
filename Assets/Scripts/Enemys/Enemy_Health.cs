@@ -11,16 +11,12 @@ public class Enemy_Health : MonoBehaviour
     public GameObject MoneyPrefab;
     public GameObject[] WeaponPrefabs;
 
-    public static int damageTaken = 1;
-    public static int enemyMaxHealth = 1;
     public static float damageTaken = 1f;
     public static float enemyMaxHealth = 1f;
 
     public int dropValue;
 
     private Vector3 dropOffset;
-    private int currentHealth;
-    private bool hit = true;
     private float currentHealth;
 
     private void Start()
@@ -44,18 +40,7 @@ public class Enemy_Health : MonoBehaviour
         currentHealth -= Damage;
         yield return new WaitForSeconds(0.1f);
     }
-   
-    /*
-    private void OnCollisionEnter2D(Collision2D collider)
-    {
-        if (collider.transform.gameObject.CompareTag("Bullet"))
-        {
-            EnemyTakeDamage(collider.transform.gameObject.GetComponent<Bullet>().damage);
-        }
-    }
-    */
     
-
     void DropMoney()
     {
         GameObject Coin;
@@ -80,10 +65,9 @@ public class Enemy_Health : MonoBehaviour
 
     private void EnemyKilled()
     {
-        Destroy(gameObject);
         DropMoney();
         DropWeapon();
-        PlayerController.score += 10;
+        PlayerController.score += 10;  // -> singleton
         Destroy(gameObject);
     }
 }
