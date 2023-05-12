@@ -11,8 +11,10 @@ public class ShopController : MonoBehaviour
     public GameObject firstItemWindow;
     public GameObject secondItemWindow;
     public GameObject thirdItemWindow;
+    public Button extraLifeButton;
     public GameObject PopUpMessageUI;
     public TextMeshProUGUI moneyDisplayShopUI;
+    public TextMeshProUGUI secondMoneyDisplayShopUI;
     public TextMeshProUGUI[] ItemCounterUI;
 
     private List<Items> itemsCollection = new List<Items>();
@@ -20,6 +22,7 @@ public class ShopController : MonoBehaviour
     private Items firstItem; 
     private Items secondItem;
     private Items thirdItem;
+    private ExtraLifeItem extraLifeItem;
 
     private int[] ItemCounter = new int[5];
 
@@ -35,6 +38,7 @@ public class ShopController : MonoBehaviour
         DamageItem firerateItem = new DamageItem("+1 Damage", 400, itemsary[2], 2);
         ReloadSpeedItem reloadSpeedItem = new ReloadSpeedItem("Decreased Reload Time", 600, itemsary[3], 3);
         MovementSpeedItem movementSpeedItem = new MovementSpeedItem("Inceased Movement Speed", 350, itemsary[4], 4);
+        extraLifeItem = new ExtraLifeItem("1 extra life!", 10, itemsary[0], 5);
 
 
         //store all items
@@ -163,8 +167,11 @@ public class ShopController : MonoBehaviour
             PlayerController.money -= item.price;
             item.ItemEffect();
             item.price += 150;
-            ItemCounter[item.id] += 1;
-            ItemCounterUI[item.id].text = ItemCounter[item.id].ToString();
+            if(item.id < ItemCounterUI.Length)
+            {
+                ItemCounter[item.id] += 1;
+                ItemCounterUI[item.id].text = ItemCounter[item.id].ToString();
+            }
         }
         else
         {
@@ -192,9 +199,16 @@ public class ShopController : MonoBehaviour
         }
     }
 
+    public void AddExtraLife()
+    {
+        InstallItem(extraLifeItem);
+        extraLifeButton.enabled = false;
+    }
+
     void DisplayMoney()
     {
-        moneyDisplayShopUI.text = PlayerController.money.ToString() + " €";
+        moneyDisplayShopUI.text = PlayerController.money.ToString();
+        secondMoneyDisplayShopUI.text = PlayerController.money.ToString();
     }
 }
 
@@ -320,5 +334,18 @@ public class ReloadSpeedItem : Items
     public override void ItemEffect()
     {
         Shooting.reloadSpeed -= 0.2f;
+    }
+}
+
+public class ExtraLifeItem: Items
+{
+    public ExtraLifeItem(string name, float price, Sprite picture, int id)
+        : base(name, price, picture, id)
+    {
+    }
+
+    public override void ItemEffect()
+    {
+        PlayerController.extraLife = true;
     }
 }
