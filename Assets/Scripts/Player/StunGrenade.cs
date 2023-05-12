@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosionBullet : Bullet
+public class StunGrenade : MonoBehaviour
 {
     public LayerMask layerMask;
     public float radius;
-    public float enviromentalDamage;
 
     private ParticleSystem explosion;
 
@@ -21,10 +20,10 @@ public class ExplosionBullet : Bullet
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 
-    protected override void HandleCollision()
+    void OnCollisionEnter2D(Collision2D collision)
     {
         PlayExplosion();
-        CastPlayerBulletSurrounding(enviromentalDamage);
+        CastPlayerStunBulletSurrounding();
         Destroy(gameObject);
     }
 
@@ -34,20 +33,16 @@ public class ExplosionBullet : Bullet
         explosion.Play();
     }
 
-    public void CastPlayerBulletSurrounding(float damage)
+    private void CastPlayerStunBulletSurrounding()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius, layerMask);
-        
+
         foreach (Collider2D col in colliders)
         {
             if (col.gameObject.CompareTag("Enemy"))
             {
-                StartCoroutine(col.GetComponent<Enemy_Health>().EnemyTakeDamage(damage));
-
-                col.gameObject.GetComponent<KnockBack>().HandleKnockBack(transform);
+                col.GetComponent<StunEffect>().HandleStunEffect();
             }
         }
     }
-
-   
 }

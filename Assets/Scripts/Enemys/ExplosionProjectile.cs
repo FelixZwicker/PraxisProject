@@ -31,8 +31,8 @@ public class ExplosionProjectile : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             gameObject.GetComponent<HandleExplosion>().PlayExplosion();
-            DestroyProjectile();
             StartCoroutine(player.GetComponent<PlayerController>().TakeDamage(directDamage));
+            DestroyProjectile();
         }
         else if (collision.gameObject.CompareTag("Enviroment"))
         {

@@ -54,7 +54,7 @@ public class MovementE : MonoBehaviour
         Animator.Play(animationName);
     }
 
-    private void HandleMovement()
+    public void HandleMovement()
     {
         if (Vector2.Distance(transform.position, player.position) > stoppingDistance)
         {

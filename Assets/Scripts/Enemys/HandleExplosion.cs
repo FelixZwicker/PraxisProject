@@ -31,11 +31,23 @@ public class HandleExplosion : MonoBehaviour
     public void CastSurrounding(int damage)
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius, layerMask);
+        
+
         foreach (Collider2D col in colliders)
         {
             if (col.name == "Player")
             {
                 StartCoroutine(player.GetComponent<PlayerController>().TakeDamage(damage));
+                
+                Rigidbody2D rigid;
+                if (col.TryGetComponent<Rigidbody2D>(out rigid))
+                {
+                    Vector3 dir = transform.position - col.transform.position;
+                    
+                    rigid.AddForce(dir.normalized * 10, ForceMode2D.Impulse);
+                }
+                
+                
             }
         }
     }

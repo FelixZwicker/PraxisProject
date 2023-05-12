@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
             obstacle.GetComponent<BoxCollider2D>().isTrigger = false;
         }
         yield return new WaitForSeconds(dashCoolDown);
-        Debug.Log("Finished");
+        
         canDash = true;
     }
 }

@@ -8,7 +8,7 @@ public class Enemy_Healthbar : MonoBehaviour
     public Slider Slider;
     public Vector3 offset;
 
-    public void SetEnemyHealthbar(int maxHealth, int currentHealth)
+    public void SetEnemyHealthbar(float maxHealth, float currentHealth)
     {
         Slider.gameObject.SetActive(currentHealth < maxHealth);
         Slider.maxValue = maxHealth;

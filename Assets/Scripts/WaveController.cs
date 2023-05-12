@@ -82,7 +82,7 @@ public class WaveController : MonoBehaviour
     {
         maxWaveDuration += waveCounter * 2;
         enemySpawnCooldown *= 0.9f;
-        Enemy_Health.enemyMaxHealth += 1;
+        Enemy_Health.enemyMaxHealth += 1f;
     }
 
     IEnumerator SpawnEnemys(int numberOfWave)

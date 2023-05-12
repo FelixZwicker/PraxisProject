@@ -7,12 +7,10 @@ public class Enemy_Health : MonoBehaviour
 {
     public Enemy_Healthbar Enemy_HealthbarScript;
 
-    public static int damageTaken = 1;
-    public static int enemyMaxHealth = 1;
+    public static float damageTaken = 1f;
+    public static float enemyMaxHealth = 1f;
 
-    private int currentHealth;
-    private bool hit = true;
-
+    private float currentHealth;
 
     private void Start()
     {
@@ -28,33 +26,28 @@ public class Enemy_Health : MonoBehaviour
         Enemy_HealthbarScript.SetEnemyHealthbar(enemyMaxHealth, currentHealth);
     }
 
-    public IEnumerator EnemyTakeDamage(int Damage)
-    {
-        hit = false;
+
+    public IEnumerator EnemyTakeDamage(float Damage)
+    { 
         currentHealth -= Damage;
         yield return new WaitForSeconds(0.1f);
-        hit = true;
     }
-
+   
+    /*
     private void OnCollisionEnter2D(Collision2D collider)
     {
         if (collider.transform.gameObject.CompareTag("Bullet"))
         {
-            if (currentHealth > 0)
-            {
-                currentHealth -= collider.transform.gameObject.GetComponent<Bullet>().damage;
-            }
-            else
-            {
-                EnemyKilled();
-            }
+            EnemyTakeDamage(collider.transform.gameObject.GetComponent<Bullet>().damage);
         }
     }
+    */
+    
 
     private void EnemyKilled()
-    {
-        Destroy(gameObject);
+    {   
         PlayerController.money += 50;
         PlayerController.score += 10;
+        Destroy(gameObject);
     }
 }

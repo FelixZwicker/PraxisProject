@@ -43,7 +43,7 @@ public class Sword : MonoBehaviour
 
     public void CastPlayerSwordSurrounding(int damage)
     {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(firePoint.position, new Vector2(1, 2), layerMask);
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(firePoint.position, new Vector2(size.x, size.y), layerMask);
         foreach (Collider2D col in colliders)
         {
             if (col.gameObject.CompareTag("Enemy"))
