@@ -21,11 +21,12 @@ public class PlayerController : MonoBehaviour
     public GameObject[] obstacles;
 
     //gloabal eccessable variables
-    public static int maxHealth = 100;
+    public static int maxHealth = 10;
     public static float money = 0;
     public float moveSpeed = 10f;
     public static float actualMoveSpeed;
     public static int score = 0;
+    public static bool extraLife = false;
 
     private int currentHealth;
     private Vector2 movement;
@@ -102,11 +103,17 @@ public class PlayerController : MonoBehaviour
 
     void CheckHealth()
     {
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && extraLife == false)
         {
             pauseScript.FreezeGame();
             GameOverUI.SetActive(true);
             InGameUI.SetActive(false);
+        }
+        else if(currentHealth <= 0 && extraLife == true)
+        {
+            currentHealth = maxHealth;
+            extraLife = false;
+            //Wiederbelebungs indikator
         }
     }
 
@@ -132,7 +139,7 @@ public class PlayerController : MonoBehaviour
 
     void DisplayMoney()
     {
-        moneyDisplayGameUI.text = money.ToString() + " €";
+        moneyDisplayGameUI.text = money.ToString();
     }
 
     private IEnumerator Dash()

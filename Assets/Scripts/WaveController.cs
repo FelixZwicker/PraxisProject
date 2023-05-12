@@ -17,11 +17,15 @@ public class WaveController : MonoBehaviour
     public static bool canUseHeal;
 
     public int waveCounter = 1;                     //keeps track of how many waves were survived
-    private float currentWaveDuration = 60f;        //how long a wave keeps spawning enemys 
     public float maxWaveDuration = 60f;
     public float enemySpawnCooldown = 1.5f;
+    public float currentWaveDuration = 60f;        //how long a wave keeps spawning enemys 
+    public bool finishedWave = false;
+
     private float spawnRadius = 20;
+    private int enemyArrayLenght = 1;
     private bool gameStarted = false;
+    private bool clearing = false;
 
     void Update()
     {
@@ -39,34 +43,36 @@ public class WaveController : MonoBehaviour
             currentWaveDuration = 0.5f;
         }
 
+        if(clearing)
+        {
+            WaitForPlayerClearing();
+        }
+
         roundNr.text = waveCounter.ToString();
     }
 
     public void StartWave()
     {
+        finishedWave = false;
         pauseScript.UnfreezeGame();
         currentWaveDuration = maxWaveDuration;
         canUseHeal = true;
-        StartCoroutine(SpawnEnemys(waveCounter));
+        ShopInteraction.openedShop = false;
+
+        if (enemyArrayLenght > 4)
+        {
+        }
+        else if (waveCounter % 5 == 0)
+        {
+            enemyArrayLenght += 1;
+        }
+        StartCoroutine(SpawnEnemys());
     }
 
-    void WaveOver()
+    public void WaveOver()
     {
         //stop player controlles
         pauseScript.FreezeGame();
-
-        // destroy remaining ememys
-        GameObject[] remainingCloseEnemies = GameObject.FindGameObjectsWithTag("Enemy");
-        GameObject[] remainingRangedEnemies = GameObject.FindGameObjectsWithTag("Ranged");
-        foreach (GameObject closeEnemy in remainingCloseEnemies)
-        {
-            GameObject.Destroy(closeEnemy);
-        }
-
-        foreach (GameObject rangedEnemy in remainingRangedEnemies)
-        {
-            GameObject.Destroy(rangedEnemy);
-        }
 
         //adjust gamestats
         waveCounter++;
@@ -78,22 +84,15 @@ public class WaveController : MonoBehaviour
         shopControllerScript.LoadShop();
     }
 
-    void UpdateDifficulty()
+    void UpdateDifficulty() //movement speed, damage anheben oder gleichbleibend
     {
         maxWaveDuration += waveCounter * 2;
         enemySpawnCooldown *= 0.9f;
         Enemy_Health.enemyMaxHealth += 1f;
     }
 
-    IEnumerator SpawnEnemys(int numberOfWave)
+    IEnumerator SpawnEnemys()
     {
-        int enemyArrayLenght = 1; 
-
-        if(numberOfWave % 5 == 0)
-        {
-            enemyArrayLenght += 1;
-        }
-
         Vector2 spawnPos = GameObject.Find("Player").transform.position;
         spawnPos += Random.insideUnitCircle.normalized * spawnRadius;
 
@@ -105,12 +104,20 @@ public class WaveController : MonoBehaviour
                 yield return new WaitForSeconds(enemySpawnCooldown);
             }
             
-            StartCoroutine(SpawnEnemys(waveCounter));
+            StartCoroutine(SpawnEnemys());
         }
         else
         {
-            new WaitForSeconds(2f);
-            WaveOver();
+            clearing = true;
+        }
+    }
+
+    void WaitForPlayerClearing()
+    {
+        if(GameObject.FindGameObjectWithTag("Enemy") == null)
+        {
+            clearing = false;
+            finishedWave = true;
         }
     }
 

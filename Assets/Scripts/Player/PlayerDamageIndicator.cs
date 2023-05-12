@@ -12,8 +12,10 @@ public class PlayerDamageIndicator : MonoBehaviour
     {
         Color splatterAlpha = BloodSplatter.color;
         if(BloodSplatter.color.a > 0)
-        splatterAlpha.a -= 1 / SplatterCooldown * Time.deltaTime;
-        BloodSplatter.color = splatterAlpha;
+        {
+            splatterAlpha.a -= 1 / SplatterCooldown * Time.deltaTime;
+            BloodSplatter.color = splatterAlpha;
+        }
     }
 
     public void TakenDamage()
