@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class CollectMoney : MonoBehaviour
 {
-    private WaveController waveControllerScript;
     private int amount;
-
-    private void Start()
-    {
-        waveControllerScript = GameObject.Find("GameController").GetComponent<WaveController>();
-    }
+    private float distanceToPlayer;
 
     private void Update()
     {
-        if (waveControllerScript.finishedWave)
+        distanceToPlayer = Vector2.Distance(gameObject.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
+
+        if (distanceToPlayer < 6)
         {
             MoveToPlayer();
         }
@@ -24,8 +21,8 @@ public class CollectMoney : MonoBehaviour
     {
         if(collision.transform.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
             PlayerController.money += amount;
+            Destroy(gameObject);
         }
     }
 

@@ -34,7 +34,7 @@ public class CollectWeapon : MonoBehaviour
 
         distanceToPlayer = Vector2.Distance(gameObject.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
 
-        if(distanceToPlayer < 1.5f)
+        if (distanceToPlayer < 1.5f)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
