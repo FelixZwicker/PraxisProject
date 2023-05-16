@@ -6,7 +6,7 @@ using UnityEngine;
 public class Enemy_Health : MonoBehaviour
 {
     public Enemy_Healthbar EnemyHealthbarScript;
-    //public CollectMoney CollectMoneyScript;
+    public GameObject DeathExplosion;
 
     public GameObject MoneyPrefab;
     public GameObject[] WeaponPrefabs;
@@ -57,17 +57,30 @@ public class Enemy_Health : MonoBehaviour
         {
             Instantiate(WeaponPrefabs[0], transform.position, Quaternion.identity);
         }
-        else if(Random.value < 0.15f && shootingScript.bulletPrefab != Resources.Load("Prefab/Weapon/MashineGunBullet"))
+        else if (Random.value < 0.2f && shootingScript.enabled)
+        {
+            Instantiate(WeaponPrefabs[2], transform.position, Quaternion.identity);
+        }
+        else if(Random.value < 0.2f && shootingScript.bulletPrefab != Resources.Load("Prefab/Weapon/MashineGunBullet"))
         {
             Instantiate(WeaponPrefabs[1], transform.position, Quaternion.identity);
         }
+
     }
 
     private void EnemyKilled()
     {
+        StartCoroutine(PlayParticleSystemOnDeath());
         DropMoney();
         DropWeapon();
         PlayerController.score += 10;  // -> singleton
         Destroy(gameObject);
+    }
+
+    IEnumerator PlayParticleSystemOnDeath()
+    {
+        GameObject Particle = Instantiate(DeathExplosion, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(DeathExplosion.GetComponent<ParticleSystem>().main.duration);
+        Destroy(Particle);
     }
 }

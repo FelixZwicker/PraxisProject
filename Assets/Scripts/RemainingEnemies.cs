@@ -29,7 +29,6 @@ public class RemainingEnemies : MonoBehaviour
 
     IEnumerator PlayAnimation()
     {
-        Debug.Log("Here");
         PopUpWindow.SetActive(true);
         animator.Play("PopUp");
         yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length);
@@ -39,7 +38,7 @@ public class RemainingEnemies : MonoBehaviour
     IEnumerator PopUpMessage()
     {
         StartCoroutine(PlayAnimation());
-        yield return new WaitForSeconds(popUpCooldown);
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length + popUpCooldown);
         if(enemiesToCount.Length != 0)
         {
             StartCoroutine(PopUpMessage());
