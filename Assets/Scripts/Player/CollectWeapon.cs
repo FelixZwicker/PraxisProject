@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class CollectWeapon : MonoBehaviour
 {
-    private Shooting shootingScript;
-    private ShopInteraction shopInteractionScript;
+    private Shooting ShootingScript;
+    private Laser LaserScript;
     private GameObject WeaponType;
 
     private float distanceToPlayer;
+    private bool isLaserWeapon = false;
 
     private void Start()
     {
+        ShootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
+        LaserScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Laser>();
+
         if (gameObject.name == "ExplosionWeapon(Clone)")
         {
             WeaponType = Resources.Load("Prefab/Weapon/ExplosionBullet") as GameObject;
@@ -20,9 +24,10 @@ public class CollectWeapon : MonoBehaviour
         {
             WeaponType = Resources.Load("Prefab/Weapon/MashineGunBullet") as GameObject;
         }
-
-        shootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
-        shopInteractionScript = GameObject.Find("Shop").GetComponent<ShopInteraction>();
+        else if(gameObject.name == "LaserWeapon(Clone)")
+        {
+            isLaserWeapon = true;
+        }
     }
 
     private void Update()
@@ -34,22 +39,34 @@ public class CollectWeapon : MonoBehaviour
 
         distanceToPlayer = Vector2.Distance(gameObject.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
 
-        if(distanceToPlayer < 1.5f)
+        if (distanceToPlayer < 1.5f)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                if(isLaserWeapon)
+                {
+                    LaserPickUp();
+                }
+                else
+                {
+                    PrefabWeaponPickUp();
+                }
+                ShootingScript.currentAmmo = ShootingScript.maxAmmo;
                 Destroy(gameObject);
-                shootingScript.bulletPrefab = WeaponType;
             }
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void LaserPickUp()
     {
-        /*if (collision.transform.gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-            shootingScript.bulletPrefab = WeaponType;
-        }*/
+        LaserScript.enabled = true;
+        ShootingScript.canShoot = false;
+    }
+
+    void PrefabWeaponPickUp()
+    {
+        ShootingScript.canShoot = true;
+        LaserScript.enabled = false;
+        ShootingScript.bulletPrefab = WeaponType;
     }
 }

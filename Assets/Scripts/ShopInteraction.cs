@@ -6,10 +6,12 @@ public class ShopInteraction : MonoBehaviour
 {
     public WaveController waveControllerScript;
     public GameObject InteractionIndicator;
+    public LineRenderer line;
 
     public static bool openedShop = false;
-
+    
     private float distanceToPlayer;
+    private bool showLine = false;
 
     private void Update()
     {
@@ -23,6 +25,26 @@ public class ShopInteraction : MonoBehaviour
         else
         {
             InteractionIndicator.SetActive(false);
+        }
+
+        if(waveControllerScript.finishedWave && !openedShop)
+        {
+            showLine = true;
+        }
+        else
+        {
+            showLine = false;
+        }
+
+        if(showLine)
+        {
+            line.enabled = true;
+            line.SetPosition(0, GameObject.FindGameObjectWithTag("Player").transform.position); // Positions des Spielercharakters
+            line.SetPosition(1, transform.position); // Postion des Ziels
+        }
+        else
+        {
+            line.enabled = false;
         }
     }
 

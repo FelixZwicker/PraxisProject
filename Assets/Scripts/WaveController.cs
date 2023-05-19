@@ -94,7 +94,7 @@ public class WaveController : MonoBehaviour
     IEnumerator SpawnEnemys()
     {
         Vector2 spawnPos = GameObject.Find("Player").transform.position;
-        spawnPos += Random.insideUnitCircle.normalized * spawnRadius;
+        //spawnPos += Random.insideUnitCircle.normalized * spawnRadius;
 
         if(currentWaveDuration > 0)
         {

@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class GrenadeHandler : MonoBehaviour
 {
-    public static int maxGrenades = 5;
-    public static bool aBombisEquipped = true;
-
     public GameObject grenadePrefab;
     public GameObject aBombPrefab;
     public Transform firePoint;
 
+    public int maxGrenades = 5;
     public float grenadeForce;
     public float airTime;
     public float grenadeCoolDown;
     public float detonationTime;
+    public int currentGrenades = 0;
+    public bool aBombisCurrentlyEquipped = false;
 
-    private int currentGrenades;
-    private bool aBombisCurrentlyEquipped;
     private bool canThrow;
     
 
@@ -25,8 +23,6 @@ public class GrenadeHandler : MonoBehaviour
     void Start()
     {
         canThrow = true;
-        aBombisCurrentlyEquipped = aBombisEquipped;
-        currentGrenades = maxGrenades;
     }
 
     // Update is called once per frame
@@ -37,7 +33,7 @@ public class GrenadeHandler : MonoBehaviour
             StartCoroutine(ThrowGrenade());
         }
 
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.X) &&  aBombisCurrentlyEquipped)
         {
             StartCoroutine(Ignate());
         }

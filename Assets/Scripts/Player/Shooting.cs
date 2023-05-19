@@ -13,11 +13,12 @@ public class Shooting : MonoBehaviour
     public Animator animator;
 
     public float bulletForce = 20f;
-    public static int maxAmmo = 25;
-    public static float reloadSpeed = 2f;
+    public int maxAmmo = 25;
+    public float reloadSpeed = 2f;
+    public int currentAmmo;
+    public bool canShoot = true;
 
     private float reloadTimer;
-    private int currentAmmo;
     private bool reloading = false;
 
     void Start()
@@ -29,12 +30,12 @@ public class Shooting : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && canShoot)
         {
             Shoot();
         }
 
-        if(Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKeyDown(KeyCode.R) && canShoot)
         {
             Reload();
         }

@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class ShopController : MonoBehaviour
 {
+    public GrenadeHandler grenadeHandlerSkript;
     public Sprite[] itemsary;
     public GameObject firstItemWindow;
     public GameObject secondItemWindow;
@@ -23,12 +24,15 @@ public class ShopController : MonoBehaviour
     private Items secondItem;
     private Items thirdItem;
     private ExtraLifeItem extraLifeItem;
+    private StunGrenadeItem stunGrenadeItem;
+    private ABombItem aBombItem;
 
     private int[] ItemCounter = new int[5];
 
     private bool boughtItemOne;
     private bool boughtItemTwo;
     private bool boughtItemThree;
+    private bool boughtABomb;
 
     private void Start()
     {
@@ -38,7 +42,9 @@ public class ShopController : MonoBehaviour
         DamageItem firerateItem = new DamageItem("+1 Damage", 400, itemsary[2], 2);
         ReloadSpeedItem reloadSpeedItem = new ReloadSpeedItem("Decreased Reload Time", 600, itemsary[3], 3);
         MovementSpeedItem movementSpeedItem = new MovementSpeedItem("Inceased Movement Speed", 350, itemsary[4], 4);
-        extraLifeItem = new ExtraLifeItem("1 extra life!", 10, itemsary[0], 5);
+        extraLifeItem = new ExtraLifeItem("set in UI", 10, itemsary[0], 5);
+        stunGrenadeItem = new StunGrenadeItem("Stun Grenade", 50, itemsary[0], 6);
+        aBombItem = new ABombItem("set in UI", 10, itemsary[0], 7);
 
 
         //store all items
@@ -64,6 +70,7 @@ public class ShopController : MonoBehaviour
         boughtItemOne = false;
         boughtItemTwo = false;
         boughtItemThree = false;
+        boughtABomb = false;
         
         //get random three
         //but not three times the same
@@ -175,7 +182,6 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            Debug.Log("not enough money");
             PopUpMessage(item, 2);
         }
 
@@ -191,7 +197,7 @@ public class ShopController : MonoBehaviour
         }
         else if(messageID == 2)
         {
-            PopUpMessageText.GetComponent<TextMeshProUGUI>().text = "You dont have enough money to by " + item.name + "!";
+            PopUpMessageText.GetComponent<TextMeshProUGUI>().text = "You dont have enough money to buy " + item.name + "!";
         }
         else if(messageID == 3)
         {
@@ -203,6 +209,23 @@ public class ShopController : MonoBehaviour
     {
         InstallItem(extraLifeItem);
         extraLifeButton.enabled = false;
+    }
+
+    public void AddStunGrenade()
+    {
+        if(grenadeHandlerSkript.currentGrenades < grenadeHandlerSkript.maxGrenades)
+        {
+            InstallItem(stunGrenadeItem);
+        }
+    }
+
+    public void AddABomb()
+    {
+        if(!boughtABomb)
+        {
+            boughtABomb = true;
+            InstallItem(aBombItem);
+        }
     }
 
     void DisplayMoney()
@@ -294,7 +317,8 @@ public class AmmoItem : Items
 
     public override void ItemEffect()
     {
-        Shooting.maxAmmo += 5;
+        Shooting ShootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
+        ShootingScript.maxAmmo += 5;
     }
 }
 
@@ -333,7 +357,8 @@ public class ReloadSpeedItem : Items
 
     public override void ItemEffect()
     {
-        Shooting.reloadSpeed -= 0.2f;
+        Shooting ShootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
+        ShootingScript.reloadSpeed -= 0.2f;
     }
 }
 
@@ -347,5 +372,33 @@ public class ExtraLifeItem: Items
     public override void ItemEffect()
     {
         PlayerController.extraLife = true;
+    }
+}
+
+public class StunGrenadeItem : Items
+{
+    public StunGrenadeItem(string name, float price, Sprite picture, int id)
+        : base(name, price, picture, id)
+    {
+    }
+
+    public override void ItemEffect()
+    {
+        GrenadeHandler grenadeHandlerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<GrenadeHandler>();
+        grenadeHandlerScript.currentGrenades += 1;
+    }
+}
+
+public class ABombItem : Items
+{
+    public ABombItem(string name, float price, Sprite picture, int id)
+        : base(name, price, picture, id)
+    {
+    }
+
+    public override void ItemEffect()
+    {
+        GrenadeHandler grenadeHandlerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<GrenadeHandler>();
+        grenadeHandlerScript.aBombisCurrentlyEquipped = true;
     }
 }
