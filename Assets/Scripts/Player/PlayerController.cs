@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public PlayerDamageIndicator PlayerDamageIndicatorScript;
     public PauseMenu pauseScript;
     public HealthBar HealthBarScript;
+    public Animator animator;
 
     public TextMeshProUGUI moneyDisplayGameUI;
     public GameObject GameOverUI;
@@ -18,7 +19,6 @@ public class PlayerController : MonoBehaviour
     public Rigidbody2D rb;
     public Camera cam;
     public TrailRenderer tr;
-    public GameObject[] obstacles;
 
     //gloabal eccessable variables
     public static int maxHealth = 10;
@@ -31,22 +31,21 @@ public class PlayerController : MonoBehaviour
     private int currentHealth;
     private Vector2 movement;
     private Vector2 mousePos;
-    private bool hit = true;
 
-    public float dashSpeed = 2f;
+    public float dashSpeed;
 
     private bool canDash;
-    private float dashTime = .05f;
-    private float dashCoolDown = 3f;
+    public float dashTime;
+    public float dashCoolDown;
     private float dashTimer = 0;
 
     void Start()
     {
+        tr.emitting = false;
         canDash = true;
         actualMoveSpeed = moveSpeed;
         currentHealth = maxHealth;
         HealthBarScript.SetHealth(currentHealth, maxHealth);
-        obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
     }
 
     void Update()
@@ -119,22 +118,17 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.gameObject.tag == "Enemy")
+        if (collision.transform.gameObject.CompareTag("Enemy"))
         {
-            if (hit)
-            {
-                StartCoroutine(TakeDamage(1));
-            }
+            collision.gameObject.GetComponent<KnockBack>().HandleKnockBack(transform, 400, .2f);
         }
     }
 
     public IEnumerator TakeDamage(int Damage)
     {
-        hit = false;
         currentHealth -= Damage;
         PlayerDamageIndicatorScript.TakenDamage();
         yield return new WaitForSeconds(0.5f);
-        hit = true;
     }
 
     void DisplayMoney()
@@ -146,19 +140,12 @@ public class PlayerController : MonoBehaviour
     {
         canDash = false;
         SoundManager.PlaySounds(SoundManager.Sound.DashSound);
-        foreach (GameObject obstacle in obstacles)
-        {
-            obstacle.GetComponent<BoxCollider2D>().isTrigger = true;
-        }
         actualMoveSpeed = dashSpeed;
+        tr.emitting = true;
         yield return new WaitForSeconds(dashTime);
         actualMoveSpeed = moveSpeed;
-        foreach (GameObject obstacle in obstacles)
-        {
-            obstacle.GetComponent<BoxCollider2D>().isTrigger = false;
-        }
+        tr.emitting = false;
         yield return new WaitForSeconds(dashCoolDown);
-        
         canDash = true;
     }
 }

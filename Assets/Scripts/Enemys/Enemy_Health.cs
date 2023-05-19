@@ -18,9 +18,11 @@ public class Enemy_Health : MonoBehaviour
 
     private Vector3 dropOffset;
     private float currentHealth;
+    private ParticleSystem enemyKilledAnimation;
 
     private void Start()
     {
+        enemyKilledAnimation = GameObject.Find("KillEnemy").GetComponent<ParticleSystem>();
         currentHealth = enemyMaxHealth;
         dropOffset.Set(0, 0.5f, 0);
     }
@@ -29,6 +31,8 @@ public class Enemy_Health : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
+            enemyKilledAnimation.transform.position = transform.position;
+            enemyKilledAnimation.Play();
             EnemyKilled();
         }
         EnemyHealthbarScript.SetEnemyHealthbar(enemyMaxHealth, currentHealth);

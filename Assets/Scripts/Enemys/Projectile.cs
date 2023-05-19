@@ -8,14 +8,11 @@ public class Projectile : MonoBehaviour
 
     public float speed;
     private GameObject player;
-    private Vector2 Target;
-    private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        Target = new Vector2(player.transform.position.x, player.transform.position.y);
         direction = player.transform.position - transform.position;
     }
 

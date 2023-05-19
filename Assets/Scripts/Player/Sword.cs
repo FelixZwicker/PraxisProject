@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
+    public Animator animator;
     public LayerMask layerMask;
     public float timebetweenSlashes;
     public int damage;
     public Transform firePoint;
     public Vector2 size;
+    public float delay;
 
     private bool canSlash;
 
@@ -23,19 +25,16 @@ public class Sword : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F) && canSlash == true)
         {
-            Slash();
+            StartCoroutine(Slash());
         }
     }
 
-    private void Slash()
+    IEnumerator Slash()
     {
+        animator.Play("PlayerMeleeAttack");
+        yield return new WaitForSeconds(delay);
         Debug.Log("slash");
         CastPlayerSwordSurrounding(damage);
-        StartCoroutine(CoolDown());
-    }
-
-    IEnumerator CoolDown()
-    {
         canSlash = false;
         yield return new WaitForSeconds(timebetweenSlashes);
         canSlash = true;

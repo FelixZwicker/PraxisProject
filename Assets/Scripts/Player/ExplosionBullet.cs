@@ -44,7 +44,7 @@ public class ExplosionBullet : Bullet
             {
                 StartCoroutine(col.GetComponent<Enemy_Health>().EnemyTakeDamage(damage));
 
-                col.gameObject.GetComponent<KnockBack>().HandleKnockBack(transform);
+                col.gameObject.GetComponent<KnockBack>().HandleKnockBack(transform, knockBackStrength, knockBackTime);
             }
         }
     }
