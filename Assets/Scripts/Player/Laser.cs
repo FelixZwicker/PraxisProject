@@ -4,47 +4,77 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    public GameObject laserPrefab;
-    public Transform laserPoint;
-    private GameObject laser;
-    public Vector2 size;
-    public LayerMask layerMask;
+    public int maxDistance;
+    public Transform laserFirePoint;
+    public LineRenderer lineRenderer;
+    private Vector2 mousePos;
+    public Camera cam;
     public float laserDamage;
 
-    // Update is called once per frame
+    private Rigidbody2D rb;
+    public ParticleSystem laserDamageEffect;
+
+    void Start()
+    {
+        lineRenderer.enabled = false;
+        rb = gameObject.GetComponent<Rigidbody2D>();
+    }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        if (Input.GetKey(KeyCode.Mouse0))
         {
-            laser = Instantiate(laserPrefab, laserPoint);
+            lineRenderer.enabled = true;
+            ShootLaser();
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
-            Destroy(laser);
-        }
-
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            CastLaser(laserDamage);
+            lineRenderer.enabled = false;
+            laserDamageEffect.Stop();
         }
     }
 
-    public void CastLaser(float damage)
+    void ShootLaser()
     {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(laserPoint.position, new Vector2(size.x, size.y), layerMask);
-        foreach (Collider2D col in colliders)
+        Vector2 lookDir = mousePos - rb.position;
+        if (Physics2D.Raycast(laserFirePoint.position, lookDir))
         {
-            if (col.gameObject.CompareTag("Enemy"))
+            RaycastHit2D hit = Physics2D.Raycast(laserFirePoint.position, transform.up);
+            if(!hit.transform.gameObject.CompareTag("Projectile"))
             {
-                StartCoroutine(col.GetComponent<Enemy_Health>().EnemyTakeDamage(damage));
+                if (Vector2.Distance(new Vector2(laserFirePoint.position.x, laserFirePoint.position.y), hit.point) > maxDistance)
+                {
+                    Vector2 endPoint = new Vector2(laserFirePoint.position.x, laserFirePoint.position.y) + Vector2.ClampMagnitude(lookDir, 10);
+                    Draw2DRay(laserFirePoint.position, endPoint);
+                }
+                else
+                {
+                    Draw2DRay(laserFirePoint.position, hit.point);
+                    HandleLaserDamage(hit);
+                }
+                Debug.Log(hit.transform.gameObject.name);
             }
         }
     }
 
-    private void OnDrawGizmos()
+    private void HandleLaserDamage(RaycastHit2D hit)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(laserPoint.position, new Vector3(size.x, size.y, 0));
+        if (hit.transform.gameObject.CompareTag("Enemy"))
+        {
+            StartCoroutine(hit.transform.GetComponent<Enemy_Health>().EnemyTakeDamage(laserDamage));
+            laserDamageEffect.transform.position = hit.transform.position;
+            laserDamageEffect.Play();
+        }
+        else
+        {
+            laserDamageEffect.Stop();
+        }
+    }
+
+    void Draw2DRay(Vector2 startPos, Vector2 endPos)
+    {
+        lineRenderer.SetPosition(0, startPos);
+        lineRenderer.SetPosition(1, endPos);
     }
 }

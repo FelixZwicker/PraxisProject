@@ -147,12 +147,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91663b71ea2394f4d9278012e92e2eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 5
+  knockBackStrength: 700
+  knockBackTime: 0.3
   layerMask:
     serializedVersion: 2
     m_Bits: 64
   radius: 2.8
-  enviromentalDamage: 1
+  enviromentalDamage: 5
 --- !u!96 &-1789764192987762303
 TrailRenderer:
   serializedVersion: 2

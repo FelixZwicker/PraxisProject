@@ -10,12 +10,13 @@ public class Shooting : MonoBehaviour
     public GameObject bulletPrefab;
     public TextMeshProUGUI ammoDisplay;
     public Image ReloadIndicator;
+    public Animator animator;
 
     public float bulletForce = 20f;
     public int maxAmmo = 25;
-    public float reloadSpeed = 5f;
-    public bool canShoot = true;
+    public float reloadSpeed = 2f;
     public int currentAmmo;
+    public bool canShoot = true;
 
     private float reloadTimer;
     private bool reloading = false;
@@ -56,6 +57,7 @@ public class Shooting : MonoBehaviour
     {
         if(currentAmmo > 0 && reloading == false)
         {
+            animator.Play("PlayerRifleShooting");
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
             rb.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);
@@ -69,11 +71,13 @@ public class Shooting : MonoBehaviour
         {
             reloading = true;
             StartCoroutine(Reloading());
+            
         }
     }
 
     IEnumerator Reloading()
     {
+        animator.Play("PlayerRifleReload");
         yield return new WaitForSeconds(reloadSpeed);
         currentAmmo = maxAmmo;
         reloading = false;

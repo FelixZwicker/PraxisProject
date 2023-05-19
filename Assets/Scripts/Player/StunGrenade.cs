@@ -11,7 +11,7 @@ public class StunGrenade : MonoBehaviour
 
     void Start()
     {
-        explosion = GameObject.Find("ExplosionPlayerBullet").GetComponent<ParticleSystem>();
+        explosion = GameObject.Find("ExplosionPlayerStunGrenade").GetComponent<ParticleSystem>();
     }
 
     private void OnDrawGizmos()
@@ -27,13 +27,13 @@ public class StunGrenade : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void PlayExplosion()
+    public void PlayExplosion()
     {
         explosion.transform.position = transform.position;
         explosion.Play();
     }
 
-    private void CastPlayerStunBulletSurrounding()
+    public void CastPlayerStunBulletSurrounding()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius, layerMask);
 

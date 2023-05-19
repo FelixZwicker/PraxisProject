@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class ShopController : MonoBehaviour
 {
+    public GrenadeHandler grenadeHandlerSkript;
     public Sprite[] itemsary;
     public GameObject firstItemWindow;
     public GameObject secondItemWindow;
@@ -24,12 +25,14 @@ public class ShopController : MonoBehaviour
     private Items thirdItem;
     private ExtraLifeItem extraLifeItem;
     private StunGrenadeItem stunGrenadeItem;
+    private ABombItem aBombItem;
 
     private int[] ItemCounter = new int[5];
 
     private bool boughtItemOne;
     private bool boughtItemTwo;
     private bool boughtItemThree;
+    private bool boughtABomb;
 
     private void Start()
     {
@@ -40,7 +43,8 @@ public class ShopController : MonoBehaviour
         ReloadSpeedItem reloadSpeedItem = new ReloadSpeedItem("Decreased Reload Time", 600, itemsary[3], 3);
         MovementSpeedItem movementSpeedItem = new MovementSpeedItem("Inceased Movement Speed", 350, itemsary[4], 4);
         extraLifeItem = new ExtraLifeItem("set in UI", 10, itemsary[0], 5);
-        stunGrenadeItem = new StunGrenadeItem("set in UI", 50, itemsary[0], 6);
+        stunGrenadeItem = new StunGrenadeItem("Stun Grenade", 50, itemsary[0], 6);
+        aBombItem = new ABombItem("set in UI", 10, itemsary[0], 7);
 
 
         //store all items
@@ -66,6 +70,7 @@ public class ShopController : MonoBehaviour
         boughtItemOne = false;
         boughtItemTwo = false;
         boughtItemThree = false;
+        boughtABomb = false;
         
         //get random three
         //but not three times the same
@@ -208,7 +213,19 @@ public class ShopController : MonoBehaviour
 
     public void AddStunGrenade()
     {
-        InstallItem(stunGrenadeItem);
+        if(grenadeHandlerSkript.currentGrenades < grenadeHandlerSkript.maxGrenades)
+        {
+            InstallItem(stunGrenadeItem);
+        }
+    }
+
+    public void AddABomb()
+    {
+        if(!boughtABomb)
+        {
+            boughtABomb = true;
+            InstallItem(aBombItem);
+        }
     }
 
     void DisplayMoney()
@@ -367,6 +384,21 @@ public class StunGrenadeItem : Items
 
     public override void ItemEffect()
     {
-        //TODO
+        GrenadeHandler grenadeHandlerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<GrenadeHandler>();
+        grenadeHandlerScript.currentGrenades += 1;
+    }
+}
+
+public class ABombItem : Items
+{
+    public ABombItem(string name, float price, Sprite picture, int id)
+        : base(name, price, picture, id)
+    {
+    }
+
+    public override void ItemEffect()
+    {
+        GrenadeHandler grenadeHandlerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<GrenadeHandler>();
+        grenadeHandlerScript.aBombisCurrentlyEquipped = true;
     }
 }

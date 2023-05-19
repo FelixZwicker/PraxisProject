@@ -207,6 +207,8 @@ GameObject:
   - component: {fileID: 4018526767595813700}
   - component: {fileID: 799802302948074902}
   - component: {fileID: 7714723332528301483}
+  - component: {fileID: 2505841078460281401}
+  - component: {fileID: -424137405516475975}
   m_Layer: 6
   m_Name: Enemy_Explosion_Runner
   m_TagString: Enemy
@@ -250,7 +252,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -272,7 +274,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 3238b7d621a47f747872f97635b8e457, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -316,7 +318,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
+  m_Mass: 50
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -401,7 +403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyHealthbarScript: {fileID: 2819712984602535641}
-  DeathExplosion: {fileID: 210365954607316549, guid: 20c55a18c6fd3f247a3c98fd5ed4a3c1,
+  DeathExplosion: {fileID: 210365954607316555, guid: 20c55a18c6fd3f247a3c98fd5ed4a3c1,
     type: 3}
   MoneyPrefab: {fileID: 1729831844437358252, guid: a7dc9abbf3597bb45b74f34fab0f02b0,
     type: 3}
@@ -438,7 +440,32 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 8
-  radius: 10
+  radius: 5
+--- !u!114 &2505841078460281401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4018526767595813712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb6f663e36f16b4fa8a5f2675402f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-424137405516475975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4018526767595813712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d3afde5cedfcb47bce577f2f3653d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunTime: 3
 --- !u!1 &5077799371222995054
 GameObject:
   m_ObjectHideFlags: 0

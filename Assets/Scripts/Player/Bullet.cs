@@ -5,6 +5,8 @@ using UnityEngine;
 public abstract class Bullet : MonoBehaviour
 {
     public float damage;
+    public float knockBackStrength;
+    public float knockBackTime;
 
     protected abstract void HandleCollision();
 
@@ -14,9 +16,7 @@ public abstract class Bullet : MonoBehaviour
         if(collision.transform.gameObject.CompareTag("Enemy"))
         {
             StartCoroutine(collision.transform.gameObject.GetComponent<Enemy_Health>().EnemyTakeDamage(damage));
-            collision.transform.GetComponent<KnockBack>().HandleKnockBack(transform);
+            collision.transform.GetComponent<KnockBack>().HandleKnockBack(transform,knockBackStrength, knockBackTime);
         }
     }
-
-
 }

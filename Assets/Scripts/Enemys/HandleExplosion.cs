@@ -45,9 +45,7 @@ public class HandleExplosion : MonoBehaviour
                     Vector3 dir = transform.position - col.transform.position;
                     
                     rigid.AddForce(dir.normalized * 10, ForceMode2D.Impulse);
-                }
-                
-                
+                } 
             }
         }
     }

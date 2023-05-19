@@ -9,14 +9,11 @@ public class ExplosionProjectile : MonoBehaviour
     public int directDamage;
 
     private GameObject player;
-    private Vector2 Target;
     private Vector2 direction;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        Target = new Vector2(player.transform.position.x, player.transform.position.y);
         direction = player.transform.position - transform.position;
     }
 

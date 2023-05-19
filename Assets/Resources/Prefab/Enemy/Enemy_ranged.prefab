@@ -161,6 +161,8 @@ GameObject:
   - component: {fileID: 6900004730665277973}
   - component: {fileID: 6900004730665277975}
   - component: {fileID: 6900004730830374692}
+  - component: {fileID: 746379684700605905}
+  - component: {fileID: 468313241636676144}
   m_Layer: 6
   m_Name: Enemy_ranged
   m_TagString: Enemy
@@ -205,7 +207,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -271,7 +273,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 100
+  m_Mass: 50
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -338,7 +340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88203a49551771c469605041a062fea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stoppingDistance: 5
+  stoppingDistance: 8
   rotationModifier: 0
   Animator: {fileID: 6900004730665278957}
   attack: {fileID: 6900004730665277975}
@@ -359,7 +361,7 @@ MonoBehaviour:
   projectile: {fileID: 3426910815453563430, guid: 45892b37116f02548a993de19bfffe9e,
     type: 3}
   Animator: {fileID: 6900004730665278957}
-  fireRate: 1.5
+  fireRate: 1
 --- !u!114 &6900004730830374692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,7 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnemyHealthbarScript: {fileID: 6247801192391161654}
-  DeathExplosion: {fileID: 210365954607316549, guid: 20c55a18c6fd3f247a3c98fd5ed4a3c1,
+  DeathExplosion: {fileID: 210365954607316555, guid: 20c55a18c6fd3f247a3c98fd5ed4a3c1,
     type: 3}
   MoneyPrefab: {fileID: 1729831844437358252, guid: a7dc9abbf3597bb45b74f34fab0f02b0,
     type: 3}
@@ -382,6 +384,31 @@ MonoBehaviour:
   - {fileID: 8871652566782095304, guid: 91230e0817164c24eb3f9c5b745967a4, type: 3}
   - {fileID: 8137764121296142556, guid: 69c6fb08cc82221428abb5823c58e284, type: 3}
   dropValue: 50
+--- !u!114 &746379684700605905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900004730830374706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fb6f663e36f16b4fa8a5f2675402f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &468313241636676144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6900004730830374706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d3afde5cedfcb47bce577f2f3653d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunTime: 3
 --- !u!1 &8701832598695850331
 GameObject:
   m_ObjectHideFlags: 0
