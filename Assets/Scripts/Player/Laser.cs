@@ -1,16 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Laser : MonoBehaviour
 {
+    public GameObject laserTimerUI;
+    public GameObject ammoUI;
     public int maxDistance;
     public Transform laserFirePoint;
     public LineRenderer lineRenderer;
     private Vector2 mousePos;
     public Camera cam;
     public float laserDamage;
+    public float coolDownSpeed = 0.5f;
+    public float laserMaxTimer = 8f;
+    public float laserCurrentTimer;
 
+    private Slider laserTimerSlider;
+    private bool laserOverHeated = false;
     private Rigidbody2D rb;
     public ParticleSystem laserDamageEffect;
 
@@ -18,14 +26,38 @@ public class Laser : MonoBehaviour
     {
         lineRenderer.enabled = false;
         rb = gameObject.GetComponent<Rigidbody2D>();
+        laserCurrentTimer = laserMaxTimer;
+
+        ammoUI.SetActive(false);
+        laserTimerUI.SetActive(true);
+        laserTimerSlider = laserTimerUI.GetComponent<Slider>();
+        laserTimerSlider.minValue = 0;
+        laserTimerSlider.maxValue = laserMaxTimer;
     }
     void Update()
     {
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0) && !laserOverHeated)
         {
             lineRenderer.enabled = true;
+            laserCurrentTimer -= 1 * Time.deltaTime;
             ShootLaser();
+        }
+        else if(laserCurrentTimer < laserMaxTimer)
+        {
+            laserCurrentTimer += coolDownSpeed * Time.deltaTime;
+        }
+        else if(laserCurrentTimer >= laserMaxTimer)
+        {
+            laserCurrentTimer = laserMaxTimer;
+            laserOverHeated = false;
+        }
+
+        if(laserCurrentTimer < 0)
+        {
+            laserOverHeated = true;
+            lineRenderer.enabled = false;
+            laserDamageEffect.Stop();
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
@@ -33,6 +65,8 @@ public class Laser : MonoBehaviour
             lineRenderer.enabled = false;
             laserDamageEffect.Stop();
         }
+
+        laserTimerSlider.value = laserCurrentTimer;
     }
 
     void ShootLaser()
@@ -53,7 +87,7 @@ public class Laser : MonoBehaviour
                     Draw2DRay(laserFirePoint.position, hit.point);
                     HandleLaserDamage(hit);
                 }
-                Debug.Log(hit.transform.gameObject.name);
+                //Debug.Log(hit.transform.gameObject.name);
             }
         }
     }

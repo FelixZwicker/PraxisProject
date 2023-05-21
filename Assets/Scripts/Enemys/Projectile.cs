@@ -17,9 +17,9 @@ public class Projectile : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        gameObject.GetComponent<Rigidbody2D>().MovePosition((Vector2)transform.position + (5f * Time.deltaTime * direction));
+        gameObject.GetComponent<Rigidbody2D>().MovePosition((Vector2)transform.position + (speed * Time.deltaTime * direction));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

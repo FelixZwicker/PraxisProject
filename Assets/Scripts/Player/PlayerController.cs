@@ -20,15 +20,18 @@ public class PlayerController : MonoBehaviour
     public Camera cam;
     public TrailRenderer tr;
 
+    public Texture2D cursorTexture;
+
     //gloabal eccessable variables
-    public static int maxHealth = 10;
+    public int maxHealth = 10;
+    public int currentHealth;
     public static float money = 0;
     public float moveSpeed = 10f;
     public static float actualMoveSpeed;
     public static int score = 0;
     public static bool extraLife = false;
+    public bool canUseHeal = false;
 
-    private int currentHealth;
     private Vector2 movement;
     private Vector2 mousePos;
 
@@ -41,11 +44,15 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        CollectWeapon.MachineGunEquipped = true;
+
         tr.emitting = false;
         canDash = true;
         actualMoveSpeed = moveSpeed;
         currentHealth = maxHealth;
         HealthBarScript.SetHealth(currentHealth, maxHealth);
+
+        Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.ForceSoftware);
     }
 
     void Update()
@@ -63,9 +70,9 @@ public class PlayerController : MonoBehaviour
         }
 
         //Health Kit
-        if (Input.GetKeyDown(KeyCode.Space) && WaveController.canUseHeal)
+        if (Input.GetKeyDown(KeyCode.Space) && canUseHeal)
         {
-            WaveController.canUseHeal = false;
+            canUseHeal = false;
             currentHealth = maxHealth;
         }
 
@@ -112,7 +119,8 @@ public class PlayerController : MonoBehaviour
         {
             currentHealth = maxHealth;
             extraLife = false;
-            //Wiederbelebungs indikator
+            GameObject extraLifeIndicator = GameObject.Find("ExtraLifeUI");
+            extraLifeIndicator.SetActive(false);
         }
     }
 

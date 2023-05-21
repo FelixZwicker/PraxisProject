@@ -11,18 +11,23 @@ public class CollectMoney : MonoBehaviour
     {
         distanceToPlayer = Vector2.Distance(gameObject.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
 
-        if (distanceToPlayer < 6)
-        {
-            MoveToPlayer();
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.transform.gameObject.CompareTag("Player"))
+        if(distanceToPlayer < 0.5f)
         {
             PlayerController.money += amount;
             Destroy(gameObject);
+        }
+
+        if(ShopInteraction.openedShop)
+        {
+            Destroy(gameObject);
+        }       
+    }
+
+    private void FixedUpdate()
+    {
+        if (distanceToPlayer < 6)
+        {
+            MoveToPlayer();
         }
     }
 
@@ -34,6 +39,6 @@ public class CollectMoney : MonoBehaviour
     void MoveToPlayer()
     {
         GameObject Player = GameObject.FindGameObjectWithTag("Player");
-        transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, 0.05f);
+        transform.position = Vector2.MoveTowards(transform.position, Player.transform.position, 0.5f);
     }
 }

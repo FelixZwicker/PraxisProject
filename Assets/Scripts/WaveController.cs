@@ -8,13 +8,13 @@ public class WaveController : MonoBehaviour
     public ShopController shopControllerScript;
     public PlayerController playerControllerScript;
     public PauseMenu pauseScript;
+    public RemainingEnemies remainingEnemiesScript;
 
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI roundNr;
     public GameObject[] enemies;
     public GameObject ShopUI;
     public GameObject IngameUI;
-    public static bool canUseHeal;
 
     public int waveCounter = 1;                     //keeps track of how many waves were survived
     public float maxWaveDuration = 60f;
@@ -22,7 +22,7 @@ public class WaveController : MonoBehaviour
     public float currentWaveDuration = 60f;        //how long a wave keeps spawning enemys 
     public bool finishedWave = false;
 
-    private float spawnRadius = 20;
+    private Vector2 spawnPosition;
     private int enemyArrayLenght = 1;
     private bool gameStarted = false;
     private bool clearing = false;
@@ -56,13 +56,21 @@ public class WaveController : MonoBehaviour
         finishedWave = false;
         pauseScript.UnfreezeGame();
         currentWaveDuration = maxWaveDuration;
-        canUseHeal = true;
         ShopInteraction.openedShop = false;
+        remainingEnemiesScript.wasPlayed = false;
 
-        if (enemyArrayLenght > 4)
+        Enemy_Health.canDropMachinGun = true;
+        if(shopControllerScript.boughtLaserWeapon)
         {
+            Enemy_Health.canDropLaser = true;
         }
-        else if (waveCounter % 5 == 0)
+        if(shopControllerScript.boughtRocketLauncher)
+        {
+            Enemy_Health.canDropExplosion = true;
+        }
+
+
+        if (waveCounter % 5 == 0)
         {
             enemyArrayLenght += 1;
         }
@@ -93,17 +101,16 @@ public class WaveController : MonoBehaviour
 
     IEnumerator SpawnEnemys()
     {
-        Vector2 spawnPos = GameObject.Find("Player").transform.position;
-        //spawnPos += Random.insideUnitCircle.normalized * spawnRadius;
+        int spawnNr = Random.Range(1, 7);
+        SetSpawnPosition(spawnNr);
 
-        if(currentWaveDuration > 0)
+        if (currentWaveDuration > 0)
         {
-            if(spawnPos.x < 33 && spawnPos.x > -31 && spawnPos.y < 22 && spawnPos.y > -16)
+            if(Vector2.Distance(spawnPosition, GameObject.FindGameObjectWithTag("Player").transform.position) > 6)
             {
-                Instantiate(enemies[Random.Range(0, enemyArrayLenght)], spawnPos, Quaternion.identity);        //spawns random enemy from array enemys
+                Instantiate(enemies[Random.Range(0, enemyArrayLenght)], spawnPosition, Quaternion.identity);        //spawns random enemy from array enemys
                 yield return new WaitForSeconds(enemySpawnCooldown);
             }
-            
             StartCoroutine(SpawnEnemys());
         }
         else
@@ -118,6 +125,34 @@ public class WaveController : MonoBehaviour
         {
             clearing = false;
             finishedWave = true;
+        }
+    }
+
+    void SetSpawnPosition(int positionNr)
+    {
+        switch(positionNr)
+        {
+            case 1:
+                spawnPosition = new Vector2(-50, 12);
+                break;
+            case 2:
+                spawnPosition = new Vector2(-50, 4);
+                break;
+            case 3:
+                spawnPosition = new Vector2(-22, -10);
+                break;
+            case 4:
+                spawnPosition = new Vector2(-20, 7.5f);
+                break;
+            case 5:
+                spawnPosition = new Vector2(-12, 3.5f);
+                break;
+            case 6:
+                spawnPosition = new Vector2(-33, -12);
+                break;
+            default:
+                spawnPosition = new Vector2(0, 0);
+                break;
         }
     }
 

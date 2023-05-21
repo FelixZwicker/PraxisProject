@@ -10,21 +10,19 @@ public class RemainingEnemies : MonoBehaviour
     public GameObject PopUpWindow;
     public TextMeshProUGUI PopUpText;
 
-    private GameObject[] enemiesToCount;
+    public bool wasPlayed = false;
 
-    private float popUpCooldown = 5f;
-    private bool startCounter = false;
+    private GameObject[] enemiesToCount;
 
     private void Update()
     {
-        if(waveControllerScript.currentWaveDuration < 5 && !waveControllerScript.finishedWave && !startCounter)
+        if (waveControllerScript.currentWaveDuration < 0 && !wasPlayed)
         {
-            startCounter = true;
-            StartCoroutine(PopUpMessage());
+            enemiesToCount = GameObject.FindGameObjectsWithTag("Enemy");
+            PopUpText.text = enemiesToCount.Length.ToString();
+            wasPlayed = true;
+            StartCoroutine(PlayAnimation());
         }
-
-        enemiesToCount = GameObject.FindGameObjectsWithTag("Enemy");
-        PopUpText.text = enemiesToCount.Length.ToString();
     }
 
     IEnumerator PlayAnimation()
@@ -33,19 +31,5 @@ public class RemainingEnemies : MonoBehaviour
         animator.Play("PopUp");
         yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length);
         PopUpWindow.SetActive(false);
-    }
-
-    IEnumerator PopUpMessage()
-    {
-        StartCoroutine(PlayAnimation());
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length + popUpCooldown);
-        if(enemiesToCount.Length != 0)
-        {
-            StartCoroutine(PopUpMessage());
-        }
-        else
-        {
-            startCounter = false;
-        }
     }
 }
