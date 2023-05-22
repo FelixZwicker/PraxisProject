@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class GrenadeHandler : MonoBehaviour
 {
     public GameObject grenadePrefab;
     public GameObject aBombPrefab;
+    public Image aBombUI;
     public Transform firePoint;
+    public TextMeshProUGUI grenadeCounter;
+    public TextMeshProUGUI grenadeCounterShopUI;
 
     public int maxGrenades = 5;
     public float grenadeForce;
@@ -35,8 +40,14 @@ public class GrenadeHandler : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X) &&  aBombisCurrentlyEquipped)
         {
+            Color aBombAlpha = aBombUI.color;
+            aBombAlpha.a = 0.1f;
+            aBombUI.color = aBombAlpha;
             StartCoroutine(Ignate());
         }
+
+        grenadeCounter.text = currentGrenades.ToString();
+        grenadeCounterShopUI.text = currentGrenades.ToString();
     }
 
     IEnumerator ThrowGrenade()

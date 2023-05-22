@@ -11,16 +11,22 @@ public class Enemy_Health : MonoBehaviour
     public GameObject MoneyPrefab;
     public GameObject[] WeaponPrefabs;
 
+    public static bool canDropLaser;
+    public static bool canDropExplosion;
+    public static bool canDropMachinGun;
+
     public static float damageTaken = 1f;
     public static float enemyMaxHealth = 1f;
-
     public int dropValue;
 
+    private Laser laserScript;
     private Vector3 dropOffset;
     private float currentHealth;
 
     private void Start()
     {
+        laserScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Laser>();
+
         currentHealth = enemyMaxHealth;
         dropOffset.Set(0, 0.5f, 0);
     }
@@ -51,21 +57,21 @@ public class Enemy_Health : MonoBehaviour
 
     void DropWeapon()
     {
-        Shooting shootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
-
-        if (Random.value < 0.15f && shootingScript.bulletPrefab != Resources.Load("Prefab/Weapon/ExplosionBullet"))
-        {
+        if (Random.value < 0.15f && !CollectWeapon.RocketLauncherEquipped && canDropExplosion)
+        { 
             Instantiate(WeaponPrefabs[0], transform.position, Quaternion.identity);
+            canDropExplosion = false;
         }
-        else if (Random.value < 0.2f && shootingScript.enabled)
+        else if (Random.value < 0.15f && !laserScript.enabled && canDropLaser) 
         {
             Instantiate(WeaponPrefabs[2], transform.position, Quaternion.identity);
+            canDropLaser = false;
         }
-        else if(Random.value < 0.2f && shootingScript.bulletPrefab != Resources.Load("Prefab/Weapon/MashineGunBullet"))
+        else if(Random.value < 0.2f && !CollectWeapon.MachineGunEquipped && canDropMachinGun)
         {
             Instantiate(WeaponPrefabs[1], transform.position, Quaternion.identity);
+            canDropMachinGun = false;
         }
-
     }
 
     private void EnemyKilled()
@@ -79,8 +85,8 @@ public class Enemy_Health : MonoBehaviour
 
     IEnumerator PlayParticleSystemOnDeath()
     {
-        GameObject Particle = Instantiate(DeathExplosion, transform.position, Quaternion.identity);
+        GameObject particle = Instantiate(DeathExplosion, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(DeathExplosion.GetComponent<ParticleSystem>().main.duration);
-        Destroy(Particle);
+       DestroyImmediate(particle);
     }
 }

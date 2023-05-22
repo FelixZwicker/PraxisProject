@@ -13,10 +13,17 @@ public class ShopController : MonoBehaviour
     public GameObject secondItemWindow;
     public GameObject thirdItemWindow;
     public Button extraLifeButton;
+    public GameObject extraLifeIndicator;
+    public GameObject laserAsPickupItemButton;
+    public GameObject rocketLauncherAsPickupItemButton;
+    public GameObject aBombUI;
     public GameObject PopUpMessageUI;
     public TextMeshProUGUI moneyDisplayShopUI;
     public TextMeshProUGUI secondMoneyDisplayShopUI;
     public TextMeshProUGUI[] ItemCounterUI;
+
+    public bool boughtLaserWeapon = false;
+    public bool boughtRocketLauncher = false;
 
     private List<Items> itemsCollection = new List<Items>();
 
@@ -26,8 +33,8 @@ public class ShopController : MonoBehaviour
     private ExtraLifeItem extraLifeItem;
     private StunGrenadeItem stunGrenadeItem;
     private ABombItem aBombItem;
-
-    private int[] ItemCounter = new int[5];
+    private EnableRocketLauncherItem enableRocketLauncherItem;
+    private EnableLaserGunItem enableLaserGunItem;
 
     private bool boughtItemOne;
     private bool boughtItemTwo;
@@ -37,27 +44,22 @@ public class ShopController : MonoBehaviour
     private void Start()
     {
         //initiate all possible items
-        HealthItem healthItem = new HealthItem("+10 max Health", 500, itemsary[0], 0);
-        AmmoItem ammoItem = new AmmoItem("+5 Ammunition", 300, itemsary[1], 1);
-        DamageItem firerateItem = new DamageItem("+1 Damage", 400, itemsary[2], 2);
-        ReloadSpeedItem reloadSpeedItem = new ReloadSpeedItem("Decreased Reload Time", 600, itemsary[3], 3);
-        MovementSpeedItem movementSpeedItem = new MovementSpeedItem("Inceased Movement Speed", 350, itemsary[4], 4);
-        extraLifeItem = new ExtraLifeItem("set in UI", 10, itemsary[0], 5);
-        stunGrenadeItem = new StunGrenadeItem("Stun Grenade", 50, itemsary[0], 6);
-        aBombItem = new ABombItem("set in UI", 10, itemsary[0], 7);
+        HealthItem healthItem = new HealthItem("+10 max Health", 500, itemsary[0]);
+        HealBoxItem healBoxItem = new HealBoxItem("One time full Heal", 200, itemsary[0]);
+        AmmoItem ammoItem = new AmmoItem("+5 Ammunition", 300, itemsary[1]);
+        MovementSpeedItem movementSpeedItem = new MovementSpeedItem("Inceased Movement Speed", 350, itemsary[4]);
+        extraLifeItem = new ExtraLifeItem("Extra Life", 10, itemsary[0]);
+        stunGrenadeItem = new StunGrenadeItem("Stun Grenade", 50, itemsary[0]);
+        aBombItem = new ABombItem("ABomb", 10, itemsary[0]);
+        enableRocketLauncherItem = new EnableRocketLauncherItem("Rocket Launcher Pickup", 10, itemsary[0]);
+        enableLaserGunItem = new EnableLaserGunItem("Laser Gun Pickup", 10, itemsary[0]);
 
 
         //store all items
         itemsCollection.Add(healthItem);
+        itemsCollection.Add(healBoxItem);
         itemsCollection.Add(ammoItem);
-        itemsCollection.Add(firerateItem);
         itemsCollection.Add(movementSpeedItem);
-        itemsCollection.Add(reloadSpeedItem);
-
-        for(int x = 0; x < 5; x++)
-        {
-            ItemCounter[x] = 0;
-        }
     }
 
     private void Update()
@@ -67,10 +69,11 @@ public class ShopController : MonoBehaviour
 
     public void LoadShop()
     {
+        //------------ random item shop ------------//
+
         boughtItemOne = false;
         boughtItemTwo = false;
         boughtItemThree = false;
-        boughtABomb = false;
         
         //get random three
         //but not three times the same
@@ -113,6 +116,12 @@ public class ShopController : MonoBehaviour
 
         thirdItemChild = thirdItemWindow.transform.GetChild(1).gameObject;
         thirdItemChild.GetComponent<TextMeshProUGUI>().text = thirdItem.price.ToString();
+
+        //------------ special items shop ------------//
+
+        boughtABomb = false;
+
+        //------------ weapon items shop ------------//
     }
 
     public void GetSelectedItem()
@@ -174,11 +183,6 @@ public class ShopController : MonoBehaviour
             PlayerController.money -= item.price;
             item.ItemEffect();
             item.price += 150;
-            if(item.id < ItemCounterUI.Length)
-            {
-                ItemCounter[item.id] += 1;
-                ItemCounterUI[item.id].text = ItemCounter[item.id].ToString();
-            }
         }
         else
         {
@@ -187,7 +191,7 @@ public class ShopController : MonoBehaviour
 
     }
 
-    void PopUpMessage(Items item, int messageID)
+    public void PopUpMessage(Items item, int messageID)
     {
         PopUpMessageUI.SetActive(true);
         GameObject PopUpMessageText = PopUpMessageUI.transform.GetChild(0).gameObject;
@@ -208,6 +212,7 @@ public class ShopController : MonoBehaviour
     public void AddExtraLife()
     {
         InstallItem(extraLifeItem);
+        extraLifeIndicator.SetActive(true);
         extraLifeButton.enabled = false;
     }
 
@@ -225,7 +230,22 @@ public class ShopController : MonoBehaviour
         {
             boughtABomb = true;
             InstallItem(aBombItem);
+            Color aBombAlpha = aBombUI.GetComponent<Image>().color;
+            aBombAlpha.a = 1;
+            aBombUI.GetComponent<Image>().color = aBombAlpha;
         }
+    }
+
+    public void AddLaserAsPickUp()
+    {
+        InstallItem(enableLaserGunItem);
+        laserAsPickupItemButton.SetActive(false);
+    }
+
+    public void AddRocketLauncherAsPickUp()
+    {
+        InstallItem(enableRocketLauncherItem);
+        rocketLauncherAsPickupItemButton.SetActive(false);
     }
 
     void DisplayMoney()
@@ -237,14 +257,12 @@ public class ShopController : MonoBehaviour
 
 public class Items
 {
-    public int id;
     public string name;
     public float price;
     public Sprite picture;
 
-    public Items(string name, float price, Sprite picture, int id)
+    public Items(string name, float price, Sprite picture)
     {
-        this.id = id;
         this.name = name;
         this.price = price;
         this.picture = picture;
@@ -283,35 +301,39 @@ public class Items
     {
         this.picture = picture;
     }
-
-    public int GetId()
-    {
-        return id;
-    }
-
-    public void SetId(int id)
-    {
-        this.id = id;
-    }
-
 }
 
 public class HealthItem : Items
 {
-    public HealthItem(string name, float price, Sprite picture, int id)
-         :base(name, price, picture, id)
+    public HealthItem(string name, float price, Sprite picture)
+         :base(name, price, picture)
     {
     }
     public override void ItemEffect()
     {
-        PlayerController.maxHealth += 10;
+        PlayerController playerControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        playerControllerScript.maxHealth += 10;
+        playerControllerScript.currentHealth = playerControllerScript.maxHealth;
+    }
+}
+
+public class HealBoxItem : Items
+{
+    public HealBoxItem(string name, float price, Sprite picture)
+         : base(name, price, picture)
+    {
+    }
+    public override void ItemEffect()
+    {
+        PlayerController playerControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        playerControllerScript.canUseHeal = true;
     }
 }
 
 public class AmmoItem : Items
 {
-    public AmmoItem(string name, float price, Sprite picture, int id)
-         : base(name, price, picture, id)
+    public AmmoItem(string name, float price, Sprite picture)
+         : base(name, price, picture)
     {
     }
 
@@ -322,23 +344,10 @@ public class AmmoItem : Items
     }
 }
 
-public class DamageItem : Items
-{
-    public DamageItem(string name, float price, Sprite picture, int id)
-         : base(name, price, picture, id)
-    {
-    }
-
-    public override void ItemEffect()
-    {
-        Enemy_Health.damageTaken += 1;
-    }
-}
-
 public class MovementSpeedItem : Items
 {
-    public MovementSpeedItem(string name, float price, Sprite picture, int id)
-         : base(name, price, picture, id)
+    public MovementSpeedItem(string name, float price, Sprite picture)
+         : base(name, price, picture)
     {
     }
 
@@ -348,24 +357,10 @@ public class MovementSpeedItem : Items
     }
 }
 
-public class ReloadSpeedItem : Items
-{
-    public ReloadSpeedItem(string name, float price, Sprite picture, int id)
-         : base(name, price, picture, id)
-    {
-    }
-
-    public override void ItemEffect()
-    {
-        Shooting ShootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
-        ShootingScript.reloadSpeed -= 0.2f;
-    }
-}
-
 public class ExtraLifeItem: Items
 {
-    public ExtraLifeItem(string name, float price, Sprite picture, int id)
-        : base(name, price, picture, id)
+    public ExtraLifeItem(string name, float price, Sprite picture)
+        : base(name, price, picture)
     {
     }
 
@@ -377,8 +372,8 @@ public class ExtraLifeItem: Items
 
 public class StunGrenadeItem : Items
 {
-    public StunGrenadeItem(string name, float price, Sprite picture, int id)
-        : base(name, price, picture, id)
+    public StunGrenadeItem(string name, float price, Sprite picture)
+        : base(name, price, picture)
     {
     }
 
@@ -391,8 +386,8 @@ public class StunGrenadeItem : Items
 
 public class ABombItem : Items
 {
-    public ABombItem(string name, float price, Sprite picture, int id)
-        : base(name, price, picture, id)
+    public ABombItem(string name, float price, Sprite picture)
+        : base(name, price, picture)
     {
     }
 
@@ -400,5 +395,33 @@ public class ABombItem : Items
     {
         GrenadeHandler grenadeHandlerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<GrenadeHandler>();
         grenadeHandlerScript.aBombisCurrentlyEquipped = true;
+    }
+}
+
+public class EnableRocketLauncherItem : Items
+{
+    public EnableRocketLauncherItem(string name, float price, Sprite picture)
+        : base(name, price, picture)
+    {
+    }
+
+    public override void ItemEffect()
+    {
+        ShopController shopControllerScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<ShopController>();
+        shopControllerScript.boughtRocketLauncher = true;
+    }
+}
+
+public class EnableLaserGunItem : Items
+{
+    public EnableLaserGunItem(string name, float price, Sprite picture)
+        : base(name, price, picture)
+    {
+    }
+
+    public override void ItemEffect()
+    {
+        ShopController shopControllerScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<ShopController>();
+        shopControllerScript.boughtLaserWeapon = true;
     }
 }

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4557904116481784620}
   - component: {fileID: 4487431878072895950}
-  - component: {fileID: 3702653234564621852}
   - component: {fileID: 8918391322326790803}
   m_Layer: 0
   m_Name: DropedMoney
@@ -86,22 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &3702653234564621852
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1729831844437358252}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.025625825, y: -0.122623146}
-  serializedVersion: 2
-  m_Radius: 3.4620135
 --- !u!114 &8918391322326790803
 MonoBehaviour:
   m_ObjectHideFlags: 0

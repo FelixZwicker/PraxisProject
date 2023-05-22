@@ -147,3 +147,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  knockBackStrength: 0
+  knockBackTime: 0
