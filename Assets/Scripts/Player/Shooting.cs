@@ -18,6 +18,7 @@ public class Shooting : MonoBehaviour
     public int currentAmmo;
     public bool canShoot = true;
     public bool permanendFire = false;
+    public bool stopReloading = false;
 
     private Vector2 mouseScreenPosition;
     private float bulletForce = 45f;
@@ -58,20 +59,9 @@ public class Shooting : MonoBehaviour
 
         ammoDisplay.SetText(currentAmmo.ToString() + " / " + maxAmmo.ToString());
 
-        if(reloadingMachineGun)
-        {
-            reloadTimer += 1 / machineGunReloadSpeed * Time.deltaTime;
-            ReloadIndicator.fillAmount = reloadTimer;
-        }
-        else if(reloadingRocketLauncher)
-        {
-            reloadTimer += 1 / rocketLaucnherReloadSpeed * Time.deltaTime;
-            ReloadIndicator.fillAmount = reloadTimer;
-        }
-        else
-        {
-            reloadTimer = 0;
-        }
+        ReloadIndicatorDisplay();
+
+        StopReloading();
 
         mouseScreenPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
@@ -80,8 +70,11 @@ public class Shooting : MonoBehaviour
     {
         if(currentAmmo > 0 && reloading == false)
         {
-            Vector2 direction = (mouseScreenPosition - (Vector2)firePoint.transform.position).normalized;
-            firePoint.up = direction;
+            if(Vector2.Distance(mouseScreenPosition, firePoint.transform.position) > 2)
+            {
+                Vector2 direction = (mouseScreenPosition - (Vector2)firePoint.transform.position).normalized;
+                firePoint.up = direction;
+            }
             animator.Play("PlayerRifleShooting");
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
@@ -94,6 +87,37 @@ public class Shooting : MonoBehaviour
                 rb.AddForce(firePoint.up * rocketBulletForce, ForceMode2D.Impulse);
             }
             currentAmmo--;
+        }
+    }
+
+    void ReloadIndicatorDisplay()
+    {
+        if (reloadingMachineGun)
+        {
+            reloadTimer += 1 / machineGunReloadSpeed * Time.deltaTime;
+            ReloadIndicator.fillAmount = reloadTimer;
+        }
+        else if (reloadingRocketLauncher)
+        {
+            reloadTimer += 1 / rocketLaucnherReloadSpeed * Time.deltaTime;
+            ReloadIndicator.fillAmount = reloadTimer;
+        }
+        else
+        {
+            reloadTimer = 0;
+        }
+    }
+
+    void StopReloading()
+    {
+        if(stopReloading)
+        {
+            stopReloading = false;
+            reloading = false;
+            reloadingMachineGun = false;
+            reloadingRocketLauncher = false;
+            currentAmmo = maxAmmo;
+            ReloadIndicator.fillAmount = reloadTimer;
         }
     }
 

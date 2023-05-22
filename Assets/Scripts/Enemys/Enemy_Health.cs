@@ -87,6 +87,6 @@ public class Enemy_Health : MonoBehaviour
     {
         GameObject particle = Instantiate(DeathExplosion, transform.position, Quaternion.identity);
         yield return new WaitForSeconds(DeathExplosion.GetComponent<ParticleSystem>().main.duration);
-        Destroy(particle);
+       DestroyImmediate(particle);
     }
 }

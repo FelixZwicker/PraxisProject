@@ -287,6 +287,7 @@ public class MachineGunReloadUpgradeItemOne : Items
     {
         Shooting shootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
         shootingScript.machineGunReloadSpeed -= 1f;
+        shootingScript.stopReloading = true;
     }
 }
 
@@ -301,6 +302,7 @@ public class MachineGunReloadUpgradeItemTwo : Items
     {
         Shooting shootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
         shootingScript.machineGunReloadSpeed -= 2.5f;
+        shootingScript.stopReloading = true;
     }
 }
 
@@ -314,6 +316,7 @@ public class MachineGunReloadUpgradeItemThree : Items
     {
         Shooting shootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
         shootingScript.machineGunReloadSpeed -= 5f;
+        shootingScript.stopReloading = true;
     }
 }
 
