@@ -71,15 +71,24 @@ public class Laser : MonoBehaviour
 
     void ShootLaser()
     {
+        
         Vector2 lookDir = mousePos - rb.position;
+        Debug.Log(lookDir);
         if (Physics2D.Raycast(laserFirePoint.position, lookDir))
         {
             RaycastHit2D hit = Physics2D.Raycast(laserFirePoint.position, transform.up);
             if(!hit.transform.gameObject.CompareTag("Projectile"))
             {
-                if (Vector2.Distance(new Vector2(laserFirePoint.position.x, laserFirePoint.position.y), hit.point) > maxDistance)
+                float distanceFirePointToHit = Vector2.Distance(new Vector2(laserFirePoint.position.x, laserFirePoint.position.y), hit.point);
+                float distanceMousePosFirePoint = Vector2.Distance(mousePos, new Vector2(laserFirePoint.position.x, laserFirePoint.position.y));
+                if (distanceFirePointToHit >= maxDistance)
                 {
                     Vector2 endPoint = new Vector2(laserFirePoint.position.x, laserFirePoint.position.y) + Vector2.ClampMagnitude(lookDir, 10);
+                    Draw2DRay(laserFirePoint.position, endPoint);
+                }
+                else if(distanceMousePosFirePoint <= distanceFirePointToHit)
+                {
+                    Vector2 endPoint = new Vector2(laserFirePoint.position.x, laserFirePoint.position.y) + lookDir;
                     Draw2DRay(laserFirePoint.position, endPoint);
                 }
                 else
@@ -87,7 +96,6 @@ public class Laser : MonoBehaviour
                     Draw2DRay(laserFirePoint.position, hit.point);
                     HandleLaserDamage(hit);
                 }
-                //Debug.Log(hit.transform.gameObject.name);
             }
         }
     }
