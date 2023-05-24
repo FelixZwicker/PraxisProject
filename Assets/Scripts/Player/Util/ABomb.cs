@@ -9,8 +9,7 @@ public class ABomb : MonoBehaviour
     public float damage;
     public float knockBackStrength;
     public float knockBackTime;
-
-    private ParticleSystem explosion;
+    public GameObject explosionPrefab;
 
     private void CastABombSurrounding()
     {
@@ -32,21 +31,17 @@ public class ABomb : MonoBehaviour
 
     public void Detonate()
     {
-        PlayExplosion();
+        StartCoroutine(PlayExplosion());
         CastABombSurrounding();
         Destroy(gameObject);
     }
 
-    private void PlayExplosion()
+    private IEnumerator PlayExplosion()
     {
-        explosion = GameObject.Find("ExplosionABomb").GetComponent<ParticleSystem>();
-        explosion.transform.position = transform.position;
-        explosion.Play();
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Debug.Log(explosion.GetComponent<ParticleSystem>().main.duration);
+        explosion.GetComponent<ParticleSystem>().Play();
+        yield return new WaitForSeconds(explosion.GetComponent<ParticleSystem>().main.duration);
+        Destroy(explosion);
     }
 }

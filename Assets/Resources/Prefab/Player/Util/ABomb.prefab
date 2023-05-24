@@ -153,3 +153,5 @@ MonoBehaviour:
   damage: 10
   knockBackStrength: 2000
   knockBackTime: 0.4
+  explosionPrefab: {fileID: 8493418523401616579, guid: 43621566929c95b43afc8be8c22ec2ce,
+    type: 3}

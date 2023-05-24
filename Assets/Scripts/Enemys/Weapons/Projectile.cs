@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private Vector2 direction;
-
     public float speed;
     private GameObject player;
 
-    // Start is called before the first frame update
+    private Vector2 direction;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         direction = player.transform.position - transform.position;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         gameObject.GetComponent<Rigidbody2D>().MovePosition((Vector2)transform.position + (speed * Time.deltaTime * direction));

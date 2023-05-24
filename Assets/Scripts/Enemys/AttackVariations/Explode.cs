@@ -9,7 +9,7 @@ public class Explode : Attack
     public override void Attacking()
     {
         gameObject.GetComponent<HandleExplosion>().CastSurrounding(damage);
-        gameObject.GetComponent<HandleExplosion>().PlayExplosion();
+        StartCoroutine(gameObject.GetComponent<HandleExplosion>().PlayExplosion());
 
         Destroy(gameObject);
     }

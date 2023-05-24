@@ -10,13 +10,13 @@ public abstract class Bullet : MonoBehaviour
 
     protected abstract void HandleCollision();
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D _collision)
     {
         HandleCollision();
-        if(collision.transform.gameObject.CompareTag("Enemy"))
+        if(_collision.transform.gameObject.CompareTag("Enemy"))
         {
-            StartCoroutine(collision.transform.gameObject.GetComponent<EnemyHealth>().EnemyTakeDamage(damage));
-            collision.transform.GetComponent<KnockBack>().HandleKnockBack(transform,knockBackStrength, knockBackTime);
+            StartCoroutine(_collision.transform.gameObject.GetComponent<EnemyHealth>().EnemyTakeDamage(damage));
+            _collision.transform.GetComponent<KnockBack>().HandleKnockBack(transform,knockBackStrength, knockBackTime);
         }
     }
 }
