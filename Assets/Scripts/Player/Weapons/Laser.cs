@@ -100,12 +100,12 @@ public class Laser : MonoBehaviour
         }
     }
 
-    private void HandleLaserDamage(RaycastHit2D hit)
+    private void HandleLaserDamage(RaycastHit2D _hit)
     {
-        if (hit.transform.gameObject.CompareTag("Enemy"))
+        if (_hit.transform.gameObject.CompareTag("Enemy"))
         {
-            StartCoroutine(hit.transform.GetComponent<EnemyHealth>().EnemyTakeDamage(laserDamage));
-            laserDamageEffect.transform.position = hit.transform.position;
+            StartCoroutine(_hit.transform.GetComponent<EnemyHealth>().EnemyTakeDamage(laserDamage));
+            laserDamageEffect.transform.position = _hit.transform.position;
             laserDamageEffect.Play();
         }
         else
@@ -114,9 +114,9 @@ public class Laser : MonoBehaviour
         }
     }
 
-    void Draw2DRay(Vector2 startPos, Vector2 endPos)
+    void Draw2DRay(Vector2 _startPos, Vector2 _endPos)
     {
-        lineRenderer.SetPosition(0, startPos);
-        lineRenderer.SetPosition(1, endPos);
+        lineRenderer.SetPosition(0, _startPos);
+        lineRenderer.SetPosition(1, _endPos);
     }
 }

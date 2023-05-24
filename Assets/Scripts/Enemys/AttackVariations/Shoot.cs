@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Shoot : Attack
 {
-    private bool canShoot;
-    private float timeBtwShots;
     public Transform enemyFirepoint;
     public GameObject projectile;
-    public Animator Animator;
+    public Animator animator;
     public float fireRate;
+
+    private bool canShoot;
 
     private void Start()
     {
@@ -20,27 +20,13 @@ public class Shoot : Attack
     {
         if (canShoot)
             StartCoroutine(Fire());
-        /*
-        if (timeBtwShots <= 0)
-        {
-            Instantiate(projectile, enemyFirepoint.position, Quaternion.identity);
-            timeBtwShots = fireRate;
-            Animator.Play("EnemyRangedShooting");
-            SoundManager.PlaySounds(SoundManager.Sound.ShootingSound);
-        }
-        else
-        {
-            timeBtwShots -= Time.deltaTime;
-            Animator.Play("EnemyRangedRunning");
-        }
-        */
     }
 
     IEnumerator Fire()
     {
         canShoot = false;
         Instantiate(projectile, enemyFirepoint.position, Quaternion.identity);
-        Animator.Play("EnemyRangedShooting");
+        animator.Play("EnemyRangedShooting");
         SoundManager.PlaySounds(SoundManager.Sound.ShootingSound);
         yield return new WaitForSeconds(fireRate);
         canShoot = true;
