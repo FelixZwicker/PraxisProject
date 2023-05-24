@@ -15,17 +15,18 @@ public class EnemyHealth : MonoBehaviour
     public static bool canDropExplosion;
     public static bool canDropMachinGun;
 
-    public static float damageTaken = 1f;
     public static float enemyMaxHealth = 1f;
     public int dropValue;
 
     private Laser laserScript;
+    private PlayerController playerControllerScript;
     private Vector3 dropOffset;
     private float currentHealth;
 
     private void Start()
     {
         laserScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Laser>();
+        playerControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         currentHealth = enemyMaxHealth;
         dropOffset.Set(0, 0.5f, 0);
@@ -57,7 +58,7 @@ public class EnemyHealth : MonoBehaviour
 
     void DropWeapon()
     {
-        if (Random.value < 0.15f && !CollectWeapon.RocketLauncherEquipped && canDropExplosion)
+        if (Random.value < 0.15f && !CollectWeapon.rocketLauncherEquipped && canDropExplosion)
         { 
             Instantiate(weaponPrefabs[0], transform.position, Quaternion.identity);
             canDropExplosion = false;
@@ -67,7 +68,7 @@ public class EnemyHealth : MonoBehaviour
             Instantiate(weaponPrefabs[2], transform.position, Quaternion.identity);
             canDropLaser = false;
         }
-        else if(Random.value < 0.2f && !CollectWeapon.MachineGunEquipped && canDropMachinGun)
+        else if(Random.value < 0.2f && !CollectWeapon.machineGunEquipped && canDropMachinGun)
         {
             Instantiate(weaponPrefabs[1], transform.position, Quaternion.identity);
             canDropMachinGun = false;
@@ -79,7 +80,7 @@ public class EnemyHealth : MonoBehaviour
         StartCoroutine(PlayParticleSystemOnDeath());
         DropMoney();
         DropWeapon();
-        PlayerController.score += 10;  // -> singleton
+        playerControllerScript.score += 10;  // -> singleton
         Destroy(gameObject);
     }
 

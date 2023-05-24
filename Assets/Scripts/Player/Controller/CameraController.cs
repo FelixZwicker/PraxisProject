@@ -6,13 +6,9 @@ public class CameraController : MonoBehaviour
 {
     public Transform player;
 
-    void Start()
-    {
-
-    }
-
     void Update()
     {
+        //adjusts camera position to player position
         Vector3 position = new Vector3(player.position.x, player.position.y, -10);
         gameObject.transform.position = position;
     }

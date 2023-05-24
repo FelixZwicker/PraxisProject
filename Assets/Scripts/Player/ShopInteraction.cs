@@ -5,26 +5,28 @@ using UnityEngine;
 public class ShopInteraction : MonoBehaviour
 {
     public WaveController waveControllerScript;
-    public GameObject InteractionIndicator;
+    public GameObject interactionIndicator;
+    public GameObject player;
     public LineRenderer line;
 
-    public static bool openedShop = false;
+    public bool openedShop = false;
     
     private float distanceToPlayer;
     private bool showLine = false;
 
     private void Update()
     {
-        distanceToPlayer = Vector2.Distance(gameObject.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
+        distanceToPlayer = Vector2.Distance(gameObject.transform.position, player.transform.position);
 
+        //checks if shop can be opened
         if (distanceToPlayer < 3 && !openedShop && waveControllerScript.finishedWave)
         {
-            InteractionIndicator.SetActive(true);
+            interactionIndicator.SetActive(true);
             OpenShop();
         }
         else
         {
-            InteractionIndicator.SetActive(false);
+            interactionIndicator.SetActive(false);
         }
 
         if(waveControllerScript.finishedWave && !openedShop)
@@ -36,6 +38,7 @@ public class ShopInteraction : MonoBehaviour
             showLine = false;
         }
 
+        //linerender to help player find the shop on round end
         if(showLine)
         {
             line.enabled = true;
@@ -53,7 +56,7 @@ public class ShopInteraction : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.E))
         {
             openedShop = true;
-            InteractionIndicator.SetActive(false);
+            interactionIndicator.SetActive(false);
             waveControllerScript.WaveOver();
         }
     }

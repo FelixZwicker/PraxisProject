@@ -9,8 +9,15 @@ public class GameController : MonoBehaviour
 
     private MashineGunBullet machineGunBulletScript;
     private ExplosionBullet explosionBulletScript;
+
+    //resetting all statics and prefabs
     void Start()
     {
+        CollectWeapon.machineGunEquipped = true;
+        CollectWeapon.rocketLauncherEquipped = false;
+        CollectWeapon.laserGunEquipped = false;
+        EnemyHealth.enemyMaxHealth = 1f;
+
         machineGunBulletPrefab = Resources.Load("Prefab/Player/Weapon/MashineGunBullet") as GameObject;
         machineGunBulletScript = machineGunBulletPrefab.GetComponent<MashineGunBullet>();
         rocketLauncherPrefab = Resources.Load("Prefab/Player/Weapon/ExplosionBullet") as GameObject;

@@ -5,6 +5,8 @@ using UnityEngine;
 public class CollectMoney : MonoBehaviour
 {
     private PlayerController playerControllerScript;
+    private ShopInteraction shopInteractionScipt;
+    private GameObject player;
 
     private int amount;
     private float distanceToPlayer;
@@ -12,19 +14,22 @@ public class CollectMoney : MonoBehaviour
     private void Start()
     {
         playerControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        shopInteractionScipt = GameObject.FindGameObjectWithTag("Shop").GetComponent<ShopInteraction>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Update()
     {
-        distanceToPlayer = Vector2.Distance(gameObject.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
+        distanceToPlayer = Vector2.Distance(gameObject.transform.position, player.transform.position);
 
+        //coin moves to player in small radius
         if(distanceToPlayer < 0.5f)
         {
             playerControllerScript.money += amount;
             Destroy(gameObject);
         }
 
-        if(ShopInteraction.openedShop)
+        if(shopInteractionScipt.openedShop)
         {
             Destroy(gameObject);
         }       

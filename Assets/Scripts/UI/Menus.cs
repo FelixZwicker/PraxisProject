@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Menus : MonoBehaviour
 {
+    //possible functions for buttons
     public void PlayUISound()
     {
         SoundManager.PlaySounds(SoundManager.Sound.UIClickSound);
@@ -25,6 +26,11 @@ public class Menus : MonoBehaviour
         SceneManager.LoadScene("StartMenu");
     }
 
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
+    }
+
     public void LoadCredits()
     {
         SceneManager.LoadScene("Credits");
@@ -34,5 +40,4 @@ public class Menus : MonoBehaviour
     {
         Application.Quit();
     }
-
 }

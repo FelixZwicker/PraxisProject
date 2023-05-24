@@ -9,7 +9,7 @@ public class Shooting : MonoBehaviour
     public Transform firePoint;
     public GameObject bulletPrefab;
     public TextMeshProUGUI ammoDisplay;
-    public Image ReloadIndicator;
+    public Image reloadIndicator;
     public Animator animator;
 
     public int maxAmmo = 25;
@@ -39,20 +39,22 @@ public class Shooting : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && canShoot && (!permanendFire || CollectWeapon.RocketLauncherEquipped))
+        //shooting
+        if (Input.GetButtonDown("Fire1") && canShoot && (!permanendFire || CollectWeapon.rocketLauncherEquipped))
         {
             Shoot();
         }
-        else if (Input.GetButton("Fire1") && canShoot && permanendFire && !startedPermanentFireCoroutine && CollectWeapon.MachineGunEquipped)
+        else if (Input.GetButton("Fire1") && canShoot && permanendFire && !startedPermanentFireCoroutine && CollectWeapon.machineGunEquipped) //used when permanent fire was bought for machinegun
         {
             StartCoroutine(PermanetFire());
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && canShoot && CollectWeapon.MachineGunEquipped)
+        //reloading
+        if (Input.GetKeyDown(KeyCode.R) && canShoot && CollectWeapon.machineGunEquipped)
         {
             ReloadMachineGun();
         }
-        if (Input.GetKeyDown(KeyCode.R) && canShoot && CollectWeapon.RocketLauncherEquipped)
+        if (Input.GetKeyDown(KeyCode.R) && canShoot && CollectWeapon.rocketLauncherEquipped)
         {
             ReloadRocketLauncher();
         }
@@ -70,6 +72,8 @@ public class Shooting : MonoBehaviour
     {
         if(currentAmmo > 0 && reloading == false)
         {
+            //shoot directly at mouse position when its not to close to player
+            //else shoot directly forward
             if(Vector2.Distance(mouseScreenPosition, firePoint.transform.position) > 2)
             {
                 Vector2 direction = (mouseScreenPosition - (Vector2)firePoint.transform.position).normalized;
@@ -78,7 +82,8 @@ public class Shooting : MonoBehaviour
             animator.Play("PlayerRifleShooting");
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-            if(CollectWeapon.MachineGunEquipped)
+            //diffrent forces for weapontypes
+            if(CollectWeapon.machineGunEquipped)
             {
                 rb.AddForce(firePoint.up * bulletForce, ForceMode2D.Impulse);
             }
@@ -90,17 +95,18 @@ public class Shooting : MonoBehaviour
         }
     }
 
+    //show reload time in ui
     void ReloadIndicatorDisplay()
     {
         if (reloadingMachineGun)
         {
             reloadTimer += 1 / machineGunReloadSpeed * Time.deltaTime;
-            ReloadIndicator.fillAmount = reloadTimer;
+            reloadIndicator.fillAmount = reloadTimer;
         }
         else if (reloadingRocketLauncher)
         {
             reloadTimer += 1 / rocketLaucnherReloadSpeed * Time.deltaTime;
-            ReloadIndicator.fillAmount = reloadTimer;
+            reloadIndicator.fillAmount = reloadTimer;
         }
         else
         {
@@ -108,6 +114,7 @@ public class Shooting : MonoBehaviour
         }
     }
 
+    //when reload time needs to be resetted 
     void StopReloading()
     {
         if(stopReloading)
@@ -117,7 +124,7 @@ public class Shooting : MonoBehaviour
             reloadingMachineGun = false;
             reloadingRocketLauncher = false;
             currentAmmo = maxAmmo;
-            ReloadIndicator.fillAmount = reloadTimer;
+            reloadIndicator.fillAmount = reloadTimer;
         }
     }
 

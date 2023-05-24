@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class BackgroundMusic : MonoBehaviour
 {
-    public AudioClip[] MusicArry;
+    public AudioClip[] musicArry;
 
     private AudioSource audio;
     private int musicCounter = 0;
+
     private void Start()
     {
         audio = gameObject.GetComponent<AudioSource>();
@@ -16,11 +17,12 @@ public class BackgroundMusic : MonoBehaviour
 
     private void selectAudio()
     {
-        if(musicCounter == MusicArry.Length)
+        //playes through all sound in array
+        if(musicCounter == musicArry.Length)
         {
             musicCounter = 0;
         }
-        StartCoroutine(playBackgroundMusic(MusicArry[musicCounter]));
+        StartCoroutine(playBackgroundMusic(musicArry[musicCounter]));
     }
 
     IEnumerator playBackgroundMusic(AudioClip clip)

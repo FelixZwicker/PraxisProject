@@ -5,15 +5,17 @@ using UnityEngine.UI;
 
 public class CollectWeapon : MonoBehaviour
 {
-    public Sprite[] WeaponSprites;
-    public static bool MachineGunEquipped;
-    public static bool LaserGunEquipped;
-    public static bool RocketLauncherEquipped;
+    public Sprite[] weaponSprites;
+    public static bool machineGunEquipped;
+    public static bool laserGunEquipped;
+    public static bool rocketLauncherEquipped;
 
-    private GameObject WeaponUI;
-    private Shooting ShootingScript;
-    private Laser LaserScript;
-    private GameObject WeaponType;
+    private GameObject weaponUI;
+    private Shooting shootingScript;
+    private Laser laserScript;
+    private ShopInteraction shopInteractionScript;
+    private GameObject weaponType;
+    private GameObject player;
 
     private float distanceToPlayer;
     private bool isLaserWeapon = false;
@@ -21,17 +23,21 @@ public class CollectWeapon : MonoBehaviour
 
     private void Start()
     {
-        ShootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
-        LaserScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Laser>();
+        shootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
+        laserScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Laser>();
+        shopInteractionScript = GameObject.FindGameObjectWithTag("Shop").GetComponent<ShopInteraction>();
+        player = GameObject.FindGameObjectWithTag("Player");
 
+        //check on wich prefab the script is
+        //and wich weapon should be installed on pickup
         if (gameObject.name == "ExplosionWeapon(Clone)")
         {
-            WeaponType = Resources.Load("Prefab/Player/Weapon/ExplosionBullet") as GameObject;
+            weaponType = Resources.Load("Prefab/Player/Weapon/ExplosionBullet") as GameObject;
             isMachineGun = false;
         }
         else if(gameObject.name == "MashineGunWeapon(Clone)")
         {
-            WeaponType = Resources.Load("Prefab/Player/Weapon/MashineGunBullet") as GameObject;
+            weaponType = Resources.Load("Prefab/Player/Weapon/MashineGunBullet") as GameObject;
             isMachineGun = true;
         }
         else if(gameObject.name == "LaserWeapon(Clone)")
@@ -39,17 +45,17 @@ public class CollectWeapon : MonoBehaviour
             isLaserWeapon = true;
         }
 
-        WeaponUI = GameObject.Find("WeaponUI");
+        weaponUI = GameObject.Find("WeaponUI");
     }
 
     private void Update()
     {
-        if(ShopInteraction.openedShop)
+        if(shopInteractionScript.openedShop)
         {
             Destroy(gameObject);
         }
 
-        distanceToPlayer = Vector2.Distance(gameObject.transform.position, GameObject.FindGameObjectWithTag("Player").transform.position);
+        distanceToPlayer = Vector2.Distance(gameObject.transform.position, player.transform.position);
 
         if (distanceToPlayer < 1.2f)
         {
@@ -63,7 +69,7 @@ public class CollectWeapon : MonoBehaviour
                 {
                     PrefabWeaponPickUp();
                 }
-                ShootingScript.currentAmmo = ShootingScript.maxAmmo;
+                shootingScript.currentAmmo = shootingScript.maxAmmo;
                 Destroy(gameObject);
             }
         }
@@ -71,56 +77,56 @@ public class CollectWeapon : MonoBehaviour
 
     void LaserPickUp()
     {
-        LaserScript.enabled = true;
-        ShootingScript.canShoot = false;
-        ShootingScript.bulletPrefab = null;
-        LaserGunEquipped = true;
-        MachineGunEquipped = false;
-        RocketLauncherEquipped = false;
+        laserScript.enabled = true;
+        shootingScript.canShoot = false;
+        shootingScript.bulletPrefab = null;
+        laserGunEquipped = true;
+        machineGunEquipped = false;
+        rocketLauncherEquipped = false;
         ActivateLaserSprite();
 
-        LaserScript.ammoUI.SetActive(false);
-        LaserScript.laserTimerUI.SetActive(true);
+        laserScript.ammoUI.SetActive(false);
+        laserScript.laserTimerUI.SetActive(true);
     }
 
     void PrefabWeaponPickUp()
     {
-        ShootingScript.canShoot = true;
-        LaserScript.enabled = false;
-        ShootingScript.bulletPrefab = WeaponType;
-        if (isMachineGun)
+        shootingScript.canShoot = true;
+        laserScript.enabled = false;
+        shootingScript.bulletPrefab = weaponType;
+        if (isMachineGun) //machingun pickup
         {
-            MachineGunEquipped = true;
-            LaserGunEquipped = false;
-            RocketLauncherEquipped = false;
+            machineGunEquipped = true;
+            laserGunEquipped = false;
+            rocketLauncherEquipped = false;
             ActivateMachineGunSprite();
         }
-        else
+        else            // rocketlauncher pickup
         {
-            RocketLauncherEquipped = true;
-            LaserGunEquipped = false;
-            MachineGunEquipped = false;
+            rocketLauncherEquipped = true;
+            laserGunEquipped = false;
+            machineGunEquipped = false;
             ActivateRocketLauncherSprite();
         }
-        LaserScript.ammoUI.SetActive(true);
-        LaserScript.laserTimerUI.SetActive(false);
+        laserScript.ammoUI.SetActive(true);
+        laserScript.laserTimerUI.SetActive(false);
     }
 
     void ActivateLaserSprite()
     {
-        WeaponUI.GetComponent<RectTransform>().sizeDelta = new Vector2(134.4706f, 74.034f);
-        WeaponUI.GetComponent<Image>().sprite = WeaponSprites[2]; 
+        weaponUI.GetComponent<RectTransform>().sizeDelta = new Vector2(134.4706f, 74.034f);
+        weaponUI.GetComponent<Image>().sprite = weaponSprites[2]; 
     }
 
     void ActivateMachineGunSprite()
     {
-        WeaponUI.GetComponent<RectTransform>().sizeDelta = new Vector2(248.0147f, 89.5598f);
-        WeaponUI.GetComponent<Image>().sprite = WeaponSprites[0];
+        weaponUI.GetComponent<RectTransform>().sizeDelta = new Vector2(248.0147f, 89.5598f);
+        weaponUI.GetComponent<Image>().sprite = weaponSprites[0];
     }
 
     void ActivateRocketLauncherSprite()
     {
-        WeaponUI.GetComponent<RectTransform>().sizeDelta = new Vector2(268.1662f, 70.9835f);
-        WeaponUI.GetComponent<Image>().sprite = WeaponSprites[1];
+        weaponUI.GetComponent<RectTransform>().sizeDelta = new Vector2(268.1662f, 70.9835f);
+        weaponUI.GetComponent<Image>().sprite = weaponSprites[1];
     }
 }
