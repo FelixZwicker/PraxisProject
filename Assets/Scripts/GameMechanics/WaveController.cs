@@ -19,11 +19,11 @@ public class WaveController : MonoBehaviour
     public GameObject player;
 
     public int waveCounter = 1;                     //keeps track of how many waves were survived
-    public float maxWaveDuration = 60f;
-    public float enemySpawnCooldown = 1.5f;
     public float currentWaveDuration = 60f;        //how long a wave keeps spawning enemys 
     public bool finishedWave = false;
 
+    private float maxWaveDuration = 20f;
+    public float enemySpawnCooldown = 5f;
     private Vector2 spawnPosition;
     private int enemyArrayLenght = 1;
     private bool gameStarted = false;
@@ -65,7 +65,7 @@ public class WaveController : MonoBehaviour
         EnemyHealth.canDropLaser = true;
         EnemyHealth.canDropExplosion = true;
 
-        if (waveCounter % 5 == 0)
+        if (waveCounter % 5 == 0 && enemyArrayLenght < 4)
         {
             enemyArrayLenght += 1;
         }
@@ -90,8 +90,11 @@ public class WaveController : MonoBehaviour
     //used to increase enemy stats every round
     void UpdateDifficulty() 
     {
-        maxWaveDuration += waveCounter * 2;
-        enemySpawnCooldown *= 0.9f;
+        if(waveCounter % 5 == 0)
+        {
+            maxWaveDuration += 10;
+        }
+        enemySpawnCooldown *= 0.88f;
         EnemyHealth.enemyMaxHealth += 1f;
     }
 
@@ -103,7 +106,7 @@ public class WaveController : MonoBehaviour
 
         if (currentWaveDuration > 0)
         {
-            if(Vector2.Distance(spawnPosition, player.transform.position) > 6)
+            if(Vector2.Distance(spawnPosition, player.transform.position) > 10)
             {
                 Instantiate(enemies[Random.Range(0, enemyArrayLenght)], spawnPosition, Quaternion.identity);        //spawns random enemy from array enemys
                 yield return new WaitForSeconds(enemySpawnCooldown);

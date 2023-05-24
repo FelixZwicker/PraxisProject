@@ -63,7 +63,7 @@ public class EnemyHealth : MonoBehaviour
             Instantiate(weaponPrefabs[0], transform.position, Quaternion.identity);
             canDropExplosion = false;
         }
-        else if (Random.value < 0.15f && !laserScript.enabled && canDropLaser) 
+        else if (Random.value < 1f && !laserScript.enabled && canDropLaser) 
         {
             Instantiate(weaponPrefabs[2], transform.position, Quaternion.identity);
             canDropLaser = false;

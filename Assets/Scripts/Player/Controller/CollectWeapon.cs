@@ -69,7 +69,8 @@ public class CollectWeapon : MonoBehaviour
                 {
                     PrefabWeaponPickUp();
                 }
-                shootingScript.currentAmmo = shootingScript.maxAmmo;
+                shootingScript.currentMachineGunAmmo = shootingScript.maxMachineGunAmmo;
+                shootingScript.currentRocketLauncherAmmo = shootingScript.maxRocketLauncherAmmo;
                 Destroy(gameObject);
             }
         }
@@ -85,7 +86,8 @@ public class CollectWeapon : MonoBehaviour
         rocketLauncherEquipped = false;
         ActivateLaserSprite();
 
-        laserScript.ammoUI.SetActive(false);
+        shootingScript.machineGunAmmoUI.SetActive(false);
+        shootingScript.rocketLauncherAmmoUI.SetActive(false);
         laserScript.laserTimerUI.SetActive(true);
     }
 
@@ -99,6 +101,7 @@ public class CollectWeapon : MonoBehaviour
             machineGunEquipped = true;
             laserGunEquipped = false;
             rocketLauncherEquipped = false;
+            shootingScript.ChangeAmmoDisplay();
             ActivateMachineGunSprite();
         }
         else            // rocketlauncher pickup
@@ -106,9 +109,9 @@ public class CollectWeapon : MonoBehaviour
             rocketLauncherEquipped = true;
             laserGunEquipped = false;
             machineGunEquipped = false;
+            shootingScript.ChangeAmmoDisplay();
             ActivateRocketLauncherSprite();
         }
-        laserScript.ammoUI.SetActive(true);
         laserScript.laserTimerUI.SetActive(false);
     }
 

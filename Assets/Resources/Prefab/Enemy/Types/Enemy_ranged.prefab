@@ -381,9 +381,9 @@ MonoBehaviour:
     type: 3}
   weaponPrefabs:
   - {fileID: 2563114028794466136, guid: dda701bebd1a38441ab3068ddfa7a570, type: 3}
-  - {fileID: 8137764121296142556, guid: 69c6fb08cc82221428abb5823c58e284, type: 3}
   - {fileID: 8871652566782095304, guid: 91230e0817164c24eb3f9c5b745967a4, type: 3}
-  dropValue: 50
+  - {fileID: 8137764121296142556, guid: 69c6fb08cc82221428abb5823c58e284, type: 3}
+  dropValue: 52
 --- !u!114 &746379684700605905
 MonoBehaviour:
   m_ObjectHideFlags: 0

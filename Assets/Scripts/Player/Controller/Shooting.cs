@@ -8,14 +8,19 @@ public class Shooting : MonoBehaviour
 {
     public Transform firePoint;
     public GameObject bulletPrefab;
-    public TextMeshProUGUI ammoDisplay;
+    public GameObject machineGunAmmoUI;
+    public GameObject rocketLauncherAmmoUI;
+    public TextMeshProUGUI machineGunAmmoDisplay;
+    public TextMeshProUGUI rocketLauncherAmmoDisplay;
     public Image reloadIndicator;
     public Animator animator;
 
-    public int maxAmmo = 25;
-    public float machineGunReloadSpeed = 10f;
-    public float rocketLaucnherReloadSpeed = 15f;  
-    public int currentAmmo;
+    public int maxMachineGunAmmo = 25;
+    public int maxRocketLauncherAmmo = 5;
+    public float machineGunReloadSpeed = 6f;
+    public float rocketLaucnherReloadSpeed = 2.5f;  
+    public int currentMachineGunAmmo;
+    public int currentRocketLauncherAmmo;
     public bool canShoot = true;
     public bool permanendFire = false;
     public bool stopReloading = false;
@@ -32,9 +37,11 @@ public class Shooting : MonoBehaviour
 
     void Start()
     {
-        currentAmmo = maxAmmo;
+        currentMachineGunAmmo = maxMachineGunAmmo;
+        currentRocketLauncherAmmo = maxRocketLauncherAmmo;
         reloadTimer = 0;
-        ammoDisplay.SetText(currentAmmo.ToString() + " / " + maxAmmo.ToString());
+        machineGunAmmoDisplay.SetText(currentMachineGunAmmo.ToString() + " / " + maxMachineGunAmmo.ToString());
+        rocketLauncherAmmoDisplay.SetText(currentMachineGunAmmo.ToString() + " / " + maxRocketLauncherAmmo.ToString());
     }
 
     void Update()
@@ -59,7 +66,8 @@ public class Shooting : MonoBehaviour
             ReloadRocketLauncher();
         }
 
-        ammoDisplay.SetText(currentAmmo.ToString() + " / " + maxAmmo.ToString());
+        machineGunAmmoDisplay.SetText(currentMachineGunAmmo.ToString() + " / " + maxMachineGunAmmo.ToString());
+        rocketLauncherAmmoDisplay.SetText(currentRocketLauncherAmmo.ToString() + " / " + maxRocketLauncherAmmo.ToString());
 
         ReloadIndicatorDisplay();
 
@@ -70,7 +78,7 @@ public class Shooting : MonoBehaviour
 
     void Shoot()
     {
-        if(currentAmmo > 0 && reloading == false)
+        if(currentMachineGunAmmo > 0 && currentRocketLauncherAmmo > 0 && reloading == false)
         {
             //shoot directly at mouse position when its not to close to player
             //else shoot directly forward
@@ -91,7 +99,15 @@ public class Shooting : MonoBehaviour
             {
                 rb.AddForce(firePoint.up * rocketBulletForce, ForceMode2D.Impulse);
             }
-            currentAmmo--;
+
+            if(CollectWeapon.machineGunEquipped)
+            {
+                --currentMachineGunAmmo;
+            }
+            else if(CollectWeapon.rocketLauncherEquipped)
+            {
+                --currentRocketLauncherAmmo;
+            }
         }
     }
 
@@ -123,8 +139,9 @@ public class Shooting : MonoBehaviour
             reloading = false;
             reloadingMachineGun = false;
             reloadingRocketLauncher = false;
-            currentAmmo = maxAmmo;
-            reloadIndicator.fillAmount = reloadTimer;
+            currentMachineGunAmmo = maxMachineGunAmmo;
+            currentRocketLauncherAmmo = maxRocketLauncherAmmo;
+            reloadIndicator.fillAmount = 1;
         }
     }
 
@@ -160,7 +177,7 @@ public class Shooting : MonoBehaviour
     {
         animator.Play("PlayerRifleReload");
         yield return new WaitForSeconds(machineGunReloadSpeed);
-        currentAmmo = maxAmmo;
+        currentMachineGunAmmo = maxMachineGunAmmo;
         reloading = false;
         reloadingMachineGun = false;
     }
@@ -169,8 +186,22 @@ public class Shooting : MonoBehaviour
     {
         animator.Play("PlayerRifleReload");
         yield return new WaitForSeconds(rocketLaucnherReloadSpeed);
-        currentAmmo = maxAmmo;
+        currentRocketLauncherAmmo = maxRocketLauncherAmmo;
         reloading = false;
         reloadingRocketLauncher = false;
+    }
+
+    public void ChangeAmmoDisplay()
+    {
+        if(CollectWeapon.machineGunEquipped)
+        {
+            machineGunAmmoUI.SetActive(true);
+            rocketLauncherAmmoUI.SetActive(false);
+        }
+        else if(CollectWeapon.rocketLauncherEquipped)
+        {
+            rocketLauncherAmmoUI.SetActive(true);
+            machineGunAmmoUI.SetActive(false);
+        }
     }
 }

@@ -291,7 +291,7 @@ public class AmmoItem : Items
     public override void ItemEffect()
     {
         Shooting ShootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
-        ShootingScript.maxAmmo += 5;
+        ShootingScript.maxMachineGunAmmo += 5;
     }
 }
 

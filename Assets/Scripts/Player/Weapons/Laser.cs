@@ -37,21 +37,7 @@ public class Laser : MonoBehaviour
     void Update()
     {
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
-        if (Input.GetKey(KeyCode.Mouse0) && !laserOverHeated)
-        {
-            lineRenderer.enabled = true;
-            laserCurrentTimer -= 1 * Time.deltaTime;
-            ShootLaser();
-        }
-        else if(laserCurrentTimer < laserMaxTimer)
-        {
-            laserCurrentTimer += coolDownSpeed * Time.deltaTime;
-        }
-        else if(laserCurrentTimer >= laserMaxTimer)
-        {
-            laserCurrentTimer = laserMaxTimer;
-            laserOverHeated = false;
-        }
+        
 
         if(laserCurrentTimer < 0)
         {
@@ -67,6 +53,25 @@ public class Laser : MonoBehaviour
         }
 
         laserTimerSlider.value = laserCurrentTimer;
+    }
+
+    private void FixedUpdate()
+    {
+        if (Input.GetKey(KeyCode.Mouse0) && !laserOverHeated)
+        {
+            lineRenderer.enabled = true;
+            laserCurrentTimer -= 1 * Time.deltaTime;
+            ShootLaser();
+        }
+        else if (laserCurrentTimer < laserMaxTimer)
+        {
+            laserCurrentTimer += coolDownSpeed * Time.deltaTime;
+        }
+        else if (laserCurrentTimer >= laserMaxTimer)
+        {
+            laserCurrentTimer = laserMaxTimer;
+            laserOverHeated = false;
+        }
     }
 
     void ShootLaser()
