@@ -23,19 +23,20 @@ public class ExplosionProjectile : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().MovePosition((Vector2)transform.position + (speed * Time.deltaTime * direction));
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D _collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (_collision.gameObject.CompareTag("Player"))
         {
-            gameObject.GetComponent<HandleExplosion>().PlayExplosion();
+            StartCoroutine(gameObject.GetComponent<HandleExplosion>().PlayExplosion());
             StartCoroutine(player.GetComponent<PlayerController>().TakeDamage(directDamage));
             DestroyProjectile();
         }
-        else if (collision.gameObject.CompareTag("Enviroment"))
+        else if (_collision.gameObject.CompareTag("Enviroment"))
         {
-            gameObject.GetComponent<HandleExplosion>().PlayExplosion();
+            StartCoroutine(gameObject.GetComponent<HandleExplosion>().PlayExplosion());
             gameObject.GetComponent<HandleExplosion>().CastSurrounding(environmentalDamage);
             DestroyProjectile();
+
         }
     }
 

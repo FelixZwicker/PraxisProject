@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Punch : Attack
 {
-    public Animator Animator;
+    public Animator animator;
     public float damageDelay;
 
     private GameObject player;
@@ -25,7 +25,7 @@ public class Punch : Attack
     IEnumerator Slash()
     {
         canAttack = false;
-        Animator.Play("EnemyCloseSlashing");
+        animator.Play("EnemyCloseSlashing");
         SoundManager.PlaySounds(SoundManager.Sound.SlashingSound);
         yield return new WaitForSeconds(damageDelay);
         Debug.Log(Vector2.Distance(transform.position, player.transform.position));

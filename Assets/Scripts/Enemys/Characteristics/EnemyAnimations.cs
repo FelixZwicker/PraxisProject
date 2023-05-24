@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyAnimations : MonoBehaviour
 {
+    private Animator animator;
+    private string enemyType;
     private struct EnemyAnimation
     {
         public string type;
@@ -15,11 +17,6 @@ public class EnemyAnimations : MonoBehaviour
         new EnemyAnimation {type = "Ranged", runAnimation = "EnemyRangedRunning"},
         new EnemyAnimation {type = "Close", runAnimation = "EnemyCloseRunning"}
     };
-
-
-    private Animator animator;
-
-    private string enemyType;
 
     void Start()
     {

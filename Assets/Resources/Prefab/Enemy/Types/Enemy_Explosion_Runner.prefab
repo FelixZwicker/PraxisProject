@@ -387,7 +387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stoppingDistance: 2
   rotationModifier: 0
-  Animator: {fileID: 4157381317998409501}
+  animator: {fileID: 4157381317998409501}
   attack: {fileID: 799802302948074902}
   enemyType: 1
 --- !u!114 &4018526767595813700
@@ -402,15 +402,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e8588c2b4e5b84aa8dac6b65fbabd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyHealthbarScript: {fileID: 2819712984602535641}
-  DeathExplosion: {fileID: 210365954607316555, guid: 20c55a18c6fd3f247a3c98fd5ed4a3c1,
+  enemyHealthbarScript: {fileID: 2819712984602535641}
+  deathExplosion: {fileID: 210365954607316555, guid: 20c55a18c6fd3f247a3c98fd5ed4a3c1,
     type: 3}
-  MoneyPrefab: {fileID: 1729831844437358252, guid: a7dc9abbf3597bb45b74f34fab0f02b0,
+  moneyPrefab: {fileID: 1729831844437358252, guid: a7dc9abbf3597bb45b74f34fab0f02b0,
     type: 3}
-  WeaponPrefabs:
+  weaponPrefabs:
   - {fileID: 2563114028794466136, guid: dda701bebd1a38441ab3068ddfa7a570, type: 3}
-  - {fileID: 8871652566782095304, guid: 91230e0817164c24eb3f9c5b745967a4, type: 3}
   - {fileID: 8137764121296142556, guid: 69c6fb08cc82221428abb5823c58e284, type: 3}
+  - {fileID: 8871652566782095304, guid: 91230e0817164c24eb3f9c5b745967a4, type: 3}
   dropValue: 20
 --- !u!114 &799802302948074902
 MonoBehaviour:
@@ -441,6 +441,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   radius: 5
+  explosionPrefab: {fileID: 2528848393228505621, guid: 372c6e368833267479982cc45ae68bc6,
+    type: 3}
 --- !u!114 &2505841078460281401
 MonoBehaviour:
   m_ObjectHideFlags: 0

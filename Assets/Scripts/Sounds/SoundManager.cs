@@ -20,7 +20,6 @@ public static class SoundManager
         soundGameObject.tag = "sound";
         audioSource.PlayOneShot(GetAudioClip(sound));
         audioSource.outputAudioMixerGroup = GameSounds.i.Mixer;
-        
     }
 
     private static AudioClip GetAudioClip(Sound sound)

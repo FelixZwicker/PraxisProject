@@ -6,13 +6,7 @@ public class StunGrenade : MonoBehaviour
 {
     public LayerMask layerMask;
     public float radius;
-
-    private ParticleSystem explosion;
-
-    void Start()
-    {
-        explosion = GameObject.Find("ExplosionPlayerStunGrenade").GetComponent<ParticleSystem>();
-    }
+    public GameObject stunGrenadeEffectPrefab;
 
     private void OnDrawGizmos()
     {
@@ -22,15 +16,18 @@ public class StunGrenade : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        PlayExplosion();
+        StartCoroutine(PlayStunExplosion());
         CastPlayerStunBulletSurrounding();
         Destroy(gameObject);
     }
 
-    public void PlayExplosion()
+    public IEnumerator PlayStunExplosion()
     {
-        explosion.transform.position = transform.position;
-        explosion.Play();
+        GameObject stunEffect = Instantiate(stunGrenadeEffectPrefab, transform.position, Quaternion.identity);
+        Debug.Log(stunEffect.GetComponent<ParticleSystem>().main.duration);
+        stunEffect.GetComponent<ParticleSystem>().Play();
+        yield return new WaitForSeconds(stunEffect.GetComponent<ParticleSystem>().main.duration);
+        Destroy(stunEffect);
     }
 
     public void CastPlayerStunBulletSurrounding()
@@ -41,7 +38,7 @@ public class StunGrenade : MonoBehaviour
         {
             if (col.gameObject.CompareTag("Enemy"))
             {
-                col.GetComponent<StunEffect>().HandleStunEffect();
+                StartCoroutine(col.GetComponent<StunEffect>().Stun());
             }
         }
     }

@@ -172,6 +172,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   radius: 2.8
+  explosionPrefab: {fileID: 2528848393228505621, guid: 372c6e368833267479982cc45ae68bc6,
+    type: 3}
 --- !u!96 &952804374535908008
 TrailRenderer:
   serializedVersion: 2

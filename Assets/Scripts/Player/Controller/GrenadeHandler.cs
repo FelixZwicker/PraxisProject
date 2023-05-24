@@ -64,7 +64,7 @@ public class GrenadeHandler : MonoBehaviour
             {
                 rb.velocity = Vector2.zero;
                 grenade.GetComponent<StunGrenade>().CastPlayerStunBulletSurrounding();
-                grenade.GetComponent<StunGrenade>().PlayExplosion();
+                StartCoroutine(grenade.GetComponent<StunGrenade>().PlayStunExplosion());
                 Destroy(grenade);
             }
             yield return new WaitForSeconds(grenadeCoolDown);

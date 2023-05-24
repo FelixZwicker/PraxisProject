@@ -8,12 +8,7 @@ public class ExplosionBullet : Bullet
     public float radius;
     public float enviromentalDamage;
 
-    private ParticleSystem explosion;
-
-    void Start()
-    {
-        explosion = GameObject.Find("ExplosionPlayerBullet").GetComponent<ParticleSystem>();
-    }
+    public GameObject explosionPrefab;
 
     private void OnDrawGizmos()
     {
@@ -23,18 +18,21 @@ public class ExplosionBullet : Bullet
 
     protected override void HandleCollision()
     {
-        PlayExplosion();
+        StartCoroutine(PlayExplosion());
         CastPlayerBulletSurrounding(enviromentalDamage);
         Destroy(gameObject);
     }
 
-    private void PlayExplosion()
+    IEnumerator PlayExplosion()
     {
-        explosion.transform.position = transform.position;
-        explosion.Play();
+        GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        Debug.Log(explosion.GetComponent<ParticleSystem>().main.duration);
+        explosion.GetComponent<ParticleSystem>().Play();
+        yield return new WaitForSeconds(explosion.GetComponent<ParticleSystem>().main.duration);
+        Destroy(explosion);
     }
 
-    public void CastPlayerBulletSurrounding(float damage)
+    public void CastPlayerBulletSurrounding(float _damage)
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius, layerMask);
         
@@ -42,7 +40,7 @@ public class ExplosionBullet : Bullet
         {
             if (col.gameObject.CompareTag("Enemy"))
             {
-                StartCoroutine(col.GetComponent<EnemyHealth>().EnemyTakeDamage(damage));
+                StartCoroutine(col.GetComponent<EnemyHealth>().EnemyTakeDamage(_damage));
 
                 col.gameObject.GetComponent<KnockBack>().HandleKnockBack(transform, knockBackStrength, knockBackTime);
             }

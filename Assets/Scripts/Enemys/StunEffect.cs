@@ -8,12 +8,7 @@ public class StunEffect : MonoBehaviour
 {
     public float stunTime;
 
-    public void HandleStunEffect()
-    {
-        StartCoroutine(Stun());
-    }
-
-    private IEnumerator Stun()
+    public IEnumerator Stun()
     {
         gameObject.GetComponent<Movement>().enabled = false;
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;

@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
 {
     public float stoppingDistance;
     public float rotationModifier;
-    public Animator Animator;
+    public Animator animator;
     public Attack attack;
     public EnemyType enemyType;
 
@@ -30,7 +30,6 @@ public class Movement : MonoBehaviour
         agent.updateUpAxis = false;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("Player").transform;
@@ -40,7 +39,6 @@ public class Movement : MonoBehaviour
         enemyAnimations = new EnemyAnimations();
     }
 
-    // Update is called once per frame
     void Update()
     {
         RotateTowardsPlayer();
@@ -51,7 +49,7 @@ public class Movement : MonoBehaviour
     public void PlayAnimation(string enemyType, string animationType)
     {
         string animationName = enemyType + animationType;
-        Animator.Play(animationName);
+        animator.Play(animationName);
     }
 
     public void HandleMovement()

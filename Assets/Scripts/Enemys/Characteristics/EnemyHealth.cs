@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public EnemyHealthbar EnemyHealthbarScript;
-    public GameObject DeathExplosion;
+    public EnemyHealthbar enemyHealthbarScript;
+    public GameObject deathExplosion;
 
-    public GameObject MoneyPrefab;
-    public GameObject[] WeaponPrefabs;
+    public GameObject moneyPrefab;
+    public GameObject[] weaponPrefabs;
 
     public static bool canDropLaser;
     public static bool canDropExplosion;
@@ -37,20 +37,20 @@ public class EnemyHealth : MonoBehaviour
         {
             EnemyKilled();
         }
-        EnemyHealthbarScript.SetEnemyHealthbar(enemyMaxHealth, currentHealth);
+        enemyHealthbarScript.SetEnemyHealthbar(enemyMaxHealth, currentHealth);
     }
 
 
-    public IEnumerator EnemyTakeDamage(float Damage)
+    public IEnumerator EnemyTakeDamage(float _damage)
     { 
-        currentHealth -= Damage;
+        currentHealth -= _damage;
         yield return new WaitForSeconds(0.1f);
     }
     
     void DropMoney()
     {
         GameObject Coin;
-        Coin = Instantiate(MoneyPrefab, transform.position + dropOffset, Quaternion.identity);
+        Coin = Instantiate(moneyPrefab, transform.position + dropOffset, Quaternion.identity);
         CollectMoney collectMoneyScript = Coin.GetComponent<CollectMoney>();
         collectMoneyScript.UpdateMoneyAmount(dropValue);
     }
@@ -59,17 +59,17 @@ public class EnemyHealth : MonoBehaviour
     {
         if (Random.value < 0.15f && !CollectWeapon.RocketLauncherEquipped && canDropExplosion)
         { 
-            Instantiate(WeaponPrefabs[0], transform.position, Quaternion.identity);
+            Instantiate(weaponPrefabs[0], transform.position, Quaternion.identity);
             canDropExplosion = false;
         }
         else if (Random.value < 0.15f && !laserScript.enabled && canDropLaser) 
         {
-            Instantiate(WeaponPrefabs[2], transform.position, Quaternion.identity);
+            Instantiate(weaponPrefabs[2], transform.position, Quaternion.identity);
             canDropLaser = false;
         }
         else if(Random.value < 0.2f && !CollectWeapon.MachineGunEquipped && canDropMachinGun)
         {
-            Instantiate(WeaponPrefabs[1], transform.position, Quaternion.identity);
+            Instantiate(weaponPrefabs[1], transform.position, Quaternion.identity);
             canDropMachinGun = false;
         }
     }
@@ -85,8 +85,8 @@ public class EnemyHealth : MonoBehaviour
 
     IEnumerator PlayParticleSystemOnDeath()
     {
-        GameObject particle = Instantiate(DeathExplosion, transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(DeathExplosion.GetComponent<ParticleSystem>().main.duration);
+        GameObject particle = Instantiate(deathExplosion, transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(deathExplosion.GetComponent<ParticleSystem>().main.duration);
        DestroyImmediate(particle);
     }
 }
