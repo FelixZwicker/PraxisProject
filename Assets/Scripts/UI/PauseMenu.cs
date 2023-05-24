@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    public Shooting ShootingScript;
-    public GameObject PauseMenuUI;
-    public GameObject InGameUI;
+    public Shooting shootingScript;
+    public Laser laserScript;
+    public GameObject pauseMenuUI;
+    public GameObject inGameUI;
 
     // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
         {
-            PauseMenuUI.SetActive(true);
-            InGameUI.SetActive(false);
+            pauseMenuUI.SetActive(true);
+            inGameUI.SetActive(false);
             FreezeGame();
         }
     }
@@ -22,12 +23,17 @@ public class PauseMenu : MonoBehaviour
     public void FreezeGame()
     {
         Time.timeScale = 0f;
-        ShootingScript.enabled = false;
+        shootingScript.enabled = false;
+        laserScript.enabled = false;
     }
 
     public void UnfreezeGame()
     {
         Time.timeScale = 1f;
-        ShootingScript.enabled = true;
+        shootingScript.enabled = true;
+        if (CollectWeapon.laserGunEquipped)
+        {
+            laserScript.enabled = true;
+        }
     }
 }

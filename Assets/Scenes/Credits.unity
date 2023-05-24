@@ -238,8 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54642e0450abed74681566291a7aa855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CreditsAnimator: {fileID: 1287109454}
-  CreditsClip: {fileID: 7400000, guid: 9feca7b106f0dec42ba63cef6384b833, type: 2}
+  creditsAnimator: {fileID: 1287109454}
+  creditsClip: {fileID: 7400000, guid: 9feca7b106f0dec42ba63cef6384b833, type: 2}
 --- !u!1 &491296067
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,7 +419,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -770.3003}
+  m_AnchoredPosition: {x: 0, y: -788.75}
   m_SizeDelta: {x: 1231.431, y: 690.114}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1287109452

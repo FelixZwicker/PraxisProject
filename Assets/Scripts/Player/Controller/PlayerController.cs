@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     public TextMeshProUGUI moneyDisplayGameUI;
     public GameObject GameOverUI;
+    public GameObject leaderBoardUI;
+    public GameObject restartUI;
     public GameObject InGameUI;
     public Image DashIndicator;
 
@@ -21,15 +23,17 @@ public class PlayerController : MonoBehaviour
     public TrailRenderer tr;
 
     public Texture2D cursorTexture;
+    public TextMeshProUGUI inGameScore;
+    public TextMeshProUGUI leaderBoardScore;
 
     //gloabal eccessable variables
     public int maxHealth = 10;
     public int currentHealth;
     public float money = 0;
     public float moveSpeed = 10f;
-    public static float actualMoveSpeed;
-    public static int score = 0;
-    public static bool extraLife = false;
+    public float actualMoveSpeed;
+    public int score = 0;
+    public bool extraLife = false;
     public bool canUseHeal = false;
 
     private Vector2 movement;
@@ -44,8 +48,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        CollectWeapon.MachineGunEquipped = true;
-
         tr.emitting = false;
         canDash = true;
         actualMoveSpeed = moveSpeed;
@@ -95,6 +97,7 @@ public class PlayerController : MonoBehaviour
 
         CheckHealth();
         DisplayMoney();
+        UpdateScore();
     }
 
     private void FixedUpdate()
@@ -124,6 +127,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void SwitchToGameOverUI()
+    {
+        leaderBoardUI.SetActive(false);
+        restartUI.SetActive(true);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.gameObject.CompareTag("Enemy"))
@@ -142,6 +151,12 @@ public class PlayerController : MonoBehaviour
     void DisplayMoney()
     {
         moneyDisplayGameUI.text = money.ToString();
+    }
+
+    void UpdateScore()
+    {
+        inGameScore.text = score.ToString();
+        leaderBoardScore.text = score.ToString();
     }
 
     private IEnumerator Dash()

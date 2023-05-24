@@ -112,8 +112,6 @@ public class ShopController : MonoBehaviour
         //------------ special items shop ------------//
 
         boughtABomb = false;
-
-        //------------ weapon items shop ------------//
     }
 
     public void GetSelectedItem()
@@ -235,58 +233,31 @@ public class ShopController : MonoBehaviour
     }
 }
 
+//class used to creat all possible items with name price and sprite
 public class Items
 {
     public string name;
     public float price;
     public Sprite picture;
+    public bool bought;
 
-    public Items(string name, float price, Sprite picture)
+    public Items(string name, float price, Sprite picture, bool bought)
     {
         this.name = name;
         this.price = price;
         this.picture = picture;
+        this.bought = bought;
     }
 
     public virtual void ItemEffect()
     {
     }
-
-    public float GetPrice()
-    {
-        return price;
-    }
-
-    public void SetPrice(float price)
-    {
-        this.price = price;
-    }
-
-    public string GetName()
-    {
-        return name;
-    }
-
-    public void SetName(string name)
-    {
-        this.name = name;
-    }
-
-    public Sprite GetPicture()
-    {
-        return picture;
-    }
-
-    public void SetPicture(Sprite picture)
-    {
-        this.picture = picture;
-    }
 }
 
 public class HealthItem : Items
 {
-    public HealthItem(string name, float price, Sprite picture)
-         :base(name, price, picture)
+    public HealthItem(string name, float price, Sprite picture, bool bought = false)
+         :base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -299,8 +270,8 @@ public class HealthItem : Items
 
 public class HealBoxItem : Items
 {
-    public HealBoxItem(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public HealBoxItem(string name, float price, Sprite picture, bool bought = false)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -312,8 +283,8 @@ public class HealBoxItem : Items
 
 public class AmmoItem : Items
 {
-    public AmmoItem(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public AmmoItem(string name, float price, Sprite picture, bool bought = false)
+         : base(name, price, picture, bought)
     {
     }
 
@@ -326,21 +297,22 @@ public class AmmoItem : Items
 
 public class ExtraLifeItem: Items
 {
-    public ExtraLifeItem(string name, float price, Sprite picture)
-        : base(name, price, picture)
+    public ExtraLifeItem(string name, float price, Sprite picture, bool bought = false)
+         : base(name, price, picture, bought)
     {
     }
 
     public override void ItemEffect()
     {
-        PlayerController.extraLife = true;
+        PlayerController playerControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        playerControllerScript.extraLife = true;
     }
 }
 
 public class StunGrenadeItem : Items
 {
-    public StunGrenadeItem(string name, float price, Sprite picture)
-        : base(name, price, picture)
+    public StunGrenadeItem(string name, float price, Sprite picture, bool bought = false)
+         : base(name, price, picture, bought)
     {
     }
 
@@ -353,8 +325,8 @@ public class StunGrenadeItem : Items
 
 public class ABombItem : Items
 {
-    public ABombItem(string name, float price, Sprite picture)
-        : base(name, price, picture)
+    public ABombItem(string name, float price, Sprite picture, bool bought = false)
+         : base(name, price, picture, bought)
     {
     }
 

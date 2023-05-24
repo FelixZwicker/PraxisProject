@@ -15,10 +15,11 @@ public class SoundGameObjects : MonoBehaviour
         }
     }
 
+    //destroyes all sound objects in scene after 2min.
     IEnumerator DestroySoundGameObjects()
     {
         yield return new WaitForSeconds(120f);
-        GameObject[] instaniatedSounds = GameObject.FindGameObjectsWithTag("sound");
+        GameObject[] instaniatedSounds = GameObject.FindGameObjectsWithTag("Sound");
         foreach (GameObject sound in instaniatedSounds)
         {
             Destroy(sound);

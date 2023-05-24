@@ -10,12 +10,12 @@ public class WeaponUpgradeShop : MonoBehaviour
     public PlayerController playerControllerScript;
     public ShopController shopControllerScript;
 
-    public GameObject MachineGunShop;
-    public GameObject LaserGunShop;
-    public GameObject RocketLauncherShop;
-    public GameObject RandomShop;
-    public GameObject WeaponUpgradeShopMoneyDisplay;
-    public TextMeshProUGUI WeaponUpgradeShopMoneyText;
+    public GameObject machineGunShop;
+    public GameObject laserGunShop;
+    public GameObject rocketLauncherShop;
+    public GameObject randomShop;
+    public GameObject weaponUpgradeShopMoneyDisplay;
+    public TextMeshProUGUI weaponUpgradeShopMoneyText;
 
     private MachineGunDamageUpgradeItemOne machineGunDamageUpgradeItemOne;
     private MachineGunDamageUpgradeItemTwo machineGunDamageUpgradeItemTwo;
@@ -43,63 +43,68 @@ public class WeaponUpgradeShop : MonoBehaviour
 
     private void Start()
     {
-        machineGunDamageUpgradeItemOne = new MachineGunDamageUpgradeItemOne("+1 Damage", 10, null);
-        machineGunDamageUpgradeItemTwo = new MachineGunDamageUpgradeItemTwo("+5 Damage", 10, null);
-        machineGunDamageUpgradeItemThree = new MachineGunDamageUpgradeItemThree("+10 Damage", 10, null);
-        machineGunReloadUpgradeItemOne = new MachineGunReloadUpgradeItemOne("-1s reload Time", 10, null);
-        machineGunReloadUpgradeItemTwo = new MachineGunReloadUpgradeItemTwo("-2.5s reload Time", 10, null);
-        machineGunReloadUpgradeItemThree = new MachineGunReloadUpgradeItemThree("-5s reload Time", 10, null);
-        machineGunFireUpgradeItem = new MachineGunFireUpgradeItem("permanend Fire", 10, null);
 
-        laserGunDamageUpgradeItemOne = new LaserGunDamageUpgradeItemOne("+0.2 Damage", 10, null);
-        laserGunDamageUpgradeItemTwo = new LaserGunDamageUpgradeItemTwo("+0.2 Damage", 10, null);
-        laserGunDamageUpgradeItemThree = new LaserGunDamageUpgradeItemThree("+0.2 Damage", 10, null);
-        laserGunCooldownUpgradeItemOne = new LaserGunCooldownUpgradeItemOne("-0.4 Cooldown reduction", 10, null);
-        laserGunCooldownUpgradeItemTwo = new LaserGunCooldownUpgradeItemTwo("-0.5 Cooldown reduction", 10, null);
-        laserGunCooldownUpgradeItemThree = new LaserGunCooldownUpgradeItemThree("-0.5 Cooldown reduction", 10, null);
-        laserGunMaxDurationItem = new LaserGunMaxDurationItem("+12 Laser Duration", 10, null);
+        //initiat all weapon shop upgrade items
+        machineGunDamageUpgradeItemOne = new MachineGunDamageUpgradeItemOne("+1 Damage", 10, null, false);
+        machineGunDamageUpgradeItemTwo = new MachineGunDamageUpgradeItemTwo("+5 Damage", 10, null, false);
+        machineGunDamageUpgradeItemThree = new MachineGunDamageUpgradeItemThree("+10 Damage", 10, null, false);
+        machineGunReloadUpgradeItemOne = new MachineGunReloadUpgradeItemOne("-1s reload Time", 10, null, false);
+        machineGunReloadUpgradeItemTwo = new MachineGunReloadUpgradeItemTwo("-2.5s reload Time", 10, null, false);
+        machineGunReloadUpgradeItemThree = new MachineGunReloadUpgradeItemThree("-5s reload Time", 10, null, false);
+        machineGunFireUpgradeItem = new MachineGunFireUpgradeItem("permanend Fire", 10, null, false);
 
-        rocketLauncherDamageItemOne = new RocketLauncherDamageItemOne("+1 Damage", 10, null);
-        rocketLauncherDamageItemTwo = new RocketLauncherDamageItemTwo("+3 Damage", 10, null);
-        rocketLauncherDamageItemThree = new RocketLauncherDamageItemThree("+6 Damage", 10, null);
-        rocketLauncherEnviromentDamageItemOne = new RocketLauncherEnviromentDamageItemOne("+1 Damage", 10, null);
-        rocketLauncherEnviromentDamageItemTwo = new RocketLauncherEnviromentDamageItemTwo("+1.5 Damage", 10, null);
-        rocketLauncherEnviromentDamageItemThree = new RocketLauncherEnviromentDamageItemThree("+2.5 Damage", 10, null);
-        rocketLauncherRadiusItem = new RocketLauncherRadiusItem("+2.5 Radius", 10, null);
+        laserGunDamageUpgradeItemOne = new LaserGunDamageUpgradeItemOne("+0.2 Damage", 10, null, false);
+        laserGunDamageUpgradeItemTwo = new LaserGunDamageUpgradeItemTwo("+0.2 Damage", 10, null, false);
+        laserGunDamageUpgradeItemThree = new LaserGunDamageUpgradeItemThree("+0.2 Damage", 10, null, false);
+        laserGunCooldownUpgradeItemOne = new LaserGunCooldownUpgradeItemOne("-0.4 Cooldown reduction", 10, null, false);
+        laserGunCooldownUpgradeItemTwo = new LaserGunCooldownUpgradeItemTwo("-0.5 Cooldown reduction", 10, null, false);
+        laserGunCooldownUpgradeItemThree = new LaserGunCooldownUpgradeItemThree("-0.5 Cooldown reduction", 10, null, false);
+        laserGunMaxDurationItem = new LaserGunMaxDurationItem("+12 Laser Duration", 10, null, false);
+
+        rocketLauncherDamageItemOne = new RocketLauncherDamageItemOne("+1 Damage", 10, null, false);
+        rocketLauncherDamageItemTwo = new RocketLauncherDamageItemTwo("+3 Damage", 10, null, false);
+        rocketLauncherDamageItemThree = new RocketLauncherDamageItemThree("+6 Damage", 10, null, false);
+        rocketLauncherEnviromentDamageItemOne = new RocketLauncherEnviromentDamageItemOne("+1 Damage", 10, null, false);
+        rocketLauncherEnviromentDamageItemTwo = new RocketLauncherEnviromentDamageItemTwo("+1.5 Damage", 10, null, false);
+        rocketLauncherEnviromentDamageItemThree = new RocketLauncherEnviromentDamageItemThree("+2.5 Damage", 10, null, false);
+        rocketLauncherRadiusItem = new RocketLauncherRadiusItem("+2.5 Radius", 10, null, false);
     }
 
     private void Update()
     {
-        WeaponUpgradeShopMoneyText.text = playerControllerScript.money.ToString();
+        weaponUpgradeShopMoneyText.text = playerControllerScript.money.ToString();
     }
 
+    //checks wich weapon the player has equipped and opens the right shop
     public void SelectWeaponShop()
     {
-        if(CollectWeapon.MachineGunEquipped)
+        if(CollectWeapon.machineGunEquipped)
         {
-            MachineGunShop.SetActive(true);
+            machineGunShop.SetActive(true);
         }
-        else if(CollectWeapon.LaserGunEquipped)
+        else if(CollectWeapon.laserGunEquipped)
         {
-            LaserGunShop.SetActive(true);
+            laserGunShop.SetActive(true);
         }
-        else if(CollectWeapon.RocketLauncherEquipped)
+        else if(CollectWeapon.rocketLauncherEquipped)
         {
-            RocketLauncherShop.SetActive(true);
+            rocketLauncherShop.SetActive(true);
         }
-        RandomShop.SetActive(false);
-        WeaponUpgradeShopMoneyDisplay.SetActive(true);
+        randomShop.SetActive(false);
+        weaponUpgradeShopMoneyDisplay.SetActive(true);
     }
 
     public void DeselectWeaponShop()
     {
-        MachineGunShop.SetActive(false);
-        LaserGunShop.SetActive(false);
-        RocketLauncherShop.SetActive(false);
-        RandomShop.SetActive(true);
-        WeaponUpgradeShopMoneyDisplay.SetActive(false);
+        machineGunShop.SetActive(false);
+        laserGunShop.SetActive(false);
+        rocketLauncherShop.SetActive(false);
+        randomShop.SetActive(true);
+        weaponUpgradeShopMoneyDisplay.SetActive(false);
     }
 
+    //upgrades for weapons can only bought ones
+    //after the butten is unuseble
     public void MakeButtonUnusebleAfterUse()
     {
         GameObject item = EventSystem.current.currentSelectedGameObject;
@@ -116,6 +121,7 @@ public class WeaponUpgradeShop : MonoBehaviour
         if(playerControllerScript.money > item.price)
         {
             playerControllerScript.money -= item.price;
+            item.bought = true;
             item.ItemEffect();
             shopControllerScript.PopUpMessage(item, 3);
             MakeButtonUnusebleAfterUse();
@@ -134,12 +140,18 @@ public class WeaponUpgradeShop : MonoBehaviour
 
     public void MachineGunDamageUpgradeTwo()
     {
-        InstallUpgradeItem(machineGunDamageUpgradeItemTwo);
+        if(machineGunDamageUpgradeItemOne.bought)
+        {
+            InstallUpgradeItem(machineGunDamageUpgradeItemTwo);
+        }
     }
 
     public void MachineGunDamageUpgradeThree()
     {
-        InstallUpgradeItem(machineGunDamageUpgradeItemThree);
+        if(machineGunDamageUpgradeItemTwo.bought)
+        {
+            InstallUpgradeItem(machineGunDamageUpgradeItemThree);
+        }
     }
 
     public void MachineGunReloadSpeedUpgradeOne()
@@ -149,17 +161,26 @@ public class WeaponUpgradeShop : MonoBehaviour
 
     public void MachineGunReloadSpeedUpgradeTwo()
     {
-        InstallUpgradeItem(machineGunReloadUpgradeItemTwo);
+        if(machineGunReloadUpgradeItemOne.bought)
+        {
+            InstallUpgradeItem(machineGunReloadUpgradeItemTwo);
+        }
     }
 
     public void MachineGunReloadSpeedUpgradeThree()
     {
-        InstallUpgradeItem(machineGunReloadUpgradeItemThree);
+        if(machineGunReloadUpgradeItemTwo.bought)
+        {
+            InstallUpgradeItem(machineGunReloadUpgradeItemThree);
+        }
     }
 
     public void MachineGunPermenandFireUpgrade()
     {
-        InstallUpgradeItem(machineGunFireUpgradeItem);
+        if(machineGunReloadUpgradeItemThree.bought && machineGunDamageUpgradeItemThree.bought)
+        {
+            InstallUpgradeItem(machineGunFireUpgradeItem);
+        }
     }
 
     //------------ Laser Gun Upgrades ------------//
@@ -170,12 +191,18 @@ public class WeaponUpgradeShop : MonoBehaviour
 
     public void LaserGunDamageUpgradeTwo()
     {
-        InstallUpgradeItem(laserGunDamageUpgradeItemTwo);
+        if(laserGunDamageUpgradeItemOne.bought)
+        {
+            InstallUpgradeItem(laserGunDamageUpgradeItemTwo);
+        }
     }
 
     public void LaserGunDamageUpgradeThree()
     {
-        InstallUpgradeItem(laserGunDamageUpgradeItemThree);
+        if (laserGunDamageUpgradeItemTwo.bought)
+        {
+            InstallUpgradeItem(laserGunDamageUpgradeItemThree);
+        }
     }
 
     public void LaserGunCooldownUpgradeOne()
@@ -185,17 +212,26 @@ public class WeaponUpgradeShop : MonoBehaviour
 
     public void LaserGunCooldownUpgradeTwo()
     {
-        InstallUpgradeItem(laserGunCooldownUpgradeItemTwo);
+        if(laserGunCooldownUpgradeItemOne.bought)
+        {
+            InstallUpgradeItem(laserGunCooldownUpgradeItemTwo);
+        }
     }
 
     public void LaserGunCooldownUpgradeThree()
     {
-        InstallUpgradeItem(laserGunCooldownUpgradeItemThree);
+        if(laserGunCooldownUpgradeItemTwo.bought)
+        {
+            InstallUpgradeItem(laserGunCooldownUpgradeItemThree);
+        }
     }
 
     public void LaserGunMaxDurationUpgrade()
     {
-        InstallUpgradeItem(laserGunMaxDurationItem);
+        if(laserGunCooldownUpgradeItemThree.bought && laserGunDamageUpgradeItemThree.bought)
+        {
+            InstallUpgradeItem(laserGunMaxDurationItem);
+        }
     }
 
     //------------ Rocket Launcher Upgrades ------------//
@@ -206,12 +242,18 @@ public class WeaponUpgradeShop : MonoBehaviour
 
     public void RocketLauncherDamageUpgradeTwo()
     {
-        InstallUpgradeItem(rocketLauncherDamageItemTwo);
+        if(rocketLauncherDamageItemOne.bought)
+        {
+            InstallUpgradeItem(rocketLauncherDamageItemTwo);
+        }
     }
 
     public void RocketLauncherDamageUpgradeThree()
     {
-        InstallUpgradeItem(rocketLauncherDamageItemThree);
+        if(rocketLauncherDamageItemTwo.bought)
+        {
+            InstallUpgradeItem(rocketLauncherDamageItemThree);
+        }
     }
 
     public void RocketLauncherEnviromentDamageUpgradeOne()
@@ -221,24 +263,33 @@ public class WeaponUpgradeShop : MonoBehaviour
 
     public void RocketLauncherEnviromentDamageUpgradeTwo()
     {
-        InstallUpgradeItem(rocketLauncherEnviromentDamageItemTwo);
+        if(rocketLauncherEnviromentDamageItemOne.bought)
+        {
+            InstallUpgradeItem(rocketLauncherEnviromentDamageItemTwo);
+        }
     }
 
     public void RocketLauncherEnviromentDamageUpgradeThree()
     {
-        InstallUpgradeItem(rocketLauncherEnviromentDamageItemThree);
+        if(rocketLauncherEnviromentDamageItemTwo.bought)
+        {
+            InstallUpgradeItem(rocketLauncherEnviromentDamageItemThree);
+        }
     }
 
     public void RocketLauncherDamageRadiusUpgrade()
     {
-        InstallUpgradeItem(rocketLauncherRadiusItem);
+        if(rocketLauncherEnviromentDamageItemThree.bought && rocketLauncherDamageItemThree.bought)
+        {
+            InstallUpgradeItem(rocketLauncherRadiusItem);
+        }
     }
 }
 
 public class MachineGunDamageUpgradeItemOne : Items
 {
-    public MachineGunDamageUpgradeItemOne(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public MachineGunDamageUpgradeItemOne(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -251,8 +302,8 @@ public class MachineGunDamageUpgradeItemOne : Items
 
 public class MachineGunDamageUpgradeItemTwo : Items
 {
-    public MachineGunDamageUpgradeItemTwo(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public MachineGunDamageUpgradeItemTwo(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -265,8 +316,8 @@ public class MachineGunDamageUpgradeItemTwo : Items
 
 public class MachineGunDamageUpgradeItemThree : Items
 {
-    public MachineGunDamageUpgradeItemThree(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public MachineGunDamageUpgradeItemThree(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -279,8 +330,8 @@ public class MachineGunDamageUpgradeItemThree : Items
 
 public class MachineGunReloadUpgradeItemOne : Items
 {
-    public MachineGunReloadUpgradeItemOne(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public MachineGunReloadUpgradeItemOne(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -294,8 +345,8 @@ public class MachineGunReloadUpgradeItemOne : Items
 
 public class MachineGunReloadUpgradeItemTwo : Items
 {
-    public MachineGunReloadUpgradeItemTwo(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public MachineGunReloadUpgradeItemTwo(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -308,8 +359,8 @@ public class MachineGunReloadUpgradeItemTwo : Items
 
 public class MachineGunReloadUpgradeItemThree : Items
 {
-    public MachineGunReloadUpgradeItemThree(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public MachineGunReloadUpgradeItemThree(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -322,8 +373,8 @@ public class MachineGunReloadUpgradeItemThree : Items
 
 public class MachineGunFireUpgradeItem : Items
 {
-    public MachineGunFireUpgradeItem(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public MachineGunFireUpgradeItem(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -335,8 +386,8 @@ public class MachineGunFireUpgradeItem : Items
 
 public class LaserGunDamageUpgradeItemOne : Items
 {
-    public LaserGunDamageUpgradeItemOne(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public LaserGunDamageUpgradeItemOne(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -348,8 +399,8 @@ public class LaserGunDamageUpgradeItemOne : Items
 
 public class LaserGunDamageUpgradeItemTwo : Items
 {
-    public LaserGunDamageUpgradeItemTwo(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public LaserGunDamageUpgradeItemTwo(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -361,8 +412,8 @@ public class LaserGunDamageUpgradeItemTwo : Items
 
 public class LaserGunDamageUpgradeItemThree : Items
 {
-    public LaserGunDamageUpgradeItemThree(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public LaserGunDamageUpgradeItemThree(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -374,8 +425,8 @@ public class LaserGunDamageUpgradeItemThree : Items
 
 public class LaserGunCooldownUpgradeItemOne : Items
 {
-    public LaserGunCooldownUpgradeItemOne(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public LaserGunCooldownUpgradeItemOne(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -387,8 +438,8 @@ public class LaserGunCooldownUpgradeItemOne : Items
 
 public class LaserGunCooldownUpgradeItemTwo : Items
 {
-    public LaserGunCooldownUpgradeItemTwo(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public LaserGunCooldownUpgradeItemTwo(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -400,8 +451,8 @@ public class LaserGunCooldownUpgradeItemTwo : Items
 
 public class LaserGunCooldownUpgradeItemThree : Items
 {
-    public LaserGunCooldownUpgradeItemThree(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public LaserGunCooldownUpgradeItemThree(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -413,8 +464,8 @@ public class LaserGunCooldownUpgradeItemThree : Items
 
 public class LaserGunMaxDurationItem : Items
 {
-    public LaserGunMaxDurationItem(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public LaserGunMaxDurationItem(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -430,8 +481,8 @@ public class LaserGunMaxDurationItem : Items
 
 public class RocketLauncherDamageItemOne : Items
 {
-    public RocketLauncherDamageItemOne(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public RocketLauncherDamageItemOne(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -444,8 +495,8 @@ public class RocketLauncherDamageItemOne : Items
 
 public class RocketLauncherDamageItemTwo : Items
 {
-    public RocketLauncherDamageItemTwo(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public RocketLauncherDamageItemTwo(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -458,8 +509,8 @@ public class RocketLauncherDamageItemTwo : Items
 
 public class RocketLauncherDamageItemThree : Items
 {
-    public RocketLauncherDamageItemThree(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public RocketLauncherDamageItemThree(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -472,8 +523,8 @@ public class RocketLauncherDamageItemThree : Items
 
 public class RocketLauncherEnviromentDamageItemOne : Items
 {
-    public RocketLauncherEnviromentDamageItemOne(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public RocketLauncherEnviromentDamageItemOne(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -486,8 +537,8 @@ public class RocketLauncherEnviromentDamageItemOne : Items
 
 public class RocketLauncherEnviromentDamageItemTwo : Items
 {
-    public RocketLauncherEnviromentDamageItemTwo(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public RocketLauncherEnviromentDamageItemTwo(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -500,8 +551,8 @@ public class RocketLauncherEnviromentDamageItemTwo : Items
 
 public class RocketLauncherEnviromentDamageItemThree : Items
 {
-    public RocketLauncherEnviromentDamageItemThree(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public RocketLauncherEnviromentDamageItemThree(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()
@@ -514,8 +565,8 @@ public class RocketLauncherEnviromentDamageItemThree : Items
 
 public class RocketLauncherRadiusItem : Items
 {
-    public RocketLauncherRadiusItem(string name, float price, Sprite picture)
-         : base(name, price, picture)
+    public RocketLauncherRadiusItem(string name, float price, Sprite picture, bool bought)
+         : base(name, price, picture, bought)
     {
     }
     public override void ItemEffect()

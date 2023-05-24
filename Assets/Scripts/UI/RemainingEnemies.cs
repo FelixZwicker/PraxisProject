@@ -7,8 +7,8 @@ public class RemainingEnemies : MonoBehaviour
 {
     public WaveController waveControllerScript;
     public Animator animator;
-    public GameObject PopUpWindow;
-    public TextMeshProUGUI PopUpText;
+    public GameObject popUpWindow;
+    public TextMeshProUGUI popUpText;
 
     public bool wasPlayed = false;
 
@@ -19,7 +19,7 @@ public class RemainingEnemies : MonoBehaviour
         if (waveControllerScript.currentWaveDuration < 0 && !wasPlayed)
         {
             enemiesToCount = GameObject.FindGameObjectsWithTag("Enemy");
-            PopUpText.text = enemiesToCount.Length.ToString();
+            popUpText.text = enemiesToCount.Length.ToString();
             wasPlayed = true;
             StartCoroutine(PlayAnimation());
         }
@@ -27,9 +27,9 @@ public class RemainingEnemies : MonoBehaviour
 
     IEnumerator PlayAnimation()
     {
-        PopUpWindow.SetActive(true);
+        popUpWindow.SetActive(true);
         animator.Play("PopUp");
         yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0).Length);
-        PopUpWindow.SetActive(false);
+        popUpWindow.SetActive(false);
     }
 }

@@ -13,14 +13,14 @@ public static class SoundManager
         DashSound,
     }
 
+    //can be used in every script to play a sound predefined by the sound enum
     public static void PlaySounds(Sound sound)
     {
         GameObject soundGameObject = new GameObject("Sound");
         AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
-        soundGameObject.tag = "sound";
+        soundGameObject.tag = "Sound";
         audioSource.PlayOneShot(GetAudioClip(sound));
         audioSource.outputAudioMixerGroup = GameSounds.i.Mixer;
-        
     }
 
     private static AudioClip GetAudioClip(Sound sound)

@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a14ac5e850dee40bcb974b0ddd0cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponSprites:
+  weaponSprites:
   - {fileID: 21300000, guid: 4f9617dafae817e429dd2d65685d9550, type: 3}
   - {fileID: 21300000, guid: 581e3486db3590e49bb029bea8e23b28, type: 3}
   - {fileID: 21300000, guid: 1e717d56bbf67e942ae32166cf491d5c, type: 3}

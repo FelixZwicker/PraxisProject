@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class Credits : MonoBehaviour
 {
-    public Animator CreditsAnimator;
-    public AnimationClip CreditsClip;
+    public Animator creditsAnimator;
+    public AnimationClip creditsClip;
 
     private void Start()
     {
-        CreditsAnimator.Play("Credits");
+        creditsAnimator.Play("Credits");
         StartCoroutine(WaitForCredits());
     }
 
     IEnumerator WaitForCredits()
     {
-        yield return new WaitForSeconds(CreditsClip.length);
+        yield return new WaitForSeconds(creditsClip.length);
         SceneManager.LoadScene("StartMenu");
 
     }

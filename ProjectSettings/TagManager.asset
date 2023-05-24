@@ -9,8 +9,9 @@ TagManager:
   - Obstacle
   - Ranged
   - Enviroment
-  - sound
   - Projectile
+  - Shop
+  - Sound
   layers:
   - Default
   - TransparentFX

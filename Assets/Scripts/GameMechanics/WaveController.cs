@@ -9,12 +9,14 @@ public class WaveController : MonoBehaviour
     public PlayerController playerControllerScript;
     public PauseMenu pauseScript;
     public RemainingEnemies remainingEnemiesScript;
+    public ShopInteraction shopInteractionScript;
 
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI roundNr;
     public GameObject[] enemies;
-    public GameObject ShopUI;
-    public GameObject IngameUI;
+    public GameObject shopUI;
+    public GameObject ingameUI;
+    public GameObject player;
 
     public int waveCounter = 1;                     //keeps track of how many waves were survived
     public float maxWaveDuration = 60f;
@@ -56,14 +58,12 @@ public class WaveController : MonoBehaviour
         finishedWave = false;
         pauseScript.UnfreezeGame();
         currentWaveDuration = maxWaveDuration;
-        ShopInteraction.openedShop = false;
+        shopInteractionScript.openedShop = false;
         remainingEnemiesScript.wasPlayed = false;
 
         EnemyHealth.canDropMachinGun = true;
         EnemyHealth.canDropLaser = true;
         EnemyHealth.canDropExplosion = true;
-
-
 
         if (waveCounter % 5 == 0)
         {
@@ -82,26 +82,28 @@ public class WaveController : MonoBehaviour
         UpdateDifficulty();
 
         //open shop
-        ShopUI.SetActive(true);
-        IngameUI.SetActive(false);
+        shopUI.SetActive(true);
+        ingameUI.SetActive(false);
         shopControllerScript.LoadShop();
     }
 
-    void UpdateDifficulty() //movement speed, damage anheben oder gleichbleibend
+    //used to increase enemy stats every round
+    void UpdateDifficulty() 
     {
         maxWaveDuration += waveCounter * 2;
         enemySpawnCooldown *= 0.9f;
         EnemyHealth.enemyMaxHealth += 1f;
     }
 
+    //spawnes enemys on predefined spots random
     IEnumerator SpawnEnemys()
     {
-        int spawnNr = Random.Range(1, 7);
+        int spawnNr = Random.Range(1, 12);
         SetSpawnPosition(spawnNr);
 
         if (currentWaveDuration > 0)
         {
-            if(Vector2.Distance(spawnPosition, GameObject.FindGameObjectWithTag("Player").transform.position) > 6)
+            if(Vector2.Distance(spawnPosition, player.transform.position) > 6)
             {
                 Instantiate(enemies[Random.Range(0, enemyArrayLenght)], spawnPosition, Quaternion.identity);        //spawns random enemy from array enemys
                 yield return new WaitForSeconds(enemySpawnCooldown);
@@ -114,6 +116,7 @@ public class WaveController : MonoBehaviour
         }
     }
 
+    //wait for the player to kill every spawned enemy after time is up
     void WaitForPlayerClearing()
     {
         if(GameObject.FindGameObjectWithTag("Enemy") == null)
@@ -123,27 +126,43 @@ public class WaveController : MonoBehaviour
         }
     }
 
+    //possible positions enemies can spawn in
     void SetSpawnPosition(int positionNr)
     {
         switch(positionNr)
         {
             case 1:
-                spawnPosition = new Vector2(-50, 12);
+                spawnPosition = new Vector2(-50, 8);
                 break;
             case 2:
-                spawnPosition = new Vector2(-50, 4);
-                break;
-            case 3:
                 spawnPosition = new Vector2(-22, -10);
                 break;
-            case 4:
+            case 3:
                 spawnPosition = new Vector2(-20, 7.5f);
                 break;
-            case 5:
+            case 4:
                 spawnPosition = new Vector2(-12, 3.5f);
                 break;
-            case 6:
+            case 5:
                 spawnPosition = new Vector2(-33, -12);
+                break;
+            case 6:
+                spawnPosition = new Vector2(-41, -56);
+                break;
+            case 7:
+                spawnPosition = new Vector2(-2.5f, -56);
+                break;
+            case 8:
+                spawnPosition = new Vector2(-20, -48);
+                break;
+            case 9:
+                spawnPosition = new Vector2(-21.5f, -25);
+                break;
+            case 10:
+                spawnPosition = new Vector2(-41, -41);
+                break;
+            case 11:
+                spawnPosition = new Vector2(-2.5f, -41);
                 break;
             default:
                 spawnPosition = new Vector2(0, 0);
