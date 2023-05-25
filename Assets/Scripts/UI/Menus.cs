@@ -13,7 +13,7 @@ public class Menus : MonoBehaviour
 
     public void LoadGame()
     {
-        SceneManager.LoadScene("MainGame_Felix");
+        SceneManager.LoadScene("MainGame");
     }
 
     public void RestartGame()

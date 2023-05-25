@@ -294,7 +294,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 8
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -411,7 +411,9 @@ MonoBehaviour:
   - {fileID: 2563114028794466136, guid: dda701bebd1a38441ab3068ddfa7a570, type: 3}
   - {fileID: 8871652566782095304, guid: 91230e0817164c24eb3f9c5b745967a4, type: 3}
   - {fileID: 8137764121296142556, guid: 69c6fb08cc82221428abb5823c58e284, type: 3}
-  dropValue: 42
+  enemyMaxHealth: 0.5
+  minDropValue: 43
+  maxDropValue: 53
 --- !u!114 &799802302948074902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,7 +426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc94dcb32b09417408897b666bab142c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 3
+  damage: 5
 --- !u!114 &7714723332528301483
 MonoBehaviour:
   m_ObjectHideFlags: 0

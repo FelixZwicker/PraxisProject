@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 using UnityEngine.AI;
 
 public class StunEffect : MonoBehaviour
 {
-    public float stunTime;
+    public float stunTime = 3;
 
-    public IEnumerator Stun()
+    public void StartCoroutineStun()
+    {
+        StartCoroutine(Stun());
+    }
+
+    IEnumerator Stun()
     {
         gameObject.GetComponent<Movement>().enabled = false;
         gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;

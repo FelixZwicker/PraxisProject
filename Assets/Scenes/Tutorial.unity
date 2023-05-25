@@ -879,8 +879,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Controls:\n\n\"W,A,S,D\"\t- Movement\n\"LMB\"\t\t- Fire\n\"E\"\t\t- Interact\n\t\t-
-    Pickup\n\"R\" \t\t- Reloading\n\"Shift\"\t\t- Dash\n\"Space\"\t- Heal Item\n\"G\"\t\t-
-    Stun Grenade\n\"X\"\t\t- ABomb"
+    Pickup\n\"R\" \t\t- Reloading\n\"Shift\"\t\t- Dash\n\"Space\"\t- Heal Item\n\"RMB\"\t\t-
+    Stun Grenade\n\"Q\"\t\t- ABomb"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

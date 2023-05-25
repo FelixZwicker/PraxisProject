@@ -38,7 +38,7 @@ public class StunGrenade : MonoBehaviour
         {
             if (col.gameObject.CompareTag("Enemy"))
             {
-                StartCoroutine(col.GetComponent<StunEffect>().Stun());
+                col.gameObject.GetComponent<StunEffect>().StartCoroutineStun();
             }
         }
     }

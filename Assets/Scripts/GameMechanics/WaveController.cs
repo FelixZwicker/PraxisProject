@@ -10,7 +10,7 @@ public class WaveController : MonoBehaviour
     public PauseMenu pauseScript;
     public RemainingEnemies remainingEnemiesScript;
     public ShopInteraction shopInteractionScript;
-
+    public EnemyHealth[] enemyHealthScript;
     public TextMeshProUGUI timeText;
     public TextMeshProUGUI roundNr;
     public GameObject[] enemies;
@@ -23,7 +23,7 @@ public class WaveController : MonoBehaviour
     public bool finishedWave = false;
 
     private float maxWaveDuration = 20f;
-    public float enemySpawnCooldown = 5f;
+    private float enemySpawnCooldown = 5f;
     private Vector2 spawnPosition;
     private int enemyArrayLenght = 1;
     private bool gameStarted = false;
@@ -95,7 +95,10 @@ public class WaveController : MonoBehaviour
             maxWaveDuration += 10;
         }
         enemySpawnCooldown *= 0.88f;
-        EnemyHealth.enemyMaxHealth += 1f;
+        for(int x = 0; x < enemyHealthScript.Length; x++)
+        {
+            enemyHealthScript[x].enemyMaxHealth += 1;
+        }
     }
 
     //spawnes enemys on predefined spots random

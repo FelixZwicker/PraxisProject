@@ -15,8 +15,9 @@ public class EnemyHealth : MonoBehaviour
     public static bool canDropExplosion;
     public static bool canDropMachinGun;
 
-    public static float enemyMaxHealth = 1f;
-    public int dropValue;
+    public float enemyMaxHealth = 1f;
+    public int minDropValue;
+    public int maxDropValue;
 
     private Laser laserScript;
     private PlayerController playerControllerScript;
@@ -53,22 +54,22 @@ public class EnemyHealth : MonoBehaviour
         GameObject Coin;
         Coin = Instantiate(moneyPrefab, transform.position + dropOffset, Quaternion.identity);
         CollectMoney collectMoneyScript = Coin.GetComponent<CollectMoney>();
-        collectMoneyScript.UpdateMoneyAmount(dropValue);
+        collectMoneyScript.UpdateMoneyAmount(Random.Range(minDropValue, maxDropValue));
     }
 
     void DropWeapon()
     {
-        if (Random.value < 0.15f && !CollectWeapon.rocketLauncherEquipped && canDropExplosion)
+        if (Random.value < 1f && !CollectWeapon.rocketLauncherEquipped && canDropExplosion)
         { 
             Instantiate(weaponPrefabs[0], transform.position, Quaternion.identity);
             canDropExplosion = false;
         }
-        else if (Random.value < 1f && !laserScript.enabled && canDropLaser) 
+        else if (Random.value < 0.15f && !laserScript.enabled && canDropLaser) 
         {
             Instantiate(weaponPrefabs[2], transform.position, Quaternion.identity);
             canDropLaser = false;
         }
-        else if(Random.value < 0.2f && !CollectWeapon.machineGunEquipped && canDropMachinGun)
+        else if(Random.value < 0.15f && !CollectWeapon.machineGunEquipped && canDropMachinGun)
         {
             Instantiate(weaponPrefabs[1], transform.position, Quaternion.identity);
             canDropMachinGun = false;
