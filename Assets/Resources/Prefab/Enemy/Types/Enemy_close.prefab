@@ -104,7 +104,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 8
+  m_Speed: 9
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 915952198174903437}
-  damageDelay: 1
+  damageDelay: 0.5
 --- !u!114 &199087669079539924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,9 +233,11 @@ MonoBehaviour:
     type: 3}
   weaponPrefabs:
   - {fileID: 2563114028794466136, guid: dda701bebd1a38441ab3068ddfa7a570, type: 3}
-  - {fileID: 8137764121296142556, guid: 69c6fb08cc82221428abb5823c58e284, type: 3}
   - {fileID: 8871652566782095304, guid: 91230e0817164c24eb3f9c5b745967a4, type: 3}
-  dropValue: 50
+  - {fileID: 8137764121296142556, guid: 69c6fb08cc82221428abb5823c58e284, type: 3}
+  enemyMaxHealth: 12
+  minDropValue: 49
+  maxDropValue: 59
 --- !u!114 &5257893433190626211
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public PlayerDamageIndicator PlayerDamageIndicatorScript;
+    public ShopController shopControllerScript;
     public PauseMenu pauseScript;
     public HealthBar HealthBarScript;
     public Animator animator;
@@ -72,10 +73,11 @@ public class PlayerController : MonoBehaviour
         }
 
         //Health Kit
-        if (Input.GetKeyDown(KeyCode.Space) && canUseHeal)
+        if (Input.GetKeyDown(KeyCode.Space) && canUseHeal && currentHealth < maxHealth / 2)
         {
             canUseHeal = false;
-            currentHealth = maxHealth;
+            currentHealth = maxHealth / 2;
+            shopControllerScript.healEquipped = false;
         }
 
         //Debug add money

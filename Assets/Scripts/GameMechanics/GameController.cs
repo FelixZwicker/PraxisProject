@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public EnemyHealth[] enemyHealthsScripts;
+
     private GameObject machineGunBulletPrefab;
     private GameObject rocketLauncherPrefab;
 
@@ -13,10 +15,14 @@ public class GameController : MonoBehaviour
     //resetting all statics and prefabs
     void Start()
     {
+        enemyHealthsScripts[0].enemyMaxHealth = 2;
+        enemyHealthsScripts[1].enemyMaxHealth = 1;
+        enemyHealthsScripts[2].enemyMaxHealth = 1;
+        enemyHealthsScripts[3].enemyMaxHealth = 0.5f;
+
         CollectWeapon.machineGunEquipped = true;
         CollectWeapon.rocketLauncherEquipped = false;
         CollectWeapon.laserGunEquipped = false;
-        EnemyHealth.enemyMaxHealth = 1f;
 
         machineGunBulletPrefab = Resources.Load("Prefab/Player/Weapon/MashineGunBullet") as GameObject;
         machineGunBulletScript = machineGunBulletPrefab.GetComponent<MashineGunBullet>();

@@ -17,8 +17,7 @@ public class ExplosionProjectile : MonoBehaviour
         direction = player.transform.position - transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         gameObject.GetComponent<Rigidbody2D>().MovePosition((Vector2)transform.position + (speed * Time.deltaTime * direction));
     }

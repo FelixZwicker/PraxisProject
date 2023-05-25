@@ -258,6 +258,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 64
-  radius: 3
+  radius: 8
   stunGrenadeEffectPrefab: {fileID: 6154749670448341199, guid: 5c04cc60a3d3c62458ec37787de68bd5,
     type: 3}

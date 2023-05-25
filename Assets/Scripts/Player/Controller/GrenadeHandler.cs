@@ -33,12 +33,12 @@ public class GrenadeHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.G))
+        if(Input.GetKeyDown(KeyCode.Mouse1))
         {
             StartCoroutine(ThrowGrenade());
         }
 
-        if (Input.GetKeyDown(KeyCode.X) &&  aBombisCurrentlyEquipped)
+        if (Input.GetKeyDown(KeyCode.Q) &&  aBombisCurrentlyEquipped)
         {
             Color aBombAlpha = aBombUI.color;
             aBombAlpha.a = 0.1f;

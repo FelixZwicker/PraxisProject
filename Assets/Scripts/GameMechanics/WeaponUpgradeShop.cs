@@ -45,29 +45,29 @@ public class WeaponUpgradeShop : MonoBehaviour
     {
 
         //initiat all weapon shop upgrade items
-        machineGunDamageUpgradeItemOne = new MachineGunDamageUpgradeItemOne("+1 Damage", 10, null, false);
-        machineGunDamageUpgradeItemTwo = new MachineGunDamageUpgradeItemTwo("+5 Damage", 10, null, false);
-        machineGunDamageUpgradeItemThree = new MachineGunDamageUpgradeItemThree("+10 Damage", 10, null, false);
-        machineGunReloadUpgradeItemOne = new MachineGunReloadUpgradeItemOne("-1s reload Time", 10, null, false);
-        machineGunReloadUpgradeItemTwo = new MachineGunReloadUpgradeItemTwo("-2.5s reload Time", 10, null, false);
-        machineGunReloadUpgradeItemThree = new MachineGunReloadUpgradeItemThree("-5s reload Time", 10, null, false);
-        machineGunFireUpgradeItem = new MachineGunFireUpgradeItem("permanend Fire", 10, null, false);
+        machineGunDamageUpgradeItemOne = new MachineGunDamageUpgradeItemOne("Increased Damage", 360, null, false);
+        machineGunDamageUpgradeItemTwo = new MachineGunDamageUpgradeItemTwo("Increased Damage", 920, null, false);
+        machineGunDamageUpgradeItemThree = new MachineGunDamageUpgradeItemThree("Increased Damage", 2100, null, false);
+        machineGunReloadUpgradeItemOne = new MachineGunReloadUpgradeItemOne("Decreased Reload Time", 250, null, false);
+        machineGunReloadUpgradeItemTwo = new MachineGunReloadUpgradeItemTwo("Decreased Reload Time", 650, null, false);
+        machineGunReloadUpgradeItemThree = new MachineGunReloadUpgradeItemThree("Decreased Reload Time", 1450, null, false);
+        machineGunFireUpgradeItem = new MachineGunFireUpgradeItem("permanend Fire", 3700, null, false);
 
-        laserGunDamageUpgradeItemOne = new LaserGunDamageUpgradeItemOne("+0.2 Damage", 10, null, false);
-        laserGunDamageUpgradeItemTwo = new LaserGunDamageUpgradeItemTwo("+0.2 Damage", 10, null, false);
-        laserGunDamageUpgradeItemThree = new LaserGunDamageUpgradeItemThree("+0.2 Damage", 10, null, false);
-        laserGunCooldownUpgradeItemOne = new LaserGunCooldownUpgradeItemOne("-0.4 Cooldown reduction", 10, null, false);
-        laserGunCooldownUpgradeItemTwo = new LaserGunCooldownUpgradeItemTwo("-0.5 Cooldown reduction", 10, null, false);
-        laserGunCooldownUpgradeItemThree = new LaserGunCooldownUpgradeItemThree("-0.5 Cooldown reduction", 10, null, false);
-        laserGunMaxDurationItem = new LaserGunMaxDurationItem("+12 Laser Duration", 10, null, false);
+        laserGunDamageUpgradeItemOne = new LaserGunDamageUpgradeItemOne("Increased Damage", 320, null, false);
+        laserGunDamageUpgradeItemTwo = new LaserGunDamageUpgradeItemTwo("Increased Damage", 1000, null, false);
+        laserGunDamageUpgradeItemThree = new LaserGunDamageUpgradeItemThree("Increased Damage", 2250, null, false);
+        laserGunCooldownUpgradeItemOne = new LaserGunCooldownUpgradeItemOne("Cooldown reduction", 250, null, false);
+        laserGunCooldownUpgradeItemTwo = new LaserGunCooldownUpgradeItemTwo("Cooldown reduction", 650, null, false);
+        laserGunCooldownUpgradeItemThree = new LaserGunCooldownUpgradeItemThree("Cooldown reduction", 1450, null, false);
+        laserGunMaxDurationItem = new LaserGunMaxDurationItem("Inceased Duration", 2700, null, false);
 
-        rocketLauncherDamageItemOne = new RocketLauncherDamageItemOne("+1 Damage", 10, null, false);
-        rocketLauncherDamageItemTwo = new RocketLauncherDamageItemTwo("+3 Damage", 10, null, false);
-        rocketLauncherDamageItemThree = new RocketLauncherDamageItemThree("+6 Damage", 10, null, false);
-        rocketLauncherEnviromentDamageItemOne = new RocketLauncherEnviromentDamageItemOne("+1 Damage", 10, null, false);
-        rocketLauncherEnviromentDamageItemTwo = new RocketLauncherEnviromentDamageItemTwo("+1.5 Damage", 10, null, false);
-        rocketLauncherEnviromentDamageItemThree = new RocketLauncherEnviromentDamageItemThree("+2.5 Damage", 10, null, false);
-        rocketLauncherRadiusItem = new RocketLauncherRadiusItem("+2.5 Radius", 10, null, false);
+        rocketLauncherDamageItemOne = new RocketLauncherDamageItemOne("Increased Damage", 350, null, false);
+        rocketLauncherDamageItemTwo = new RocketLauncherDamageItemTwo("Increased Damage", 900, null, false);
+        rocketLauncherDamageItemThree = new RocketLauncherDamageItemThree("Increased Damage", 1900, null, false);
+        rocketLauncherEnviromentDamageItemOne = new RocketLauncherEnviromentDamageItemOne("Increased Enviroment Damage", 380, null, false);
+        rocketLauncherEnviromentDamageItemTwo = new RocketLauncherEnviromentDamageItemTwo("Increased Enviroment Damage", 1200, null, false);
+        rocketLauncherEnviromentDamageItemThree = new RocketLauncherEnviromentDamageItemThree("Increased Enviroment Damage", 2300, null, false);
+        rocketLauncherRadiusItem = new RocketLauncherRadiusItem("Increased Damage Radius", 3000, null, false);
     }
 
     private void Update()
@@ -103,7 +103,7 @@ public class WeaponUpgradeShop : MonoBehaviour
         weaponUpgradeShopMoneyDisplay.SetActive(false);
     }
 
-    //upgrades for weapons can only bought ones
+    //upgrades for weapons can only be bought ones
     //after the butten is unuseble
     public void MakeButtonUnusebleAfterUse()
     {
@@ -118,7 +118,7 @@ public class WeaponUpgradeShop : MonoBehaviour
 
     void InstallUpgradeItem(Items item)
     {
-        if(playerControllerScript.money > item.price)
+        if(playerControllerScript.money >= item.price)
         {
             playerControllerScript.money -= item.price;
             item.bought = true;
@@ -296,7 +296,7 @@ public class MachineGunDamageUpgradeItemOne : Items
     {
         GameObject machineGunBulletPrefab = Resources.Load("Prefab/Player/Weapon/MashineGunBullet") as GameObject;
         MashineGunBullet machmachineGunBulletScript = machineGunBulletPrefab.GetComponent<MashineGunBullet>();
-        machmachineGunBulletScript.damage += 1;
+        machmachineGunBulletScript.damage += 2;
     }
 }
 
@@ -310,7 +310,7 @@ public class MachineGunDamageUpgradeItemTwo : Items
     {
         GameObject machineGunBulletPrefab = Resources.Load("Prefab/Player/Weapon/MashineGunBullet") as GameObject;
         MashineGunBullet machmachineGunBulletScript = machineGunBulletPrefab.GetComponent<MashineGunBullet>();
-        machmachineGunBulletScript.damage += 5;
+        machmachineGunBulletScript.damage += 4;
     }
 }
 
@@ -324,7 +324,7 @@ public class MachineGunDamageUpgradeItemThree : Items
     {
         GameObject machineGunBulletPrefab = Resources.Load("Prefab/Player/Weapon/MashineGunBullet") as GameObject;
         MashineGunBullet machmachineGunBulletScript = machineGunBulletPrefab.GetComponent<MashineGunBullet>();
-        machmachineGunBulletScript.damage += 10;
+        machmachineGunBulletScript.damage += 9;
     }
 }
 
@@ -352,7 +352,7 @@ public class MachineGunReloadUpgradeItemTwo : Items
     public override void ItemEffect()
     {
         Shooting shootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
-        shootingScript.machineGunReloadSpeed -= 2.5f;
+        shootingScript.machineGunReloadSpeed -= 1f;
         shootingScript.stopReloading = true;
     }
 }
@@ -366,7 +366,7 @@ public class MachineGunReloadUpgradeItemThree : Items
     public override void ItemEffect()
     {
         Shooting shootingScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Shooting>();
-        shootingScript.machineGunReloadSpeed -= 5f;
+        shootingScript.machineGunReloadSpeed -= 1.5f;
         shootingScript.stopReloading = true;
     }
 }
@@ -406,7 +406,7 @@ public class LaserGunDamageUpgradeItemTwo : Items
     public override void ItemEffect()
     {
         Laser laserScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Laser>();
-        laserScript.laserDamage += 0.2f;
+        laserScript.laserDamage += 0.5f;
     }
 }
 
@@ -419,7 +419,7 @@ public class LaserGunDamageUpgradeItemThree : Items
     public override void ItemEffect()
     {
         Laser laserScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Laser>();
-        laserScript.laserDamage += 0.2f;
+        laserScript.laserDamage += 1.2f;
     }
 }
 
@@ -445,7 +445,7 @@ public class LaserGunCooldownUpgradeItemTwo : Items
     public override void ItemEffect()
     {
         Laser laserScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Laser>();
-        laserScript.coolDownSpeed += 0.5f;
+        laserScript.coolDownSpeed += 0.7f;
     }
 }
 
@@ -458,7 +458,7 @@ public class LaserGunCooldownUpgradeItemThree : Items
     public override void ItemEffect()
     {
         Laser laserScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Laser>();
-        laserScript.coolDownSpeed += 0.5f;
+        laserScript.coolDownSpeed += 1.4f;
     }
 }
 
@@ -471,7 +471,7 @@ public class LaserGunMaxDurationItem : Items
     public override void ItemEffect()
     {
         Laser laserScript = GameObject.FindGameObjectWithTag("Player").GetComponent<Laser>();
-        laserScript.laserMaxTimer += 12;
+        laserScript.laserMaxTimer += 15;
         laserScript.laserCurrentTimer = laserScript.laserMaxTimer;
 
         Slider laserTimerSlider = laserScript.laserTimerUI.GetComponent<Slider>();
@@ -489,7 +489,7 @@ public class RocketLauncherDamageItemOne : Items
     {
         GameObject explosionBulletPrefab = Resources.Load("Prefab/Player/Weapon/ExplosionBullet") as GameObject;
         ExplosionBullet explosionBulletScript = explosionBulletPrefab.GetComponent<ExplosionBullet>();
-        explosionBulletScript.damage += 1;
+        explosionBulletScript.damage += 2.5f;
     }
 }
 
@@ -503,7 +503,7 @@ public class RocketLauncherDamageItemTwo : Items
     {
         GameObject explosionBulletPrefab = Resources.Load("Prefab/Player/Weapon/ExplosionBullet") as GameObject;
         ExplosionBullet explosionBulletScript = explosionBulletPrefab.GetComponent<ExplosionBullet>();
-        explosionBulletScript.damage += 3;
+        explosionBulletScript.damage += 4.5f;
     }
 }
 
@@ -517,7 +517,7 @@ public class RocketLauncherDamageItemThree : Items
     {
         GameObject explosionBulletPrefab = Resources.Load("Prefab/Player/Weapon/ExplosionBullet") as GameObject;
         ExplosionBullet explosionBulletScript = explosionBulletPrefab.GetComponent<ExplosionBullet>();
-        explosionBulletScript.damage += 6;
+        explosionBulletScript.damage += 9;
     }
 }
 
@@ -531,7 +531,7 @@ public class RocketLauncherEnviromentDamageItemOne : Items
     {
         GameObject explosionBulletPrefab = Resources.Load("Prefab/Player/Weapon/ExplosionBullet") as GameObject;
         ExplosionBullet explosionBulletScript = explosionBulletPrefab.GetComponent<ExplosionBullet>();
-        explosionBulletScript.enviromentalDamage += 1;
+        explosionBulletScript.enviromentalDamage += 0.5f;
     }
 }
 
@@ -545,7 +545,7 @@ public class RocketLauncherEnviromentDamageItemTwo : Items
     {
         GameObject explosionBulletPrefab = Resources.Load("Prefab/Player/Weapon/ExplosionBullet") as GameObject;
         ExplosionBullet explosionBulletScript = explosionBulletPrefab.GetComponent<ExplosionBullet>();
-        explosionBulletScript.enviromentalDamage += 1.5f;
+        explosionBulletScript.enviromentalDamage += 3.5f;
     }
 }
 
@@ -559,7 +559,7 @@ public class RocketLauncherEnviromentDamageItemThree : Items
     {
         GameObject explosionBulletPrefab = Resources.Load("Prefab/Player/Weapon/ExplosionBullet") as GameObject;
         ExplosionBullet explosionBulletScript = explosionBulletPrefab.GetComponent<ExplosionBullet>();
-        explosionBulletScript.enviromentalDamage += 2.5f;
+        explosionBulletScript.enviromentalDamage += 4;
     }
 }
 
