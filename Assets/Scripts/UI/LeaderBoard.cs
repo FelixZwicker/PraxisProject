@@ -56,25 +56,4 @@ public class LeaderBoard : MonoBehaviour
             Load();
         }
     }
-    /*
-    public void GetLeaderBoard()
-    {
-        LeaderboardCreator.GetLeaderboard(publicLeaderBoardKey, ((msg) =>
-        {
-            int loopLength = (msg.Length < names.Count) ? msg.Length : names.Count;
-            for(int x = 0; x < loopLength; ++x)
-            {
-                names[x].text = msg[x].Username;
-                scores[x].text = msg[x].Score.ToString();
-            }
-        }));
-    }
-
-    public void SetLeaderBoardEntry(string username, int score)
-    {
-        LeaderboardCreator.UploadNewEntry(publicLeaderBoardKey, username, score, ((msg) =>
-        {
-            GetLeaderBoard();
-        }));
-    }*/
 }

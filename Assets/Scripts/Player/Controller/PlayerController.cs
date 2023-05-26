@@ -73,10 +73,10 @@ public class PlayerController : MonoBehaviour
         }
 
         //Health Kit
-        if (Input.GetKeyDown(KeyCode.Space) && canUseHeal && currentHealth < maxHealth / 2)
+        if (Input.GetKeyDown(KeyCode.Space) && canUseHeal)
         {
             canUseHeal = false;
-            currentHealth = maxHealth / 2;
+            currentHealth = maxHealth;
             shopControllerScript.healEquipped = false;
         }
 
