@@ -5,6 +5,7 @@ using UnityEngine;
 public class PauseMenu : MonoBehaviour
 {
     public Shooting shootingScript;
+    public ShopInteraction shopInteractionScript;
     public Laser laserScript;
     public GameObject pauseMenuUI;
     public GameObject inGameUI;
@@ -12,7 +13,7 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+        if((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)) && !shopInteractionScript.openedShop)
         {
             pauseMenuUI.SetActive(true);
             inGameUI.SetActive(false);

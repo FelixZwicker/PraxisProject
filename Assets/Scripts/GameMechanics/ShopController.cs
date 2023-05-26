@@ -41,7 +41,7 @@ public class ShopController : MonoBehaviour
     {
         //initiate all possible items
         HealthItem healthItem = new HealthItem("+10 max Health", 350, itemsary[0]);
-        HealBoxItem healBoxItem = new HealBoxItem("One time 50% Heal", 50, itemsary[0]);
+        HealBoxItem healBoxItem = new HealBoxItem("One time full Heal", 50, itemsary[0]);
         MachineGunAmmoItem machineGunAmmoItem = new MachineGunAmmoItem("+5 Machine Gun Ammo", 300, itemsary[2]);
         RocketLauncherAmmoItem rocketLauncherAmmoItem = new RocketLauncherAmmoItem("+2 Rocket Launcher Ammo", 250, itemsary[1]);
         MoveSpeedItem moveSpeedItem = new MoveSpeedItem("Movement Speed", 100, itemsary[3]);
@@ -166,14 +166,19 @@ public class ShopController : MonoBehaviour
     void InstallItem(Items item)
     {
         //Check money
-        if(playerControllerScript.money >= item.price && (item.name != "One time 50% Heal" || !healEquipped))
+        if(playerControllerScript.money >= item.price && (item.name != "One time full Heal" || !healEquipped))
         {
             PopUpMessage(item, 3);
             playerControllerScript.money -= item.price;
             item.ItemEffect();
             IncreasePrice(item);
+            if(item.name == "Extra Life")
+            {
+                extraLifeIndicator.SetActive(true);
+                extraLifeButton.enabled = false;
+            }
         }
-        else if(healEquipped && item.name != "One time 50% Heal")
+        else if(healEquipped && item.name != "One time full Heal")
         {
             PopUpMessage(item, 1);
         }
@@ -186,9 +191,9 @@ public class ShopController : MonoBehaviour
 
     void IncreasePrice(Items item)
     {
-        if(item.name == "One time 50% Heal")
+        if(item.name == "One time full Heal")
         {
-            item.price += 110;
+            item.price += 150;
             healEquipped = true;
         }
         else if(item.name == "Stun Grenade")
@@ -228,8 +233,6 @@ public class ShopController : MonoBehaviour
     public void AddExtraLife()
     {
         InstallItem(extraLifeItem);
-        extraLifeIndicator.SetActive(true);
-        extraLifeButton.enabled = false;
     }
 
     public void AddStunGrenade()
