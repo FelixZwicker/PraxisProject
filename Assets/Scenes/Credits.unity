@@ -419,7 +419,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -788.75}
+  m_AnchoredPosition: {x: 0, y: -1024.8}
   m_SizeDelta: {x: 1231.431, y: 690.114}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1287109452
@@ -442,8 +442,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Game Development\n\n\tFelix Zwicker\n\tDariush Naghed\n\n\nMusic by\n\n\tName\n\tName\n\tName\n\n\nAssets
-    by\n\n\tUnity Asset Store\t\n\n"
+  m_text: "Game Development\n\n\tFelix Zwicker\n\tDariush Naghed\n\n\nMusic by\n\n\tSport
+    Racing Car \t\t\tby Alex-Productions\n\n\tRacing Sport Gaming \t\tby Alex-Productions\n\n\tEpic
+    Cyberpunk \t\t\tby Alex-Productions\n\n\tAggressive Electro Cyberpunk \tby Alex-Productions\n\n\tExit
+    the Premise \t\t\tby Kevin MacLeod\n\n\tBrazilian Street Fight \t\tby Punch Deck\n\n\tDark
+    Cyberpunk \t\t\tby Aim to Head\n\n\tPowerful Trap Beat \t\tby Alex-Productions\n\n\nSoundeffects
+    by\n\t\n\twesleyextrem_gamer\n\tstintx\n\tqubodup\n\tEminYILDIRIM\n\n\nAssets
+    by\n\n\tUnity Asset Store\n\tpngfind.com\n\n\tThanks for Playing!\t\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
